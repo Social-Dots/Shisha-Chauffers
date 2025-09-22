@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ShishaSmokeAnimation } from "@/components/smoke-animation";
+// import { ShishaSmokeAnimation } from "@/components/smoke-animation"; // Disabled - only want cursor smoke
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -25,8 +25,7 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
         
-        {/* Static shisha smoke from the pipe */}
-        <ShishaSmokeAnimation className="z-20" />
+        {/* Removed static smoke - now only smoke comes from cursor */}
       </div>
       
       <div className="relative z-30 text-center max-w-4xl mx-auto px-4">

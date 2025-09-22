@@ -464,19 +464,19 @@
   color: hsl(0, 70%, 55%);
 }
 
-/* Custom hookah cursor using the SVG file */
+/* Custom hookah cursor using the large white shisha SVG */
 html, body, * {
-  cursor: url('/cursor-hookah.svg') 16 16, auto !important;
+  cursor: url('/cursor-hookah-large.svg') 32 32, auto !important;
 }
 
 /* Specific classes for different cursor states */
 .custom-hookah-cursor {
-  cursor: url('/cursor-hookah.svg') 16 16, auto !important;
+  cursor: url('/cursor-hookah-large.svg') 32 32, auto !important;
 }
 
 /* Clickable elements get a pointer-style hookah cursor */
 button, a, [role="button"], input[type="submit"], input[type="button"] {
-  cursor: url('/cursor-hookah.svg') 16 16, pointer !important;
+  cursor: url('/cursor-hookah-large.svg') 32 32, pointer !important;
 }
 
 /* Text input areas still get text cursor for usability */

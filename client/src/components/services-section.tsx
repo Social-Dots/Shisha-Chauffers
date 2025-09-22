@@ -1,4 +1,4 @@
-import { Martini, Home, Check } from "lucide-react";
+import { Martini, Home } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function ServicesSection() {
@@ -9,22 +9,9 @@ export default function ServicesSection() {
       description: "Professional shisha masters bring premium flavours and equipment directly to your event",
       gradient: "gradient-gold",
       features: [
-        "Professional setup & service",
-        "Premium tobacco selection", 
-        "Luxury equipment provided",
-        "Expert flavor recommendations"
-      ]
-    },
-    {
-      icon: Martini,
-      title: "Mocktail Services", 
-      description: "Handcrafted mocktails made with premium ingredients to complement your shisha experience",
-      gradient: "gradient-purple",
-      features: [
-        "Skilled mixologists",
-        "Premium ingredients",
-        "Custom drink menus",
-        "Beautiful presentation"
+        "Professional attendants prepare all shisha equipment and premium flavors.",
+        "Continuous monitoring and service throughout your event.",
+        "Complete breakdown and cleanup once the event concludes."
       ]
     },
     {
@@ -33,10 +20,20 @@ export default function ServicesSection() {
       description: "Rent premium shisha equipment for your private events and parties",
       gradient: "gradient-gold",
       features: [
-        "High-quality equipment",
-        "Flexible rental periods",
-        "Setup instructions included",
-        "Competitive pricing"
+        "Professional attendants prepare all shisha equipment and premium flavors.",
+        "Continuous monitoring and service throughout your event.",
+        "Complete breakdown and cleanup once the event concludes."
+      ]
+    },
+    {
+      icon: Martini,
+      title: "Shisha Membership", 
+      description: "Enjoy exclusive member perks, preferred pricing, and prioritized bookings for private events and regular service schedules.",
+      gradient: "gradient-purple",
+      features: [
+        "Professional attendants prepare all shisha equipment and premium flavors.",
+        "Continuous monitoring and service throughout your event.",
+        "Complete breakdown and cleanup once the event concludes."
       ]
     }
   ];
@@ -47,7 +44,7 @@ export default function ServicesSection() {
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Our Premium Services</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Elevate your events with our luxury mobile shisha and mocktail catering services
+            Elevate your events with our luxury mobile shisha catering services and exclusive membership benefits
           </p>
         </div>
         
@@ -61,10 +58,9 @@ export default function ServicesSection() {
                     {service.description}
                   </p>
                 </div>
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-sm list-disc list-inside">
                   {service.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <Check className="text-primary mr-2 h-4 w-4" />
+                    <li key={featureIndex}>
                       {feature}
                     </li>
                   ))}

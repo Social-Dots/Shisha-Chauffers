@@ -17,6 +17,10 @@ export default function HeroSection() {
           src="https://lh3.googleusercontent.com/pw/AP1GczOrQSNMMXMkfvlqyH32IhDel9d5ORHwmV-nHIfYLSv1ya8e7Cc9RngQdbYVctm9a9Z1MhtN3K8OnQlMo76X1Mj19MaqwAk_kA6Xby8OpoG4crYB4LL1zhj97zA1CI2kIhKdCAFAglvDlofj5IIihanJ=w854-h683-s-no?authuser=0" 
           alt="Luxury shisha cafe ambiance" 
           className="w-full h-full object-cover"
+          width="854"
+          height="683"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
       </div>

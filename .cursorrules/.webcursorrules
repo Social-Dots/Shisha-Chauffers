@@ -1,0 +1,104 @@
+# Context Engineering Framework for Social Dots
+
+## Task Management Structure
+- **Task-based approach**: Each request becomes a task with unique semantic ID
+- **Context storage**: Store all intermediate context in `tasks/<task-id>/` folders
+- **Semantic naming**: Use descriptive task IDs (e.g., `feature-user-auth`, `bug-nav-mobile`)
+
+## Three-Phase Workflow
+
+### Phase 1: Research & Discovery
+**Goal**: Understand the problem space and existing solutions
+
+**Actions**:
+1. **Codebase Analysis**
+   - Search for existing patterns, components, and similar implementations
+   - Identify reusable code and established conventions
+   - Document current architecture and dependencies
+
+2. **External Research** (when needed)
+   - Search internet for best practices and solutions
+   - Look up documentation for libraries/frameworks
+   - Find examples and case studies
+
+3. **Clarification Questions**
+   - Ask targeted follow-up questions to understand requirements
+   - Clarify scope, constraints, and success criteria
+   - Identify edge cases and potential issues
+
+4. **Documentation**
+   - Create `tasks/<task-id>/research.md` with findings
+   - Include code examples, patterns, and references
+   - Note any assumptions or limitations
+
+### Phase 2: Planning & Design
+**Goal**: Create a comprehensive implementation plan
+
+**Actions**:
+1. **Review Research**
+   - Read `tasks/<task-id>/research.md`
+   - Synthesize findings into actionable insights
+
+2. **Architecture Planning**
+   - Design solution using existing patterns where possible
+   - Plan component structure and data flow
+   - Identify integration points and dependencies
+
+3. **Scope Clarification**
+   - Ask clarifying questions if requirements are unclear
+   - Define MVP vs. future enhancements
+   - Set realistic expectations
+
+4. **Implementation Plan**
+   - Create detailed `tasks/<task-id>/plan.md`
+   - Include step-by-step implementation guide
+   - Specify files to create/modify with clear rationale
+   - Include testing strategy and validation steps
+
+### Phase 3: Implementation & Execution
+**Goal**: Execute the plan efficiently and thoroughly
+
+**Actions**:
+1. **Task Breakdown**
+   - Read `tasks/<task-id>/plan.md`
+   - Create comprehensive todo list with all implementation items
+   - Prioritize tasks by dependencies and complexity
+
+2. **Iterative Development**
+   - Implement features incrementally
+   - Test each component as you build
+   - Refactor and optimize as needed
+
+3. **Quality Assurance**
+   - Follow existing code patterns and conventions
+   - Ensure responsive design and accessibility
+   - Validate against requirements and edge cases
+
+4. **Documentation & Handoff**
+   - Update relevant documentation
+   - Add comments for complex logic
+   - Prepare summary of changes made
+
+## Best Practices
+
+### Code Reuse
+- Always check for existing components before creating new ones
+- Follow established patterns and naming conventions
+- Leverage existing utilities and helper functions
+
+### Communication
+- Group clarifying questions at the end of research phase
+- Provide regular progress updates for complex tasks
+- Explain technical decisions and trade-offs
+
+### Quality Standards
+- Write clean, maintainable code
+- Follow TypeScript best practices
+- Ensure mobile responsiveness
+- Test across different browsers/devices
+
+### Social Dots Specific
+- Use pnpm for package management
+- Follow Next.js 14 App Router patterns
+- Maintain consistent Tailwind CSS styling
+- Optimize for performance and SEO

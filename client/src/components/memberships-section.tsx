@@ -1,4 +1,4 @@
-import { Check, Crown } from "lucide-react";
+import { Crown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -34,7 +34,7 @@ export default function MembershipsSection() {
         "20% discount on all packages",
         "VIP priority booking",
         "Unlimited premium flavors",
-        "Free mocktail service included",
+        "Free premium flavor service included",
         "Personal chauffeur assigned",
         "Custom event planning",
         "Exclusive member-only events",
@@ -85,11 +85,10 @@ export default function MembershipsSection() {
                 
                 <div className="mb-8 flex-grow">
                   <h4 className="font-semibold text-white mb-4 text-center">What's Included:</h4>
-                  <ul className="space-y-3">
+                  <ul className="space-y-3 list-disc list-inside">
                     {membership.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-start text-sm">
-                        <Check className="text-white mr-3 h-5 w-5 mt-0.5 flex-shrink-0" />
-                        <span className="text-white">{feature}</span>
+                      <li key={featureIndex} className="text-sm text-white">
+                        {feature}
                       </li>
                     ))}
                   </ul>

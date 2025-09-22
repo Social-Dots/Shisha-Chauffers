@@ -1,4 +1,3 @@
-import { Check } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -29,7 +28,7 @@ export default function PackagesSection() {
         "Professional chauffeur service",
         "Serves up to 12 guests",
         "Premium equipment package",
-        "Mocktail service included",
+        "Premium flavor service included",
         "Setup & clean-up service",
         "Custom flavor mixing"
       ],
@@ -46,7 +45,7 @@ export default function PackagesSection() {
         "Dedicated chauffeur team",
         "Serves up to 20 guests",
         "Luxury equipment package",
-        "Full mocktail bar service",
+        "Full flavor bar service",
         "Professional setup & styling",
         "Custom flavor creation",
         "Event coordination",
@@ -62,8 +61,8 @@ export default function PackagesSection() {
     <section id="packages" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Packages</h2>
-          <p className="text-xl text-muted-foreground">Choose the perfect package for your event</p>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Shisha Catering Packages</h2>
+          <p className="text-xl text-muted-foreground">All Shisha Catering Packages include full shisha service with setup, maintenance, and cleaning by our attendants.</p>
         </div>
         
         <div className="grid md:grid-cols-3 gap-8">
@@ -87,11 +86,10 @@ export default function PackagesSection() {
                   <p className="text-sm text-gray-300 mb-6">{pkg.description}</p>
                 </div>
                 
-                <ul className="space-y-3 mb-8 flex-grow">
+                <ul className="space-y-3 mb-8 flex-grow list-disc list-inside">
                   {pkg.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-start text-sm">
-                      <Check className="text-white mr-3 h-5 w-5 mt-0.5 flex-shrink-0" />
-                      <span className="text-white">{feature}</span>
+                    <li key={featureIndex} className="text-sm text-white">
+                      {feature}
                     </li>
                   ))}
                 </ul>

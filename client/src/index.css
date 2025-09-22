@@ -9,19 +9,19 @@
   --card-foreground: hsl(0, 0%, 98%);
   --popover: hsl(0, 0%, 4%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(0, 84%, 60%);
+  --primary: hsl(0, 70%, 55%);
   --primary-foreground: hsl(0, 0%, 4%);
   --secondary: hsl(262, 83%, 28%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --muted: hsl(0, 0%, 15%);
   --muted-foreground: hsl(0, 0%, 70%);
-  --accent: hsl(0, 84%, 60%);
+  --accent: hsl(0, 70%, 55%);
   --accent-foreground: hsl(0, 0%, 4%);
-  --destructive: hsl(0, 84%, 60%);
+  --destructive: hsl(0, 70%, 55%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --border: hsl(0, 0%, 20%);
   --input: hsl(0, 0%, 15%);
-  --ring: hsl(0, 84%, 60%);
+  --ring: hsl(0, 70%, 55%);
   --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
   --chart-2: hsl(159.7826, 100%, 36.0784%);
   --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
@@ -58,19 +58,19 @@
   --card-foreground: hsl(0, 0%, 98%);
   --popover: hsl(0, 0%, 4%);
   --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(0, 84%, 60%);
+  --primary: hsl(0, 70%, 55%);
   --primary-foreground: hsl(0, 0%, 4%);
   --secondary: hsl(262, 83%, 28%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --muted: hsl(0, 0%, 15%);
   --muted-foreground: hsl(0, 0%, 70%);
-  --accent: hsl(0, 84%, 60%);
+  --accent: hsl(0, 70%, 55%);
   --accent-foreground: hsl(0, 0%, 4%);
-  --destructive: hsl(0, 84%, 60%);
+  --destructive: hsl(0, 70%, 55%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --border: hsl(0, 0%, 20%);
   --input: hsl(0, 0%, 15%);
-  --ring: hsl(0, 84%, 60%);
+  --ring: hsl(0, 70%, 55%);
 }
 
 @layer base {
@@ -103,11 +103,11 @@
 }
 
 .gradient-gold {
-  background: linear-gradient(135deg, hsl(0, 84%, 60%) 0%, hsl(0, 84%, 50%) 100%);
+  background: linear-gradient(135deg, hsl(0, 70%, 55%) 0%, hsl(0, 84%, 50%) 100%);
 }
 
 .gradient-purple {
-  background: linear-gradient(135deg, hsl(0, 84%, 60%) 0%, hsl(0, 84%, 50%) 100%);
+  background: linear-gradient(135deg, hsl(0, 70%, 55%) 0%, hsl(0, 84%, 50%) 100%);
 }
 
 .glass-effect {
@@ -146,6 +146,248 @@
     animation: fadeInUp 0.8s ease-out forwards;
   }
 
+  /* Smoke Animation Keyframes */
+  @keyframes smokeRise {
+    0% {
+      opacity: 0.8;
+      transform: translateY(0) translateX(0) scale(0.5);
+    }
+    20% {
+      opacity: 0.9;
+      transform: translateY(-20px) translateX(2px) scale(0.7);
+    }
+    40% {
+      opacity: 0.7;
+      transform: translateY(-60px) translateX(-3px) scale(1);
+    }
+    60% {
+      opacity: 0.5;
+      transform: translateY(-120px) translateX(5px) scale(1.2);
+    }
+    80% {
+      opacity: 0.3;
+      transform: translateY(-180px) translateX(-2px) scale(1.4);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-240px) translateX(3px) scale(1.6);
+    }
+  }
+
+  @keyframes smokeDrift {
+    0% {
+      opacity: 0.6;
+      transform: translateY(0) translateX(0) scale(0.3) rotate(0deg);
+    }
+    25% {
+      opacity: 0.8;
+      transform: translateY(-40px) translateX(8px) scale(0.6) rotate(5deg);
+    }
+    50% {
+      opacity: 0.6;
+      transform: translateY(-100px) translateX(-5px) scale(0.9) rotate(-3deg);
+    }
+    75% {
+      opacity: 0.4;
+      transform: translateY(-160px) translateX(10px) scale(1.2) rotate(8deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-220px) translateX(-8px) scale(1.5) rotate(-5deg);
+    }
+  }
+
+  @keyframes smokeTwirl {
+    0% {
+      opacity: 0.7;
+      transform: translateY(0) translateX(0) scale(0.4) rotate(0deg);
+    }
+    30% {
+      opacity: 0.9;
+      transform: translateY(-50px) translateX(-6px) scale(0.7) rotate(-10deg);
+    }
+    60% {
+      opacity: 0.5;
+      transform: translateY(-110px) translateX(4px) scale(1.1) rotate(15deg);
+    }
+    85% {
+      opacity: 0.2;
+      transform: translateY(-170px) translateX(-8px) scale(1.3) rotate(-12deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-230px) translateX(6px) scale(1.6) rotate(20deg);
+    }
+  }
+
+  /* Smoke particle classes */
+  .smoke-particle {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.25) 30%, rgba(255, 255, 255, 0.1) 60%, transparent 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(1.5px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Dense smoke particle for continuous effect */
+  .smoke-dense {
+    position: absolute;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.02) 70%, transparent 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(3px);
+  }
+
+  /* Mouse trail smoke */
+  .smoke-trail {
+    position: absolute;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.3) 40%, rgba(255, 255, 255, 0.1) 70%, transparent 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transition: all 0.2s ease-out;
+  }
+
+  .smoke-1 {
+    width: 40px;
+    height: 40px;
+    animation: smokeRise 8s ease-out infinite;
+    animation-delay: 0s;
+  }
+
+  .smoke-2 {
+    width: 35px;
+    height: 35px;
+    animation: smokeDrift 10s ease-out infinite;
+    animation-delay: 1.5s;
+  }
+
+  .smoke-3 {
+    width: 45px;
+    height: 45px;
+    animation: smokeTwirl 12s ease-out infinite;
+    animation-delay: 3s;
+  }
+
+  .smoke-4 {
+    width: 30px;
+    height: 30px;
+    animation: smokeRise 9s ease-out infinite;
+    animation-delay: 4.5s;
+  }
+
+  .smoke-5 {
+    width: 38px;
+    height: 38px;
+    animation: smokeDrift 11s ease-out infinite;
+    animation-delay: 2s;
+  }
+
+  .smoke-6 {
+    width: 32px;
+    height: 32px;
+    animation: smokeTwirl 10s ease-out infinite;
+    animation-delay: 1s;
+  }
+
+  .smoke-7 {
+    width: 26px;
+    height: 26px;
+    animation: smokeRise 7s ease-out infinite;
+    animation-delay: 3.5s;
+  }
+
+  .smoke-8 {
+    width: 34px;
+    height: 34px;
+    animation: smokeDrift 9s ease-out infinite;
+    animation-delay: 0.5s;
+  }
+
+  /* Additional dense smoke particles */
+  .smoke-9 {
+    width: 28px;
+    height: 28px;
+    animation: smokeRise 6s ease-out infinite;
+    animation-delay: 1.2s;
+  }
+
+  .smoke-10 {
+    width: 42px;
+    height: 42px;
+    animation: smokeTwirl 13s ease-out infinite;
+    animation-delay: 2.8s;
+  }
+
+  .smoke-11 {
+    width: 24px;
+    height: 24px;
+    animation: smokeDrift 8s ease-out infinite;
+    animation-delay: 0.3s;
+  }
+
+  .smoke-12 {
+    width: 36px;
+    height: 36px;
+    animation: smokeRise 11s ease-out infinite;
+    animation-delay: 4.2s;
+  }
+
+  .smoke-13 {
+    width: 31px;
+    height: 31px;
+    animation: smokeTwirl 7s ease-out infinite;
+    animation-delay: 1.8s;
+  }
+
+  .smoke-14 {
+    width: 39px;
+    height: 39px;
+    animation: smokeDrift 12s ease-out infinite;
+    animation-delay: 3.1s;
+  }
+
+  .smoke-15 {
+    width: 27px;
+    height: 27px;
+    animation: smokeRise 9s ease-out infinite;
+    animation-delay: 0.7s;
+  }
+
+  .smoke-16 {
+    width: 33px;
+    height: 33px;
+    animation: smokeTwirl 10s ease-out infinite;
+    animation-delay: 2.5s;
+  }
+
+  /* Dense background smoke */
+  .smoke-dense-1 {
+    width: 60px;
+    height: 60px;
+    animation: smokeDrift 15s ease-out infinite;
+    animation-delay: 0s;
+    opacity: 0.3;
+  }
+
+  .smoke-dense-2 {
+    width: 50px;
+    height: 50px;
+    animation: smokeRise 18s ease-out infinite;
+    animation-delay: 3s;
+    opacity: 0.2;
+  }
+
+  .smoke-dense-3 {
+    width: 70px;
+    height: 70px;
+    animation: smokeTwirl 20s ease-out infinite;
+    animation-delay: 6s;
+    opacity: 0.25;
+  }
+
   /* Enable transitions for users who prefer motion */
   .hover-float {
     transition: transform 0.3s ease;
@@ -156,11 +398,46 @@
   }
 }
 
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  /* Reduce particle density on mobile for better performance */
+  .smoke-particle {
+    filter: blur(1px) !important; /* Less blur for better performance */
+  }
+  
+  /* Smaller smoke particles on mobile */
+  .smoke-1, .smoke-2, .smoke-3, .smoke-4, .smoke-5, .smoke-6, .smoke-7, .smoke-8,
+  .smoke-9, .smoke-10, .smoke-11, .smoke-12, .smoke-13, .smoke-14, .smoke-15, .smoke-16 {
+    width: 75% !important;
+    height: 75% !important;
+  }
+  
+  /* Faster animations on mobile to reduce CPU usage */
+  .smoke-particle {
+    animation-duration: 75% !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Mobile/touch devices */
+  .smoke-trail {
+    filter: blur(1px) !important;
+    opacity: 0.8 !important;
+  }
+}
+
 /* For users who prefer reduced motion, provide instant feedback without animations */
 @media (prefers-reduced-motion: reduce) {
   .animate-float,
-  .animate-in {
+  .animate-in,
+  .smoke-particle {
     animation: none;
+  }
+
+  /* Hide smoke animations for users who prefer reduced motion */
+  .smoke-particle {
+    opacity: 0;
   }
 
   .hover-float {
@@ -184,5 +461,25 @@
 }
 
 .text-red {
-  color: hsl(0, 84%, 60%);
+  color: hsl(0, 70%, 55%);
+}
+
+/* Custom hookah cursor using the SVG file */
+html, body, * {
+  cursor: url('/cursor-hookah.svg') 16 16, auto !important;
+}
+
+/* Specific classes for different cursor states */
+.custom-hookah-cursor {
+  cursor: url('/cursor-hookah.svg') 16 16, auto !important;
+}
+
+/* Clickable elements get a pointer-style hookah cursor */
+button, a, [role="button"], input[type="submit"], input[type="button"] {
+  cursor: url('/cursor-hookah.svg') 16 16, pointer !important;
+}
+
+/* Text input areas still get text cursor for usability */
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  cursor: text !important;
 }

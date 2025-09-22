@@ -33,62 +33,55 @@ export default function Navigation() {
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a 
-              href="#home"
+            <button 
               onClick={() => scrollToSection('home')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-home"
             >
               Home
-            </a>
-            <a 
-              href="#services"
+            </button>
+            <button 
               onClick={() => scrollToSection('services')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-services"
             >
               Services
-            </a>
-            <a 
-              href="#packages"
+            </button>
+            <button 
               onClick={() => scrollToSection('packages')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-packages"
             >
               Packages
-            </a>
-            <a 
-              href="#memberships"
+            </button>
+            <button 
               onClick={() => scrollToSection('memberships')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-memberships"
             >
               Memberships
-            </a>
-            <a 
-              href="#shisha-rentals"
+            </button>
+            <button 
               onClick={() => scrollToSection('shisha-rentals')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-pricing"
             >
               Pricing
-            </a>
-            <a 
-              href="#flavours"
+            </button>
+            <button 
               onClick={() => scrollToSection('flavours')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-flavours"
             >
               Flavours
-            </a>
-            <a 
-              href="#contact"
+            </button>
+            <button 
               onClick={() => scrollToSection('contact')} 
-              className="hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+              className="hover:text-primary transition-colors"
               data-testid="nav-contact"
             >
               Contact
-            </a>
+            </button>
           </div>
           
           <div className="md:hidden">
@@ -106,62 +99,55 @@ export default function Navigation() {
         {isMobileMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 glass-effect bg-opacity-95 p-4">
             <div className="flex flex-col space-y-4">
-              <a 
-                href="#home"
+              <button 
                 onClick={() => scrollToSection('home')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-home"
               >
                 Home
-              </a>
-              <a 
-                href="#services"
+              </button>
+              <button 
                 onClick={() => scrollToSection('services')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-services"
               >
                 Services
-              </a>
-              <a 
-                href="#packages"
+              </button>
+              <button 
                 onClick={() => scrollToSection('packages')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-packages"
               >
                 Packages
-              </a>
-              <a 
-                href="#memberships"
+              </button>
+              <button 
                 onClick={() => scrollToSection('memberships')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-memberships"
               >
                 Memberships
-              </a>
-              <a 
-                href="#shisha-rentals"
+              </button>
+              <button 
                 onClick={() => scrollToSection('shisha-rentals')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-pricing"
               >
                 Pricing
-              </a>
-              <a 
-                href="#flavours"
+              </button>
+              <button 
                 onClick={() => scrollToSection('flavours')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-flavours"
               >
                 Flavours
-              </a>
-              <a 
-                href="#contact"
+              </button>
+              <button 
                 onClick={() => scrollToSection('contact')} 
-                className="text-left hover:text-primary transition-colors focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
+                className="text-left hover:text-primary transition-colors"
                 data-testid="mobile-nav-contact"
               >
                 Contact
-              </a>
+              </button>
             </div>
           </div>
         )}

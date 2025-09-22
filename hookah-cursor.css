@@ -1,0 +1,18 @@
+/* Hookah cursor using the SVG file */
+:root {
+  --cursor-url: url('/cursor-hookah.svg') 16 16, auto;
+}
+
+.custom-cursor {
+  cursor: var(--cursor-url) !important;
+}
+
+/* Apply hookah cursor globally */
+html, body, * {
+  cursor: var(--cursor-url) !important;
+}
+
+/* Maintain usability for text inputs */
+input[type="text"], input[type="email"], input[type="password"], textarea {
+  cursor: text !important;
+}

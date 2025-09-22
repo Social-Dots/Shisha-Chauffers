@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import GlobalSmokeCursor, { useSmokeCursor } from "@/components/global-smoke-cursor";
 
 // Lazy-load admin pages to reduce initial bundle size
 const AdminLogin = lazy(() => import("@/pages/admin-login"));
@@ -23,21 +24,35 @@ const AdminLoadingFallback = () => (
 );
 
 function Router() {
+  // Enable global smoke cursor
+  useSmokeCursor(true);
+
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/admin/login">
-        <Suspense fallback={<AdminLoadingFallback />}>
-          <AdminLogin />
-        </Suspense>
-      </Route>
-      <Route path="/admin">
-        <Suspense fallback={<AdminLoadingFallback />}>
-          <AdminDashboard />
-        </Suspense>
-      </Route>
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      {/* Global smoke cursor overlay */}
+      <GlobalSmokeCursor 
+        enabled={true}
+        intensity={0.9}
+        trailLength={30}
+        mobileOptimized={true}
+      />
+      
+      {/* Main router */}
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/admin/login">
+          <Suspense fallback={<AdminLoadingFallback />}>
+            <AdminLogin />
+          </Suspense>
+        </Route>
+        <Route path="/admin">
+          <Suspense fallback={<AdminLoadingFallback />}>
+            <AdminDashboard />
+          </Suspense>
+        </Route>
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 }
 

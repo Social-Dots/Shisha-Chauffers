@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ShishaSmokeAnimation } from "@/components/smoke-animation";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -23,9 +24,12 @@ export default function HeroSection() {
           decoding="async"
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        
+        {/* Static shisha smoke from the pipe */}
+        <ShishaSmokeAnimation className="z-20" />
       </div>
       
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+      <div className="relative z-30 text-center max-w-4xl mx-auto px-4">
         <h1 className="font-serif text-5xl md:text-7xl font-bold mb-6 text-shadow">
           LUXURY MOBILE <br />
           <span className="text-primary font-extrabold tracking-wider">SHISHA CATERING</span>
@@ -53,7 +57,7 @@ export default function HeroSection() {
       </div>
       
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-30">
         <ChevronDown className="text-primary text-2xl" />
       </div>
     </section>

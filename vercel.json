@@ -20,6 +20,10 @@
       "dest": "/api/index.ts"
     },
     {
+      "src": "/media/(.*)",
+      "dest": "/media/$1"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
     },

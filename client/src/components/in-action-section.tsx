@@ -191,21 +191,21 @@ export default function InActionSection() {
   };
 
   return (
-    <section id="in-action" className="relative overflow-hidden py-24">
+    <section id="in-action" className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(220,38,38,0.15),transparent_28rem)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-10 flex flex-col gap-6 sm:mb-12 lg:mb-14 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
           <div className="max-w-3xl">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80">
               <Sparkles className="h-4 w-4 text-primary" />
               Curated from your latest event content
             </div>
-            <h2 className="font-serif text-4xl font-bold text-white md:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
               Shisha Chauffeurs in Action
             </h2>
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
               Browse real examples of our mobile shisha catering, hookah rental setups, and luxury private event service in Toronto, Mississauga, Brampton, and the Greater Toronto Area.
               This gallery is built to show how Shisha Chauffeurs serves birthdays, weddings, backyard parties, corporate events, and VIP gatherings.
             </p>
@@ -213,7 +213,7 @@ export default function InActionSection() {
 
           <div className="grid gap-3 sm:grid-cols-3">
             {coverageNotes.map((note) => (
-              <div key={note} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm text-white/80">
+              <div key={note} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm leading-6 text-white/80">
                 <MapPin className="mb-3 h-4 w-4 text-primary" />
                 {note}
               </div>
@@ -231,7 +231,7 @@ export default function InActionSection() {
                 key={item.src}
                 className="pl-0 md:basis-1/2 xl:basis-1/3"
               >
-                <article className="mx-3 overflow-hidden rounded-[1.75rem] border border-white/10 bg-black/35 shadow-2xl shadow-black/20">
+                <article className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35 shadow-2xl shadow-black/20 sm:mx-3 sm:rounded-[1.75rem]">
                   <div className="relative aspect-[4/5] bg-black">
                     {item.type === "video" ? (
                       <>
@@ -245,7 +245,7 @@ export default function InActionSection() {
                           controls
                           preload="metadata"
                         />
-                        <div className="pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white/80">
+                        <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/80 sm:left-4 sm:top-4 sm:text-[11px] sm:tracking-[0.22em]">
                           <PlayCircle className="h-4 w-4 text-primary" />
                           Live Clip
                         </div>
@@ -261,8 +261,8 @@ export default function InActionSection() {
                     )}
 
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                    <div className="absolute inset-x-0 bottom-0 p-5">
-                      <p className="text-sm text-white/85">{item.caption}</p>
+                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                      <p className="text-sm leading-6 text-white/85">{item.caption}</p>
                     </div>
                   </div>
                 </article>
@@ -270,17 +270,17 @@ export default function InActionSection() {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="left-2 top-[42%] h-11 w-11 border-white/15 bg-black/60 text-white hover:bg-black/80 disabled:opacity-30 md:left-4" />
-          <CarouselNext className="right-2 top-[42%] h-11 w-11 border-white/15 bg-black/60 text-white hover:bg-black/80 disabled:opacity-30 md:right-4" />
+          <CarouselPrevious className="left-3 top-[42%] hidden h-10 w-10 border-white/15 bg-black/60 text-white hover:bg-black/80 disabled:opacity-30 sm:flex md:left-4 md:h-11 md:w-11" />
+          <CarouselNext className="right-3 top-[42%] hidden h-10 w-10 border-white/15 bg-black/60 text-white hover:bg-black/80 disabled:opacity-30 sm:flex md:right-4 md:h-11 md:w-11" />
         </Carousel>
 
-        <div className="mt-8 grid gap-4 rounded-[2rem] border border-white/10 bg-black/30 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
+        <div className="mt-6 grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/30 p-5 sm:mt-8 sm:rounded-[2rem] sm:p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-primary/90">Setup Spotlight</p>
-            <h3 className="mt-3 font-serif text-3xl font-semibold text-white">
+            <h3 className="mt-3 font-serif text-2xl font-semibold text-white sm:text-3xl">
               Toronto mobile shisha catering for private events and premium gatherings
             </h3>
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground">
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
               The updated carousel now supports SEO-focused captions built around the services people actually search for:
               shisha catering Toronto, hookah rental GTA, private event shisha service, and luxury mobile shisha setups for weddings, birthdays, and corporate events.
             </p>
@@ -288,7 +288,7 @@ export default function InActionSection() {
 
           <Button
             onClick={scrollToContact}
-            className="w-full justify-center rounded-full bg-primary px-6 py-6 text-base font-semibold text-primary-foreground hover:bg-accent hover:text-accent-foreground md:w-auto"
+            className="w-full justify-center rounded-full bg-primary px-6 py-5 text-base font-semibold text-primary-foreground hover:bg-accent hover:text-accent-foreground md:w-auto md:py-6"
             data-testid="button-in-action-book"
           >
             Book A Setup Like This

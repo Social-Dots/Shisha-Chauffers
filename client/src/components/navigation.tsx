@@ -27,11 +27,11 @@ export default function Navigation() {
       isScrolled ? 'glass-effect shadow-2xl' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex min-h-16 items-center justify-between gap-3 py-2">
           <div className="flex items-center space-x-2">
             <button
               onClick={() => scrollToSection('home')}
-              className="font-serif font-bold text-xl tracking-wide"
+              className="max-w-[14rem] text-left font-serif text-lg font-bold leading-tight tracking-[0.08em] sm:max-w-none sm:text-xl"
               data-testid="nav-logo"
             >
               SHISHA CHAUFFEURS
@@ -101,8 +101,9 @@ export default function Navigation() {
           <div className="md:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-foreground hover:text-primary"
+              className="rounded-full border border-white/10 bg-black/30 p-2 text-foreground transition-colors hover:text-primary"
               data-testid="mobile-menu-toggle"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMobileMenuOpen ? <X className="text-xl" /> : <Menu className="text-xl" />}
             </button>
@@ -111,63 +112,63 @@ export default function Navigation() {
         
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 glass-effect bg-opacity-95 p-4">
-            <div className="flex flex-col space-y-4">
+          <div className="absolute left-0 right-0 top-full border-t border-white/10 bg-black/95 px-4 pb-5 pt-4 backdrop-blur-xl md:hidden">
+            <div className="flex flex-col space-y-2">
               <button 
                 onClick={() => scrollToSection('home')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-home"
               >
                 Home
               </button>
               <button 
                 onClick={() => scrollToSection('services')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-services"
               >
                 Services
               </button>
               <button 
                 onClick={() => scrollToSection('packages')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-packages"
               >
                 Packages
               </button>
               <button 
                 onClick={() => scrollToSection('memberships')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-memberships"
               >
                 Memberships
               </button>
               <button 
                 onClick={() => scrollToSection('shisha-rentals')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-pricing"
               >
                 Pricing
               </button>
               <button 
                 onClick={() => scrollToSection('flavours')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-flavours"
               >
                 Flavours
               </button>
               <button
                 onClick={() => scrollToSection('in-action')}
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-in-action"
               >
                 In Action
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 
-                className="text-left hover:text-primary transition-colors"
+                className="rounded-2xl bg-primary px-4 py-3 text-left font-semibold text-primary-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                 data-testid="mobile-nav-contact"
               >
-                Contact
+                Book Now
               </button>
             </div>
           </div>

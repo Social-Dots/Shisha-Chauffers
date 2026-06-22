@@ -187,21 +187,21 @@ export default function ContactForm() {
   const progress = (currentStep / totalSteps) * 100;
 
   return (
-    <section id="contact" className="relative overflow-hidden py-24">
+    <section id="contact" className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(220,38,38,0.16),transparent_32rem)]" />
       <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
+        <div className="mb-12 text-center sm:mb-16">
           <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80">
             <Sparkles className="h-4 w-4 text-primary" />
             Shisha Chauffeurs Booking Form
           </div>
-          <div className="mx-auto mb-6 flex w-fit items-center justify-center rounded-3xl border border-white/10 bg-black/30 px-6 py-4 shadow-2xl shadow-black/20">
-            <img src="/logo.svg" alt="Shisha Chauffeurs" className="h-12 w-auto md:h-16" />
+          <div className="mx-auto mb-6 flex w-fit items-center justify-center rounded-3xl border border-white/10 bg-black/30 px-5 py-4 shadow-2xl shadow-black/20 sm:px-6">
+            <img src="/logo.svg" alt="Shisha Chauffeurs" className="h-10 w-auto sm:h-12 md:h-16" />
           </div>
-          <h2 className="mb-4 font-serif text-4xl font-bold text-white md:text-5xl">
+          <h2 className="mb-4 font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Shisha Catering, Rental & Mocktail Services
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
+          <p className="mx-auto max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
             Reserve our luxury mobile shisha and mocktail catering services or rent shishas for your next event.
             Whether you are hosting a private gathering, wedding, birthday, or celebration, we use this form to confirm
             your service request, event details, preferred flavours, and any add-ons you want included.
@@ -209,8 +209,8 @@ export default function ContactForm() {
         </div>
 
         <Card className="surface-panel overflow-hidden border-white/10 bg-card/80">
-          <CardContent className="p-8 lg:p-12">
-            <div className="mb-10 grid gap-4 rounded-2xl border border-white/10 bg-black/20 p-5 md:grid-cols-3">
+          <CardContent className="p-5 sm:p-6 lg:p-12">
+            <div className="mb-8 grid gap-4 rounded-2xl border border-white/10 bg-black/20 p-4 sm:mb-10 sm:p-5 md:grid-cols-3">
               <div className="flex items-start gap-3">
                 <CalendarDays className="mt-0.5 h-5 w-5 text-primary" />
                 <div>
@@ -235,14 +235,14 @@ export default function ContactForm() {
             </div>
 
             <div className="mb-8">
-              <div className="mb-4 flex items-center justify-between">
+              <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <span className="text-sm text-muted-foreground">Step {currentStep} of {totalSteps}</span>
                 <span className="text-sm text-muted-foreground">Progress: {Math.round(progress)}%</span>
               </div>
               <div className="h-2 w-full rounded-full bg-muted-foreground/20">
                 <div className="gradient-gold h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
               </div>
-              <div className="mt-5 grid gap-3 md:grid-cols-5">
+              <div className="-mx-1 mt-5 flex gap-3 overflow-x-auto px-1 pb-2 md:mx-0 md:grid md:grid-cols-5 md:overflow-visible md:px-0 md:pb-0">
                 {stepCopy.map((step, index) => {
                   const stepNumber = index + 1;
                   const isActive = currentStep === stepNumber;
@@ -251,7 +251,7 @@ export default function ContactForm() {
                   return (
                     <div
                       key={step.title}
-                      className={`rounded-2xl border px-4 py-3 text-left transition-all ${
+                      className={`min-w-[12rem] rounded-2xl border px-4 py-3 text-left transition-all md:min-w-0 ${
                         isActive
                           ? "border-primary/60 bg-primary/10"
                           : isComplete
@@ -741,22 +741,22 @@ export default function ContactForm() {
                   </div>
                 )}
 
-                <div className="flex justify-between border-t border-border pt-8">
+                <div className="flex flex-col gap-3 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
                   <Button
                     type="button"
                     onClick={prevStep}
                     variant="outline"
-                    className={currentStep === 1 ? "invisible" : ""}
+                    className={`${currentStep === 1 ? "invisible" : ""} w-full sm:w-auto`}
                     data-testid="button-previous"
                   >
                     Previous
                   </Button>
-                  <div className="flex-1" />
+                  <div className="hidden flex-1 sm:block" />
                   {currentStep < totalSteps ? (
                     <Button
                       type="button"
                       onClick={nextStep}
-                      className="gradient-gold font-semibold text-black transition-all duration-300 hover:shadow-lg"
+                      className="gradient-gold w-full font-semibold text-black transition-all duration-300 hover:shadow-lg sm:w-auto"
                       data-testid="button-next"
                     >
                       Next Step
@@ -766,7 +766,7 @@ export default function ContactForm() {
                     <Button
                       type="submit"
                       disabled={bookingMutation.isPending}
-                      className="gradient-gold font-semibold text-black transition-all duration-300 hover:shadow-lg"
+                      className="gradient-gold w-full font-semibold text-black transition-all duration-300 hover:shadow-lg sm:w-auto"
                       data-testid="button-submit"
                     >
                       {bookingMutation.isPending ? "Submitting..." : "Submit Booking Request"}

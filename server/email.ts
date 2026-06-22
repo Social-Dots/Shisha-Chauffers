@@ -1,10 +1,22 @@
 import nodemailer from 'nodemailer';
 
+const smtpConfigured = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
+const brandName = 'Shisha Chauffeurs';
+const brandPrimary = '#dc2626';
+const brandSurface = '#111111';
+const brandPanel = 'rgba(255,255,255,0.08)';
+const adminContactEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
+const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+const smtpSecure = smtpPort === 465;
+const senderEmail = process.env.EMAIL_FROM || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
+const senderName = process.env.EMAIL_FROM_NAME || brandName;
+const formattedFrom = `"${senderName}" <${senderEmail}>`;
+
 // Email configuration
 const emailConfig = {
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: false, // true for 465, false for other ports
+  port: smtpPort,
+  secure: smtpSecure,
   auth: {
     user: process.env.SMTP_USER, // Your email
     pass: process.env.SMTP_PASS, // Your app password
@@ -12,102 +24,150 @@ const emailConfig = {
 };
 
 // Create transporter
-const transporter = nodemailer.createTransport(emailConfig);
+const transporter = smtpConfigured ? nodemailer.createTransport(emailConfig) : null;
 
 // Verify connection configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.log('❌ Email configuration error:', error);
-    console.log('📧 Email config:', {
-      host: emailConfig.host,
-      port: emailConfig.port,
-      secure: emailConfig.secure,
-      auth: {
-        user: emailConfig.auth.user,
-        pass: emailConfig.auth.pass ? '***' : 'undefined'
-      }
-    });
-  } else {
-    console.log('✅ Email server is ready to send messages');
-    console.log('📧 Using email:', emailConfig.auth.user);
-  }
-});
+if (transporter) {
+  transporter.verify((error) => {
+    if (error) {
+      console.log('❌ Email configuration error:', error);
+      console.log('📧 Email config:', {
+        host: emailConfig.host,
+        port: emailConfig.port,
+        secure: emailConfig.secure,
+        auth: {
+          user: emailConfig.auth.user,
+          pass: emailConfig.auth.pass ? '***' : 'undefined'
+        }
+      });
+    } else {
+      console.log('✅ Email server is ready to send messages');
+      console.log('📧 Using email:', emailConfig.auth.user);
+    }
+  });
+} else {
+  console.warn('No email provider configured. Set SMTP_USER/SMTP_PASS.');
+}
+
+const formatServiceLabel = (service: string) =>
+  service
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+
+const renderServiceList = (services: string[]) =>
+  services.map((service) => `<li>${formatServiceLabel(service)}</li>`).join('');
+
+const renderServiceText = (services: string[]) =>
+  services.map((service) => `- ${formatServiceLabel(service)}`).join('\n');
+
+const renderOptionalField = (label: string, value?: string | null) =>
+  value ? `<p><strong>${label}:</strong> ${value}</p>` : '';
+
+const renderOptionalListField = (label: string, values?: string[] | null) =>
+  values && values.length ? `<p><strong>${label}:</strong> ${values.join(', ')}</p>` : '';
 
 // Email templates
 export const createBookingNotificationEmail = (booking: any) => {
   return {
-    subject: `🌟 New Shisha Cafe Booking - ${booking.firstName} ${booking.lastName}`,
+    subject: `New Booking Request | ${brandName} | ${booking.firstName} ${booking.lastName}`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="font-size: 2.5em; margin: 0;">🌟 New Booking Alert!</h1>
-          <p style="font-size: 1.2em; opacity: 0.9;">Shisha Cafe Booking System</p>
+      <div style="font-family: Inter, Arial, sans-serif; max-width: 640px; margin: 0 auto; background: linear-gradient(180deg, ${brandSurface} 0%, #050505 100%); color: white; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
+        <div style="text-align: center; margin-bottom: 28px;">
+          <img src="https://shishachauffeurs.com/logo.svg" alt="${brandName}" style="width: 180px; max-width: 100%; margin-bottom: 16px;" />
+          <p style="margin: 0; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: ${brandPrimary}; font-weight: 700;">New Booking Request</p>
+          <h1 style="font-size: 34px; line-height: 1.15; margin: 12px 0 8px 0;">${booking.firstName} ${booking.lastName}</h1>
+          <p style="font-size: 16px; opacity: 0.78; margin: 0;">A new event enquiry was submitted through the ${brandName} booking form.</p>
         </div>
-        
-        <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
-          <h2 style="color: #FFD700; margin-top: 0;">Customer Information</h2>
+
+        <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+          <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Client Details</h2>
           <p><strong>Name:</strong> ${booking.firstName} ${booking.lastName}</p>
           <p><strong>Email:</strong> ${booking.email}</p>
           <p><strong>Phone:</strong> ${booking.phone}</p>
-          ${booking.instagram ? `<p><strong>Instagram:</strong> @${booking.instagram}</p>` : ''}
+          ${renderOptionalField('Instagram', booking.instagram)}
         </div>
 
-        <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-          <h2 style="color: #FFD700; margin-top: 0;">Event Details</h2>
+        <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+          <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Event Details</h2>
           <p><strong>Date:</strong> ${booking.eventDate}</p>
-          <p><strong>Time:</strong> ${booking.eventTime}</p>
+          <p><strong>Start Time:</strong> ${booking.eventTime}</p>
+          ${renderOptionalField('End Time', booking.endTime)}
           <p><strong>Location:</strong> ${booking.location}</p>
           <p><strong>Guest Count:</strong> ${booking.guestCount}</p>
           <p><strong>Event Type:</strong> ${booking.eventType || 'Not specified'}</p>
+          ${renderOptionalField('Package Selection', booking.packageSelection)}
+          ${renderOptionalField('Budget', booking.budget)}
+          ${renderOptionalField('Referral Source', booking.referralSource)}
         </div>
 
-        <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-          <h2 style="color: #FFD700; margin-top: 0;">Services Requested</h2>
+        <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+          <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Services Requested</h2>
           <ul style="margin: 0; padding-left: 20px;">
-            ${booking.services.map((service: string) => `<li>${service}</li>`).join('')}
+            ${renderServiceList(booking.services)}
           </ul>
         </div>
 
         ${booking.flavourPreferences ? `
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-            <h2 style="color: #FFD700; margin-top: 0;">Flavor Preferences</h2>
+          <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+            <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Custom Flavour Notes</h2>
             <p>${booking.flavourPreferences}</p>
           </div>
         ` : ''}
 
+        ${booking.preferredFlavours?.length ? `
+          <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+            <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Preferred Flavours</h2>
+            <p>${booking.preferredFlavours.join(', ')}</p>
+          </div>
+        ` : ''}
+
+        ${booking.additionalServices?.length ? `
+          <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+            <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Additional Services</h2>
+            <p>${booking.additionalServices.join(', ')}</p>
+          </div>
+        ` : ''}
+
         ${booking.specialRequirements ? `
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-            <h2 style="color: #FFD700; margin-top: 0;">Special Requirements</h2>
+          <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+            <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Special Requirements</h2>
             <p>${booking.specialRequirements}</p>
           </div>
         ` : ''}
 
-        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
-          <p style="opacity: 0.8; margin: 0;">Booking ID: ${booking.id}</p>
-          <p style="opacity: 0.8; margin: 5px 0 0 0;">Received: ${new Date(booking.createdAt).toLocaleString()}</p>
+        <div style="text-align: center; margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12);">
+          <p style="opacity: 0.86; margin: 0;"><strong>Booking ID:</strong> ${booking.id}</p>
+          <p style="opacity: 0.7; margin: 6px 0 0 0;">Received: ${new Date(booking.createdAt).toLocaleString()}</p>
         </div>
       </div>
     `,
     text: `
-New Shisha Cafe Booking Alert!
+New Booking Request - ${brandName}
 
-Customer Information:
+Client Details:
 - Name: ${booking.firstName} ${booking.lastName}
 - Email: ${booking.email}
 - Phone: ${booking.phone}
-${booking.instagram ? `- Instagram: @${booking.instagram}` : ''}
+${booking.instagram ? `- Instagram: ${booking.instagram}` : ''}
 
 Event Details:
 - Date: ${booking.eventDate}
-- Time: ${booking.eventTime}
+- Start Time: ${booking.eventTime}
+${booking.endTime ? `- End Time: ${booking.endTime}` : ''}
 - Location: ${booking.location}
 - Guest Count: ${booking.guestCount}
 - Event Type: ${booking.eventType || 'Not specified'}
+${booking.packageSelection ? `- Package Selection: ${booking.packageSelection}` : ''}
+${booking.budget ? `- Budget: ${booking.budget}` : ''}
+${booking.referralSource ? `- Referral Source: ${booking.referralSource}` : ''}
 
 Services Requested:
-${booking.services.map((service: string) => `- ${service}`).join('\n')}
+${renderServiceText(booking.services)}
 
-${booking.flavourPreferences ? `Flavor Preferences: ${booking.flavourPreferences}` : ''}
+${booking.preferredFlavours?.length ? `Preferred Flavours: ${booking.preferredFlavours.join(', ')}` : ''}
+${booking.flavourPreferences ? `Custom Flavour Notes: ${booking.flavourPreferences}` : ''}
+${booking.additionalServices?.length ? `Additional Services: ${booking.additionalServices.join(', ')}` : ''}
 ${booking.specialRequirements ? `Special Requirements: ${booking.specialRequirements}` : ''}
 
 Booking ID: ${booking.id}
@@ -118,36 +178,42 @@ Received: ${new Date(booking.createdAt).toLocaleString()}
 
 export const createCustomerConfirmationEmail = (booking: any) => {
   return {
-    subject: `🌟 Booking Confirmation - Shisha Cafe`,
+    subject: `Booking Request Received | ${brandName}`,
     html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px;">
-        <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="font-size: 2.5em; margin: 0;">🌟 Booking Confirmed!</h1>
-          <p style="font-size: 1.2em; opacity: 0.9;">Thank you for choosing Shisha Cafe</p>
-        </div>
-        
-        <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
-          <h2 style="color: #FFD700; margin-top: 0;">Hello ${booking.firstName}!</h2>
-          <p>We've received your booking request and will contact you shortly to confirm the details.</p>
+      <div style="font-family: Inter, Arial, sans-serif; max-width: 640px; margin: 0 auto; background: linear-gradient(180deg, ${brandSurface} 0%, #050505 100%); color: white; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
+        <div style="text-align: center; margin-bottom: 28px;">
+          <img src="https://shishachauffeurs.com/logo.svg" alt="${brandName}" style="width: 180px; max-width: 100%; margin-bottom: 16px;" />
+          <p style="margin: 0; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: ${brandPrimary}; font-weight: 700;">Booking Request Received</p>
+          <h1 style="font-size: 34px; line-height: 1.15; margin: 12px 0 8px 0;">Thanks, ${booking.firstName}</h1>
+          <p style="font-size: 16px; opacity: 0.78; margin: 0;">Your booking request is in. The ${brandName} team will review it and follow up shortly.</p>
         </div>
 
-        <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-          <h2 style="color: #FFD700; margin-top: 0;">Your Booking Details</h2>
+        <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+          <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">What Happens Next</h2>
+          <p style="margin: 0 0 10px 0;">We’ll review your event details, confirm availability, and follow up with pricing, deposit info, and final logistics.</p>
+          <p style="margin: 0;">If you need to update anything, reply directly to this email or contact us at <a href="mailto:${adminContactEmail}" style="color: ${brandPrimary};">${adminContactEmail}</a>.</p>
+        </div>
+
+        <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 18px; border: 1px solid rgba(255,255,255,0.08);">
+          <h2 style="color: ${brandPrimary}; margin: 0 0 14px 0; font-size: 18px;">Your Booking Details</h2>
           <p><strong>Date:</strong> ${booking.eventDate}</p>
-          <p><strong>Time:</strong> ${booking.eventTime}</p>
+          <p><strong>Start Time:</strong> ${booking.eventTime}</p>
+          ${renderOptionalField('End Time', booking.endTime)}
           <p><strong>Location:</strong> ${booking.location}</p>
           <p><strong>Guest Count:</strong> ${booking.guestCount}</p>
-          <p><strong>Services:</strong> ${booking.services.join(', ')}</p>
+          <p><strong>Services:</strong> ${booking.services.map(formatServiceLabel).join(', ')}</p>
+          ${renderOptionalField('Package Selection', booking.packageSelection)}
+          ${renderOptionalListField('Preferred Flavours', booking.preferredFlavours)}
         </div>
 
-        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
-          <p style="opacity: 0.8;">We'll be in touch soon!</p>
-          <p style="opacity: 0.8; font-size: 0.9em;">Booking Reference: ${booking.id}</p>
+        <div style="text-align: center; margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.12);">
+          <p style="opacity: 0.84; margin: 0;">We’ll be in touch soon.</p>
+          <p style="opacity: 0.7; font-size: 14px; margin: 6px 0 0 0;">Booking Reference: ${booking.id}</p>
         </div>
       </div>
     `,
     text: `
-Booking Confirmed - Shisha Cafe
+Booking Request Received - ${brandName}
 
 Hello ${booking.firstName}!
 
@@ -155,10 +221,13 @@ We've received your booking request and will contact you shortly to confirm the 
 
 Your Booking Details:
 - Date: ${booking.eventDate}
-- Time: ${booking.eventTime}
+- Start Time: ${booking.eventTime}
+${booking.endTime ? `- End Time: ${booking.endTime}` : ''}
 - Location: ${booking.location}
 - Guest Count: ${booking.guestCount}
-- Services: ${booking.services.join(', ')}
+- Services: ${booking.services.map(formatServiceLabel).join(', ')}
+${booking.packageSelection ? `- Package Selection: ${booking.packageSelection}` : ''}
+${booking.preferredFlavours?.length ? `- Preferred Flavours: ${booking.preferredFlavours.join(', ')}` : ''}
 
 We'll be in touch soon!
 Booking Reference: ${booking.id}
@@ -170,24 +239,38 @@ Booking Reference: ${booking.id}
 export const sendBookingNotification = async (booking: any, adminEmail: string) => {
   try {
     const emailContent = createBookingNotificationEmail(booking);
-    
-    const mailOptions = {
-      from: process.env.SMTP_USER,
+
+    if (!transporter) {
+      throw new Error('No email provider configured');
+    }
+
+    const result = await transporter.sendMail({
+      from: formattedFrom,
+      sender: senderEmail,
       to: adminEmail,
+      replyTo: booking.email,
+      envelope: {
+        from: senderEmail,
+        to: [adminEmail],
+      },
       subject: emailContent.subject,
       text: emailContent.text,
       html: emailContent.html,
-    };
-
-    const result = await transporter.sendMail(mailOptions);
-    console.log('✅ Booking notification sent successfully:', result.messageId);
+    });
+    console.log('✅ Booking notification sent successfully:', {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected,
+      response: result.response,
+    });
     return { success: true, messageId: result.messageId };
   } catch (error) {
     console.error('❌ Error sending booking notification:', error);
     console.error('📧 Mail options:', {
-      from: mailOptions.from,
-      to: mailOptions.to,
-      subject: mailOptions.subject
+      provider: 'smtp',
+      from: formattedFrom,
+      to: adminEmail,
+      subject: `New Booking Request | ${brandName}`
     });
     return { success: false, error };
   }
@@ -197,24 +280,37 @@ export const sendBookingNotification = async (booking: any, adminEmail: string) 
 export const sendCustomerConfirmation = async (booking: any) => {
   try {
     const emailContent = createCustomerConfirmationEmail(booking);
-    
-    const mailOptions = {
-      from: process.env.SMTP_USER,
+
+    if (!transporter) {
+      throw new Error('No email provider configured');
+    }
+
+    const result = await transporter.sendMail({
+      from: formattedFrom,
+      sender: senderEmail,
       to: booking.email,
+      replyTo: adminContactEmail,
+      envelope: {
+        from: senderEmail,
+        to: [booking.email],
+      },
       subject: emailContent.subject,
       text: emailContent.text,
       html: emailContent.html,
-    };
-
-    const result = await transporter.sendMail(mailOptions);
-    console.log('✅ Customer confirmation sent successfully:', result.messageId);
+    });
+    console.log('✅ Customer confirmation sent successfully:', {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected,
+      response: result.response,
+    });
     return { success: true, messageId: result.messageId };
   } catch (error) {
     console.error('❌ Error sending customer confirmation:', error);
     console.error('📧 Mail options:', {
-      from: process.env.SMTP_USER,
+      from: formattedFrom,
       to: booking.email,
-      subject: 'Booking Confirmation - Shisha Cafe'
+      subject: `Booking Request Received | ${brandName}`
     });
     return { success: false, error };
   }
@@ -351,16 +447,18 @@ ${member.paymentStatus === 'pending' ? 'Action Required: Payment confirmation ne
 export const sendMembershipWelcome = async (member: any) => {
   try {
     const emailContent = createMembershipWelcomeEmail(member);
-    
-    const mailOptions = {
+
+    if (!transporter) {
+      throw new Error('No email provider configured');
+    }
+
+    const result = await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: member.email,
       subject: emailContent.subject,
       text: emailContent.text,
       html: emailContent.html,
-    };
-
-    const result = await transporter.sendMail(mailOptions);
+    });
     console.log('✅ Membership welcome sent successfully:', result.messageId);
     return { success: true, messageId: result.messageId };
   } catch (error) {
@@ -377,16 +475,19 @@ export const sendMembershipWelcome = async (member: any) => {
 export const sendMembershipAdminNotification = async (member: any, adminEmail: string) => {
   try {
     const emailContent = createMembershipAdminNotification(member);
-    
-    const mailOptions = {
+
+    if (!transporter) {
+      throw new Error('No email provider configured');
+    }
+
+    const result = await transporter.sendMail({
       from: process.env.SMTP_USER,
       to: adminEmail,
+      replyTo: member.email,
       subject: emailContent.subject,
       text: emailContent.text,
       html: emailContent.html,
-    };
-
-    const result = await transporter.sendMail(mailOptions);
+    });
     console.log('✅ Membership admin notification sent successfully:', result.messageId);
     return { success: true, messageId: result.messageId };
   } catch (error) {

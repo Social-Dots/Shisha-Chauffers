@@ -29,76 +29,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Booking endpoint
   app.post("/api/bookings", async (req, res) => {
     try {
-      console.log('Raw request body:', req.body);
-      console.log('Package in request:', req.body.selectedPackage);
-      console.log('Membership in request:', req.body.selectedMembership);
       const validatedData = insertBookingSchema.parse(req.body);
-      console.log('Validated data:', validatedData);
       const booking = await storage.createBooking(validatedData);
       
-      // If customer selected a membership, create/update member record
-      if (validatedData.selectedMembership && validatedData.selectedMembership !== 'none') {
-        const existingMember = await storage.getMemberByEmail(validatedData.email);
-        
-        if (!existingMember) {
-          // Create new member
-          const expiryDate = new Date();
-          expiryDate.setMonth(expiryDate.getMonth() + 1); // 1 month from now
-          
-          const newMember = {
-            firstName: validatedData.firstName,
-            lastName: validatedData.lastName,
-            email: validatedData.email,
-            phone: validatedData.phone,
-            instagram: validatedData.instagram || '',
-            membershipType: validatedData.selectedMembership,
-            membershipStatus: 'active',
-            startDate: new Date(),
-            expiryDate: expiryDate,
-            totalBookings: '1',
-            discountEligible: true,
-          };
-          
-          await storage.createMember(newMember);
-          console.log('Created new member:', validatedData.selectedMembership, 'for', validatedData.email);
-        } else {
-          // Update existing member's booking count
-          const currentBookings = parseInt(existingMember.totalBookings || '0');
-          existingMember.totalBookings = (currentBookings + 1).toString();
-          existingMember.updatedAt = new Date();
-          console.log('Updated existing member booking count for', validatedData.email);
-        }
-      }
-      
-      console.log("New booking received:", {
+      console.log("New booking request received:", {
         id: booking.id,
         name: `${booking.firstName} ${booking.lastName}`,
         email: booking.email,
         eventDate: booking.eventDate,
-        services: booking.services,
-        selectedPackage: booking.selectedPackage,
-        selectedMembership: booking.selectedMembership
+        services: booking.services
       });
 
-      // Send response immediately
-      res.json({ success: true, booking });
-
-      // Send email notifications asynchronously (fire-and-forget)
-      const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
-      
-      if (adminEmail) {
-        // Send notification to admin (async)
-        sendBookingNotification(booking, adminEmail)
-          .then(result => console.log('Admin notification status:', result.success ? 'Sent' : 'Failed'))
-          .catch(error => console.error('Admin notification error:', error));
-        
-        // Send confirmation to customer (async)
-        sendCustomerConfirmation(booking)
-          .then(result => console.log('Customer confirmation status:', result.success ? 'Sent' : 'Failed'))
-          .catch(error => console.error('Customer confirmation error:', error));
-      } else {
-        console.warn('No admin email configured. Set ADMIN_EMAIL or SMTP_USER environment variable.');
+      if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+        console.warn('No email provider configured. Set SMTP_USER/SMTP_PASS.');
+        return res.json({
+          success: true,
+          booking,
+          email: {
+            adminNotificationSent: false,
+            customerConfirmationSent: false,
+            warning: "Booking saved, but email is not configured.",
+          },
+        });
       }
+
+      const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || "shishachauffeurs@gmail.com";
+      const adminNotification = await sendBookingNotification(booking, adminEmail);
+      const customerConfirmation = await sendCustomerConfirmation(booking);
+
+      res.status(adminNotification.success ? 200 : 202).json({
+        success: true,
+        booking,
+        email: {
+          adminNotificationSent: adminNotification.success,
+          customerConfirmationSent: customerConfirmation.success,
+          warning: adminNotification.success ? undefined : "Booking saved, but admin email failed to send.",
+        },
+      });
     } catch (error) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Validation failed", details: error.errors });
@@ -126,22 +93,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         createdAt: new Date().toISOString()
       };
 
-      const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
+      const adminEmail = process.env.ADMIN_EMAIL || "shishachauffeurs@gmail.com";
       
       // Send test notification to admin
-      const adminNotification = await sendBookingNotification(testBooking, adminEmail!);
-      
-      // Send test confirmation to customer  
-      const customerConfirmation = await sendCustomerConfirmation(testBooking);
+      const adminNotification = await sendBookingNotification(testBooking, adminEmail);
       
       res.json({
         success: true,
-        adminNotification,
-        customerConfirmation
+        adminNotification
       });
     } catch (error) {
       console.error('Test email error:', error);
-      res.status(500).json({ success: false, error: error.message });
+      res.status(500).json({ success: false, error: error instanceof Error ? error.message : "Unknown error" });
     }
   });
 

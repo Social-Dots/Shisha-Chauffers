@@ -37,9 +37,11 @@ export default function AboutSection() {
           
           <div className="relative">
             <img 
-              src="https://lh3.googleusercontent.com/pw/AP1GczNvIUwAacYkUVNx6O-SOAQnnTmEV-gqK90NWR0G1HwlZPnlrNXZJ6s21BhEm88xZ6o5onE44Ssv74D0E8kJLiVhJAkYs6_AJC7q2CeUpfFZ8dFewKTkOrtdQrsr4X2vtwjzwN_Xw2DLdnikZABsLCJJ=w854-h683-s-no?authuser=0" 
-              alt="Professional shisha service preparation" 
+              src="/media/about/about-shisha-chauffeurs.jpg"
+              alt="Luxury mobile shisha service by Shisha Chauffeurs"
               className="rounded-xl shadow-2xl"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>

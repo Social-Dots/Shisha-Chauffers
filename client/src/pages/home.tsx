@@ -1,7 +1,9 @@
 import { Suspense, lazy } from "react";
 import Navigation from "@/components/navigation";
 import HeroSection from "@/components/hero-section";
+import EventFlowSection from "@/components/event-flow-section";
 import AboutSection from "@/components/about-section";
+import InActionSection from "@/components/in-action-section";
 
 // Lazy-load below-the-fold components for better performance
 const ServicesSection = lazy(() => import("@/components/services-section"));
@@ -35,6 +37,8 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
       <HeroSection />
+      <EventFlowSection />
+      <InActionSection />
       <AboutSection />
       
       <Suspense fallback={<SectionSkeleton />}>

@@ -67,10 +67,10 @@ app.use((req, res, next) => {
           res.status(200).send(`
             <!DOCTYPE html>
             <html>
-            <head><title>Shisha Cafe</title></head>
+            <head><title>Shisha Chauffeurs</title></head>
             <body>
-              <h1>Shisha Cafe</h1>
-              <p>Welcome to Shisha Cafe!</p>
+              <h1>Shisha Chauffeurs</h1>
+              <p>Welcome to Shisha Chauffeurs!</p>
               <p>Static file setup failed, but server is running.</p>
             </body>
             </html>

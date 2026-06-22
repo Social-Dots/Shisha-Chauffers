@@ -19,9 +19,14 @@ export const bookings = pgTable("bookings", {
   services: text("services").array().notNull(),
   eventDate: text("event_date").notNull(),
   eventTime: text("event_time").notNull(),
+  endTime: text("end_time"),
   location: text("location").notNull(),
   guestCount: text("guest_count").notNull(),
   eventType: text("event_type"),
+  packageSelection: text("package_selection"),
+  preferredFlavours: text("preferred_flavours").array(),
+  additionalServices: text("additional_services").array(),
+  referralSource: text("referral_source"),
   flavourPreferences: text("flavour_preferences"),
   specialRequirements: text("special_requirements"),
   budget: text("budget"),
@@ -59,10 +64,29 @@ export const insertBookingSchema = createInsertSchema(bookings).omit({
   id: true,
   createdAt: true,
 }).extend({
+  firstName: z.string().trim().min(1, "First name is required"),
+  lastName: z.string().trim().min(1, "Last name is required"),
   services: z.array(z.string()).min(1, "Please select at least one service"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
+  eventDate: z.string().trim().min(1, "Event date is required"),
+  eventTime: z.string().trim().min(1, "Event time is required"),
+  endTime: z.string().trim().min(1, "End time is required"),
+  location: z.string().trim().min(1, "Event location is required"),
+  guestCount: z.string().trim().min(1, "Please select a guest count"),
+  packageSelection: z.string().trim().optional(),
+  preferredFlavours: z.array(z.string()).min(1, "Please select at least one flavour"),
+  additionalServices: z.array(z.string()).default([]),
+  referralSource: z.string().trim().min(1, "Please tell us how you heard about us"),
   termsAccepted: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
+}).superRefine((data, ctx) => {
+  if (data.services.includes("shisha-catering") && !data.packageSelection) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Please select a shisha package",
+      path: ["packageSelection"],
+    });
+  }
 });
 
 export const insertMemberSchema = createInsertSchema(members).omit({

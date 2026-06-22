@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { CalendarCheck, Menu, X } from "lucide-react";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,12 +24,18 @@ export default function Navigation() {
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'glass-effect bg-opacity-95' : 'glass-effect'
+      isScrolled ? 'glass-effect shadow-2xl' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-2">
-            <span className="font-serif font-bold text-xl">SHISHA CHAUFFEURS</span>
+            <button
+              onClick={() => scrollToSection('home')}
+              className="font-serif font-bold text-xl tracking-wide"
+              data-testid="nav-logo"
+            >
+              SHISHA CHAUFFEURS
+            </button>
           </div>
           
           <div className="hidden md:flex items-center space-x-8">
@@ -75,12 +81,20 @@ export default function Navigation() {
             >
               Flavours
             </button>
+            <button
+              onClick={() => scrollToSection('in-action')}
+              className="hover:text-primary transition-colors"
+              data-testid="nav-in-action"
+            >
+              In Action
+            </button>
             <button 
               onClick={() => scrollToSection('contact')} 
-              className="hover:text-primary transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-accent hover:text-accent-foreground"
               data-testid="nav-contact"
             >
-              Contact
+              <CalendarCheck className="h-4 w-4" />
+              Book
             </button>
           </div>
           
@@ -140,6 +154,13 @@ export default function Navigation() {
                 data-testid="mobile-nav-flavours"
               >
                 Flavours
+              </button>
+              <button
+                onClick={() => scrollToSection('in-action')}
+                className="text-left hover:text-primary transition-colors"
+                data-testid="mobile-nav-in-action"
+              >
+                In Action
               </button>
               <button 
                 onClick={() => scrollToSection('contact')} 

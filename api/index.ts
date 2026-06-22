@@ -3,10 +3,11 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import { randomUUID } from 'crypto';
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, Timestamp } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, Timestamp } from "firebase/firestore";
 
 // Fix for __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +25,16 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const brandName = 'Shisha Chauffeurs';
+const brandPrimary = '#dc2626';
+const brandSurface = '#111111';
+const brandPanel = 'rgba(255,255,255,0.08)';
+const adminContactEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
+const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+const smtpSecure = smtpPort === 465;
+const senderEmail = process.env.EMAIL_FROM || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
+const senderName = process.env.EMAIL_FROM_NAME || brandName;
+const formattedFrom = `"${senderName}" <${senderEmail}>`;
 
 const expressApp = express();
 
@@ -31,92 +42,152 @@ const expressApp = express();
 expressApp.use(express.json());
 expressApp.use(express.urlencoded({ extended: false }));
 
-// Email configuration
+const smtpConfigured = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
 const emailConfig = {
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: false, // true for 465, false for other ports
+  port: smtpPort,
+  secure: smtpSecure,
   auth: {
-    user: process.env.SMTP_USER, // Your email
-    pass: process.env.SMTP_PASS, // Your app password
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 };
+const transporter = smtpConfigured ? nodemailer.createTransport(emailConfig) : null;
 
-// Create transporter
-const transporter = nodemailer.createTransport(emailConfig);
+if (transporter) {
+  transporter.verify((error) => {
+    if (error) {
+      console.log('❌ Email configuration error:', error);
+    } else {
+      console.log('✅ Email server is ready to send messages');
+      console.log('📧 Using email:', emailConfig.auth.user);
+    }
+  });
+} else {
+  console.warn('No email provider configured. Set SMTP_USER/SMTP_PASS.');
+}
 
-// Verify connection configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.log('❌ Email configuration error:', error);
-    console.log('📧 Email config:', {
-      host: emailConfig.host,
-      port: emailConfig.port,
-      secure: emailConfig.secure,
-      auth: {
-        user: emailConfig.auth.user,
-        pass: emailConfig.auth.pass ? '***' : 'undefined'
-      }
-    });
-  } else {
-    console.log('✅ Email server is ready to send messages');
-    console.log('📧 Using email:', emailConfig.auth.user);
-  }
+const formatServiceLabel = (service: string) =>
+  service
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+
+const renderServiceList = (services: string[]) =>
+  services.map((service) => `<li>${formatServiceLabel(service)}</li>`).join('');
+
+const renderServiceText = (services: string[]) =>
+  services.map((service) => `- ${formatServiceLabel(service)}`).join('\n');
+
+const renderOptionalField = (label: string, value?: string | null) =>
+  value ? `<p><strong>${label}:</strong> ${value}</p>` : '';
+
+const renderOptionalListField = (label: string, values?: string[] | null) =>
+  values && values.length ? `<p><strong>${label}:</strong> ${values.join(', ')}</p>` : '';
+
+const createBookingNotificationEmail = (booking: any) => ({
+  subject: `New Booking Request | ${brandName} | ${booking.firstName} ${booking.lastName}`,
+  html: `
+    <div style="font-family: Inter, Arial, sans-serif; max-width: 640px; margin: 0 auto; background: linear-gradient(180deg, ${brandSurface} 0%, #050505 100%); color: white; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <img src="https://shishachauffeurs.com/logo.svg" alt="${brandName}" style="width: 180px; max-width: 100%; margin-bottom: 16px;" />
+        <p style="margin: 0; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: ${brandPrimary}; font-weight: 700;">New Booking Request</p>
+        <h1 style="font-size: 34px; line-height: 1.15; margin: 12px 0 8px 0;">${booking.firstName} ${booking.lastName}</h1>
+        <p style="font-size: 16px; opacity: 0.78; margin: 0;">A new event enquiry was submitted through the ${brandName} booking form.</p>
+      </div>
+      <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+        <h2 style="color: ${brandPrimary}; margin-top: 0;">Client Details</h2>
+        <p><strong>Name:</strong> ${booking.firstName} ${booking.lastName}</p>
+        <p><strong>Email:</strong> ${booking.email}</p>
+        <p><strong>Phone:</strong> ${booking.phone}</p>
+        ${renderOptionalField('Instagram', booking.instagram)}
+      </div>
+      <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);">
+        <h2 style="color: ${brandPrimary}; margin-top: 0;">Event Details</h2>
+        <p><strong>Date:</strong> ${booking.eventDate}</p>
+        <p><strong>Start Time:</strong> ${booking.eventTime}</p>
+        ${renderOptionalField('End Time', booking.endTime)}
+        <p><strong>Location:</strong> ${booking.location}</p>
+        <p><strong>Guest Count:</strong> ${booking.guestCount}</p>
+        <p><strong>Event Type:</strong> ${booking.eventType || 'Not specified'}</p>
+        ${renderOptionalField('Package Selection', booking.packageSelection)}
+        ${renderOptionalField('Budget', booking.budget)}
+        ${renderOptionalField('Referral Source', booking.referralSource)}
+      </div>
+      <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);">
+        <h2 style="color: ${brandPrimary}; margin-top: 0;">Services Requested</h2>
+        <ul style="margin: 0; padding-left: 20px;">
+          ${renderServiceList(booking.services)}
+        </ul>
+      </div>
+      ${booking.flavourPreferences ? `<div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);"><h2 style="color: ${brandPrimary}; margin-top: 0;">Custom Flavour Notes</h2><p>${booking.flavourPreferences}</p></div>` : ''}
+      ${booking.preferredFlavours?.length ? `<div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);"><h2 style="color: ${brandPrimary}; margin-top: 0;">Preferred Flavours</h2><p>${booking.preferredFlavours.join(', ')}</p></div>` : ''}
+      ${booking.additionalServices?.length ? `<div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);"><h2 style="color: ${brandPrimary}; margin-top: 0;">Additional Services</h2><p>${booking.additionalServices.join(', ')}</p></div>` : ''}
+      ${booking.specialRequirements ? `<div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);"><h2 style="color: ${brandPrimary}; margin-top: 0;">Special Requirements</h2><p>${booking.specialRequirements}</p></div>` : ''}
+    </div>
+  `,
+  text: `New Booking Request - ${brandName}\n\nName: ${booking.firstName} ${booking.lastName}\nEmail: ${booking.email}\nPhone: ${booking.phone}\n${booking.instagram ? `Instagram: ${booking.instagram}\n` : ''}Date: ${booking.eventDate}\nStart Time: ${booking.eventTime}\n${booking.endTime ? `End Time: ${booking.endTime}\n` : ''}Location: ${booking.location}\nGuest Count: ${booking.guestCount}\nEvent Type: ${booking.eventType || 'Not specified'}\n${booking.packageSelection ? `Package Selection: ${booking.packageSelection}\n` : ''}${booking.budget ? `Budget: ${booking.budget}\n` : ''}${booking.referralSource ? `Referral Source: ${booking.referralSource}\n` : ''}Services:\n${renderServiceText(booking.services)}\n${booking.preferredFlavours?.length ? `Preferred Flavours: ${booking.preferredFlavours.join(', ')}\n` : ''}${booking.flavourPreferences ? `Custom Flavour Notes: ${booking.flavourPreferences}\n` : ''}${booking.additionalServices?.length ? `Additional Services: ${booking.additionalServices.join(', ')}\n` : ''}${booking.specialRequirements ? `Special Requirements: ${booking.specialRequirements}\n` : ''}Booking ID: ${booking.id}`,
+});
+
+const createCustomerConfirmationEmail = (booking: any) => ({
+  subject: `Booking Request Received | ${brandName}`,
+  html: `
+    <div style="font-family: Inter, Arial, sans-serif; max-width: 640px; margin: 0 auto; background: linear-gradient(180deg, ${brandSurface} 0%, #050505 100%); color: white; padding: 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <img src="https://shishachauffeurs.com/logo.svg" alt="${brandName}" style="width: 180px; max-width: 100%; margin-bottom: 16px;" />
+        <p style="margin: 0; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: ${brandPrimary}; font-weight: 700;">Booking Request Received</p>
+        <h1 style="font-size: 34px; line-height: 1.15; margin: 12px 0 8px 0;">Thanks, ${booking.firstName}</h1>
+        <p style="font-size: 16px; opacity: 0.78; margin: 0;">Your request is in and the ${brandName} team will be in touch soon.</p>
+      </div>
+      <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);">
+        <h2 style="color: ${brandPrimary}; margin-top: 0;">What Happens Next</h2>
+        <p>We’ll review your event details, confirm availability, and follow up with pricing, deposit information, and final logistics.</p>
+        <p>If you need to update anything, reply directly or email <a href="mailto:${adminContactEmail}" style="color: ${brandPrimary};">${adminContactEmail}</a>.</p>
+      </div>
+      <div style="background: ${brandPanel}; padding: 22px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08);">
+        <h2 style="color: ${brandPrimary}; margin-top: 0;">Your Booking Details</h2>
+        <p><strong>Date:</strong> ${booking.eventDate}</p>
+        <p><strong>Start Time:</strong> ${booking.eventTime}</p>
+        ${renderOptionalField('End Time', booking.endTime)}
+        <p><strong>Location:</strong> ${booking.location}</p>
+        <p><strong>Guest Count:</strong> ${booking.guestCount}</p>
+        <p><strong>Services:</strong> ${booking.services.map(formatServiceLabel).join(', ')}</p>
+        ${renderOptionalField('Package Selection', booking.packageSelection)}
+        ${renderOptionalListField('Preferred Flavours', booking.preferredFlavours)}
+      </div>
+    </div>
+  `,
+  text: `Booking Request Received - ${brandName}\n\nHello ${booking.firstName}, we've received your booking request and will contact you shortly.\n\nDate: ${booking.eventDate}\nStart Time: ${booking.eventTime}\n${booking.endTime ? `End Time: ${booking.endTime}\n` : ''}Location: ${booking.location}\nGuest Count: ${booking.guestCount}\nServices: ${booking.services.map(formatServiceLabel).join(', ')}\n${booking.packageSelection ? `Package Selection: ${booking.packageSelection}\n` : ''}${booking.preferredFlavours?.length ? `Preferred Flavours: ${booking.preferredFlavours.join(', ')}\n` : ''}\nReply to ${adminContactEmail} if you need to make changes.`,
 });
 
 // Email sending functions
 const sendBookingNotification = async (booking: any, adminEmail: string) => {
   try {
-    const emailContent = {
-      subject: `🌟 New Shisha Cafe Booking - ${booking.firstName} ${booking.lastName}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 2.5em; margin: 0;">🌟 New Booking Alert!</h1>
-            <p style="font-size: 1.2em; opacity: 0.9;">Shisha Cafe Booking System</p>
-          </div>
-          
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
-            <h2 style="color: #FFD700; margin-top: 0;">Customer Information</h2>
-            <p><strong>Name:</strong> ${booking.firstName} ${booking.lastName}</p>
-            <p><strong>Email:</strong> ${booking.email}</p>
-            <p><strong>Phone:</strong> ${booking.phone}</p>
-            ${booking.instagram ? `<p><strong>Instagram:</strong> @${booking.instagram}</p>` : ''}
-          </div>
+    const emailContent = createBookingNotificationEmail(booking);
 
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-            <h2 style="color: #FFD700; margin-top: 0;">Event Details</h2>
-            <p><strong>Date:</strong> ${booking.eventDate}</p>
-            <p><strong>Time:</strong> ${booking.eventTime}</p>
-            <p><strong>Location:</strong> ${booking.location}</p>
-            <p><strong>Guest Count:</strong> ${booking.guestCount}</p>
-            <p><strong>Event Type:</strong> ${booking.eventType || 'Not specified'}</p>
-          </div>
+    if (!transporter) {
+      throw new Error('No email provider configured');
+    }
 
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-            <h2 style="color: #FFD700; margin-top: 0;">Services Requested</h2>
-            <ul style="margin: 0; padding-left: 20px;">
-              ${booking.services.map((service: string) => `<li>${service}</li>`).join('')}
-            </ul>
-          </div>
-
-          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
-            <p style="opacity: 0.8; margin: 0;">Booking ID: ${booking.id}</p>
-            <p style="opacity: 0.8; margin: 5px 0 0 0;">Received: ${new Date(booking.createdAt).toLocaleString()}</p>
-          </div>
-        </div>
-      `,
-    };
-    
-    const mailOptions = {
-      from: process.env.SMTP_USER,
+    const result = await transporter.sendMail({
+      from: formattedFrom,
+      sender: senderEmail,
       to: adminEmail,
+      replyTo: booking.email,
+      envelope: {
+        from: senderEmail,
+        to: [adminEmail],
+      },
       subject: emailContent.subject,
+      text: emailContent.text,
       html: emailContent.html,
-    };
-
-    const result = await transporter.sendMail(mailOptions);
-    console.log('✅ Booking notification sent successfully:', result.messageId);
+    });
+    console.log('✅ Booking notification sent successfully:', {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected,
+      response: result.response,
+    });
     return { success: true, messageId: result.messageId };
   } catch (error) {
     console.error('❌ Error sending booking notification:', error);
@@ -126,46 +197,31 @@ const sendBookingNotification = async (booking: any, adminEmail: string) => {
 
 const sendCustomerConfirmation = async (booking: any) => {
   try {
-    const emailContent = {
-      subject: `🌟 Booking Confirmation - Shisha Cafe`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 2.5em; margin: 0;">🌟 Booking Confirmed!</h1>
-            <p style="font-size: 1.2em; opacity: 0.9;">Thank you for choosing Shisha Cafe</p>
-          </div>
-          
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
-            <h2 style="color: #FFD700; margin-top: 0;">Hello ${booking.firstName}!</h2>
-            <p>We've received your booking request and will contact you shortly to confirm the details.</p>
-          </div>
+    const emailContent = createCustomerConfirmationEmail(booking);
 
-          <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px); margin-top: 20px;">
-            <h2 style="color: #FFD700; margin-top: 0;">Your Booking Details</h2>
-            <p><strong>Date:</strong> ${booking.eventDate}</p>
-            <p><strong>Time:</strong> ${booking.eventTime}</p>
-            <p><strong>Location:</strong> ${booking.location}</p>
-            <p><strong>Guest Count:</strong> ${booking.guestCount}</p>
-            <p><strong>Services:</strong> ${booking.services.join(', ')}</p>
-          </div>
+    if (!transporter) {
+      throw new Error('No email provider configured');
+    }
 
-          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
-            <p style="opacity: 0.8;">We'll be in touch soon!</p>
-            <p style="opacity: 0.8; font-size: 0.9em;">Booking Reference: ${booking.id}</p>
-          </div>
-        </div>
-      `,
-    };
-    
-    const mailOptions = {
-      from: process.env.SMTP_USER,
+    const result = await transporter.sendMail({
+      from: formattedFrom,
+      sender: senderEmail,
       to: booking.email,
+      replyTo: adminContactEmail,
+      envelope: {
+        from: senderEmail,
+        to: [booking.email],
+      },
       subject: emailContent.subject,
+      text: emailContent.text,
       html: emailContent.html,
-    };
-
-    const result = await transporter.sendMail(mailOptions);
-    console.log('✅ Customer confirmation sent successfully:', result.messageId);
+    });
+    console.log('✅ Customer confirmation sent successfully:', {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected,
+      response: result.response,
+    });
     return { success: true, messageId: result.messageId };
   } catch (error) {
     console.error('❌ Error sending customer confirmation:', error);
@@ -178,18 +234,31 @@ const insertBookingSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().min(1, "Phone number is required"),
+  phone: z.string().min(10, "Please enter a valid phone number"),
   instagram: z.string().optional(),
   services: z.array(z.string()).min(1, "At least one service must be selected"),
   eventDate: z.string().min(1, "Event date is required"),
   eventTime: z.string().min(1, "Event time is required"),
+  endTime: z.string().min(1, "End time is required"),
   location: z.string().min(1, "Event location is required"),
-  guestCount: z.string().min(1, "Guest count is required"),
+  guestCount: z.string().min(1, "Please select a guest count"),
   eventType: z.string().optional(),
+  packageSelection: z.string().optional(),
+  preferredFlavours: z.array(z.string()).min(1, "Please select at least one flavour"),
+  additionalServices: z.array(z.string()).optional(),
+  referralSource: z.string().min(1, "Please tell us how you heard about us"),
   flavourPreferences: z.string().optional(),
   specialRequirements: z.string().optional(),
   budget: z.string().optional(),
   termsAccepted: z.boolean().refine(val => val === true, "Terms must be accepted"),
+}).superRefine((data, ctx) => {
+  if (data.services.includes("shisha-catering") && !data.packageSelection) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Please select a shisha package",
+      path: ["packageSelection"],
+    });
+  }
 });
 
 // Try to find and serve static files
@@ -224,19 +293,16 @@ expressApp.post('/api/bookings', async (req, res) => {
     
     // Validate the request
     const booking = insertBookingSchema.parse(req.body);
-    
-    // Save booking to Firebase
+    const createdAt = Timestamp.now();
     const docRef = await addDoc(collection(db, "bookings"), {
       ...booking,
-      createdAt: Timestamp.now(),
+      createdAt,
       status: "pending"
     });
-
-    // Add booking metadata
     const bookingWithMeta = {
       ...booking,
       id: docRef.id,
-      createdAt: new Date().toISOString(),
+      createdAt: createdAt.toDate().toISOString(),
       status: "pending"
     };
 
@@ -248,22 +314,33 @@ expressApp.post('/api/bookings', async (req, res) => {
       services: booking.services
     });
 
-    // Send email notifications
-    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER;
-    
-    if (adminEmail) {
-      // Send notification to admin
-      const adminNotification = await sendBookingNotification(bookingWithMeta, adminEmail);
-      console.log('Admin notification status:', adminNotification.success ? 'Sent' : 'Failed');
-      
-      // Send confirmation to customer
-      const customerConfirmation = await sendCustomerConfirmation(bookingWithMeta);
-      console.log('Customer confirmation status:', customerConfirmation.success ? 'Sent' : 'Failed');
-    } else {
-      console.warn('No admin email configured. Set ADMIN_EMAIL or SMTP_USER environment variable.');
+    if (!transporter) {
+      console.warn('No email provider configured. Set SMTP_USER/SMTP_PASS.');
+      return res.json({
+        success: true,
+        booking: bookingWithMeta,
+        email: {
+          adminNotificationSent: false,
+          customerConfirmationSent: false,
+          warning: "Booking saved, but email is not configured",
+        },
+      });
     }
-    
-    res.json({ success: true, booking: bookingWithMeta });
+
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || "shishachauffeurs@gmail.com";
+    const adminNotification = await sendBookingNotification(bookingWithMeta, adminEmail);
+    const customerConfirmation = await sendCustomerConfirmation(bookingWithMeta);
+    console.log('Admin notification status:', adminNotification.success ? 'Sent' : 'Failed');
+
+    res.status(adminNotification.success ? 200 : 202).json({
+      success: true,
+      booking: bookingWithMeta,
+      email: {
+        adminNotificationSent: adminNotification.success,
+        customerConfirmationSent: customerConfirmation.success,
+        warning: adminNotification.success ? undefined : "Booking saved, but admin email failed to send.",
+      },
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       res.status(400).json({ error: "Validation failed", details: error.errors });
@@ -290,7 +367,7 @@ expressApp.get('/api/bookings', async (req, res) => {
   }
 });
 
-// Catch all route - serve React app or create a working Shisha Cafe app
+// Catch all route - serve React app or create a working Shisha Chauffeurs app
 expressApp.get('*', (req, res) => {
   // Try to find index.html in any of the possible locations
   const possibleIndexPaths = [
@@ -318,7 +395,7 @@ expressApp.get('*', (req, res) => {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Shisha Cafe - Loading...</title>
+        <title>Shisha Chauffeurs - Loading...</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -353,7 +430,7 @@ expressApp.get('*', (req, res) => {
       </head>
       <body>
         <div class="container">
-          <h1>🌟 Shisha Cafe</h1>
+          <h1>🌟 Shisha Chauffeurs</h1>
           <div class="spinner"></div>
           <p>Building your original React app...</p>
           <p>This will refresh automatically in 10 seconds</p>

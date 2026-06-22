@@ -11,7 +11,7 @@
   --popover-foreground: hsl(0, 0%, 98%);
   --primary: hsl(0, 70%, 55%);
   --primary-foreground: hsl(0, 0%, 4%);
-  --secondary: hsl(262, 83%, 28%);
+  --secondary: hsl(0, 0%, 18%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --muted: hsl(0, 0%, 15%);
   --muted-foreground: hsl(0, 0%, 70%);
@@ -60,7 +60,7 @@
   --popover-foreground: hsl(0, 0%, 98%);
   --primary: hsl(0, 70%, 55%);
   --primary-foreground: hsl(0, 0%, 4%);
-  --secondary: hsl(262, 83%, 28%);
+  --secondary: hsl(0, 0%, 18%);
   --secondary-foreground: hsl(0, 0%, 98%);
   --muted: hsl(0, 0%, 15%);
   --muted-foreground: hsl(0, 0%, 70%);
@@ -80,6 +80,10 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(220, 38, 38, 0.16), transparent 32rem),
+      radial-gradient(circle at 80% 8%, rgba(255, 255, 255, 0.08), transparent 28rem),
+      linear-gradient(180deg, hsl(0, 0%, 4%) 0%, hsl(0, 0%, 2%) 45%, hsl(0, 0%, 7%) 100%);
   }
 
   /* Enhanced focus-visible styles for better accessibility */
@@ -111,9 +115,9 @@
 }
 
 .glass-effect {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.66);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .text-shadow {
@@ -461,7 +465,29 @@
 }
 
 .text-red {
+  color: hsl(8, 82%, 56%);
+}
+
+.section-kicker {
   color: hsl(0, 70%, 55%);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.surface-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.34);
+}
+
+.ambient-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(to bottom, black, transparent);
 }
 
 /* Custom hookah cursor using the large white shisha SVG */

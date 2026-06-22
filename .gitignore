@@ -5,3 +5,6 @@ server/public
 vite.config.ts.*
 *.tar.gz
 .vercel
+.env
+.playwright-cli
+plan.md

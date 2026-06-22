@@ -16,6 +16,8 @@ import { Separator } from "@/components/ui/separator";
 import { LogOut, Users, Calendar, Mail, Phone, MapPin, CheckCircle, Clock, XCircle, Trash2, Eye, MessageSquare, Crown, Award } from "lucide-react";
 import type { Booking, Member } from "@shared/schema";
 
+const getErrorMessage = (error: unknown) => error instanceof Error ? error.message : "Unknown error";
+
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
@@ -68,7 +70,7 @@ export default function AdminDashboard() {
       console.error('Status update error:', error);
       toast({
         title: "Error",
-        description: `Failed to update booking status: ${error.message}`,
+        description: `Failed to update booking status: ${getErrorMessage(error)}`,
         variant: "destructive",
       });
     }
@@ -89,7 +91,7 @@ export default function AdminDashboard() {
       console.error('Delete error:', error);
       toast({
         title: "Error",
-        description: `Failed to delete booking: ${error.message}`,
+        description: `Failed to delete booking: ${getErrorMessage(error)}`,
         variant: "destructive",
       });
     }
@@ -245,10 +247,10 @@ export default function AdminDashboard() {
                   <TableCell>
                     <div className="space-y-1 text-sm">
                       <div>
-                        <span className="text-muted-foreground">Start:</span> {new Date(member.startDate).toLocaleDateString()}
+                        <span className="text-muted-foreground">Start:</span> {new Date(member.startDate ?? Date.now()).toLocaleDateString()}
                       </div>
                       <div>
-                        <span className="text-muted-foreground">Expires:</span> {new Date(member.expiryDate).toLocaleDateString()}
+                        <span className="text-muted-foreground">Expires:</span> {new Date(member.expiryDate ?? Date.now()).toLocaleDateString()}
                       </div>
                     </div>
                   </TableCell>
@@ -347,7 +349,7 @@ export default function AdminDashboard() {
                   <div className="space-y-1">
                     <div className="flex items-center text-sm">
                       <Calendar className="h-3 w-3 mr-2" />
-                      {booking.eventDate} at {booking.eventTime}
+                      {booking.eventDate} at {booking.eventTime}{booking.endTime ? ` - ${booking.endTime}` : ""}
                     </div>
                     <div className="flex items-center text-sm">
                       <MapPin className="h-3 w-3 mr-2" />
@@ -424,7 +426,10 @@ export default function AdminDashboard() {
                               <div className="grid md:grid-cols-2 gap-4">
                                 <div>
                                   <p className="text-sm text-muted-foreground">Date & Time</p>
-                                  <p className="font-medium">{selectedBooking.eventDate} at {selectedBooking.eventTime}</p>
+                                  <p className="font-medium">
+                                    {selectedBooking.eventDate} at {selectedBooking.eventTime}
+                                    {selectedBooking.endTime ? ` - ${selectedBooking.endTime}` : ""}
+                                  </p>
                                 </div>
                                 <div>
                                   <p className="text-sm text-muted-foreground">Guest Count</p>
@@ -437,6 +442,14 @@ export default function AdminDashboard() {
                                 <div>
                                   <p className="text-sm text-muted-foreground">Budget Range</p>
                                   <p className="font-medium">{selectedBooking.budget || 'Not specified'}</p>
+                                </div>
+                                <div>
+                                  <p className="text-sm text-muted-foreground">Package Selection</p>
+                                  <p className="font-medium">{selectedBooking.packageSelection || 'Not specified'}</p>
+                                </div>
+                                <div>
+                                  <p className="text-sm text-muted-foreground">How They Heard About Us</p>
+                                  <p className="font-medium">{selectedBooking.referralSource || 'Not specified'}</p>
                                 </div>
                                 <div className="md:col-span-2">
                                   <p className="text-sm text-muted-foreground">Location</p>
@@ -468,13 +481,25 @@ export default function AdminDashboard() {
                               <div className="space-y-4">
                                 {selectedBooking.flavourPreferences && (
                                   <div>
-                                    <p className="text-sm text-muted-foreground">Flavour Preferences</p>
+                                    <p className="text-sm text-muted-foreground">Custom Flavour Notes</p>
                                     <p className="font-medium">{selectedBooking.flavourPreferences}</p>
+                                  </div>
+                                )}
+                                {selectedBooking.preferredFlavours?.length > 0 && (
+                                  <div>
+                                    <p className="text-sm text-muted-foreground">Preferred Flavours</p>
+                                    <p className="font-medium">{selectedBooking.preferredFlavours.join(', ')}</p>
+                                  </div>
+                                )}
+                                {selectedBooking.additionalServices?.length > 0 && (
+                                  <div>
+                                    <p className="text-sm text-muted-foreground">Additional Services</p>
+                                    <p className="font-medium">{selectedBooking.additionalServices.join(', ')}</p>
                                   </div>
                                 )}
                                 {selectedBooking.specialRequirements && (
                                   <div>
-                                    <p className="text-sm text-muted-foreground">Special Requirements</p>
+                                    <p className="text-sm text-muted-foreground">Questions or Other Information</p>
                                     <p className="font-medium">{selectedBooking.specialRequirements}</p>
                                   </div>
                                 )}

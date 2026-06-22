@@ -50,6 +50,16 @@ export class MemStorage implements IStorage {
     const booking: Booking = { 
       ...insertBooking, 
       id,
+      instagram: insertBooking.instagram ?? null,
+      endTime: insertBooking.endTime ?? null,
+      eventType: insertBooking.eventType ?? null,
+      packageSelection: insertBooking.packageSelection ?? null,
+      preferredFlavours: insertBooking.preferredFlavours ?? [],
+      additionalServices: insertBooking.additionalServices ?? [],
+      referralSource: insertBooking.referralSource ?? null,
+      flavourPreferences: insertBooking.flavourPreferences ?? null,
+      specialRequirements: insertBooking.specialRequirements ?? null,
+      budget: insertBooking.budget ?? null,
       status: "pending",
       createdAt: new Date()
     };
@@ -75,9 +85,20 @@ export class MemStorage implements IStorage {
 
   async createMember(insertMember: InsertMember): Promise<Member> {
     const id = randomUUID();
+    const memberData = insertMember as InsertMember & Partial<Member>;
+    const expiryDate = memberData.expiryDate ?? new Date();
     const member: Member = { 
-      ...insertMember, 
+      ...insertMember,
       id,
+      instagram: insertMember.instagram ?? null,
+      membershipStatus: insertMember.membershipStatus ?? "pending_payment",
+      paymentStatus: memberData.paymentStatus ?? "pending",
+      paymentAmount: insertMember.paymentAmount ?? null,
+      paymentDate: memberData.paymentDate ?? null,
+      startDate: memberData.startDate ?? new Date(),
+      expiryDate,
+      totalBookings: memberData.totalBookings ?? "0",
+      discountEligible: memberData.discountEligible ?? true,
       createdAt: new Date(),
       updatedAt: new Date()
     };

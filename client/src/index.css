@@ -17,6 +17,9 @@
   --muted-foreground: hsl(0, 0%, 70%);
   --accent: hsl(0, 70%, 55%);
   --accent-foreground: hsl(0, 0%, 4%);
+  /* Champagne gold — the luxury signal. Used for fine accents, not actions. */
+  --gold: hsl(40, 56%, 64%);
+  --gold-foreground: hsl(0, 0%, 8%);
   --destructive: hsl(0, 70%, 55%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --border: hsl(0, 0%, 20%);
@@ -107,11 +110,20 @@
 }
 
 .gradient-gold {
+  background: linear-gradient(135deg, hsl(43, 64%, 70%) 0%, hsl(38, 56%, 52%) 100%);
+}
+
+.gradient-red {
   background: linear-gradient(135deg, hsl(0, 70%, 55%) 0%, hsl(0, 84%, 50%) 100%);
 }
 
-.gradient-purple {
-  background: linear-gradient(135deg, hsl(0, 70%, 55%) 0%, hsl(0, 84%, 50%) 100%);
+/* Thin champagne hairline + soft gold glow for premium surfaces */
+.gold-text {
+  color: var(--gold);
+}
+
+.gold-border {
+  border-color: hsl(40, 56%, 64%, 0.35);
 }
 
 .glass-effect {
@@ -490,22 +502,8 @@
   mask-image: linear-gradient(to bottom, black, transparent);
 }
 
-/* Custom hookah cursor using the large white shisha SVG */
-html, body, * {
-  cursor: url('/cursor-hookah-large.svg') 32 32, auto !important;
-}
-
-/* Specific classes for different cursor states */
-.custom-hookah-cursor {
-  cursor: url('/cursor-hookah-large.svg') 32 32, auto !important;
-}
-
-/* Clickable elements get a pointer-style hookah cursor */
+/* Native cursors for a clean, premium feel.
+   Clickable elements use the standard pointer; everything else the default arrow. */
 button, a, [role="button"], input[type="submit"], input[type="button"] {
-  cursor: url('/cursor-hookah-large.svg') 32 32, pointer !important;
-}
-
-/* Text input areas still get text cursor for usability */
-input[type="text"], input[type="email"], input[type="password"], textarea {
-  cursor: text !important;
+  cursor: pointer;
 }

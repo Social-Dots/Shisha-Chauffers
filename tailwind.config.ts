@@ -37,6 +37,10 @@ export default {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
         },
+        gold: {
+          DEFAULT: "var(--gold)",
+          foreground: "var(--gold-foreground)",
+        },
         destructive: {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",

@@ -1,7 +1,12 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Reveal from "@/components/reveal";
 
 export default function PackagesSection() {
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const packages = [
     {
       name: "Standard",
@@ -9,14 +14,13 @@ export default function PackagesSection() {
       description: "Perfect for small gatherings and intimate events",
       features: [
         "2-hour shisha service",
-        "Choice of 3 premium flavors",
+        "Choice of 3 premium flavours",
         "Professional setup included",
         "Serves up to 6 guests",
         "Basic equipment package",
-        "Clean-up service included"
+        "Clean-up service included",
       ],
       popular: false,
-      gradient: "gradient-gold"
     },
     {
       name: "Premium",
@@ -24,16 +28,15 @@ export default function PackagesSection() {
       description: "Enhanced experience for special occasions",
       features: [
         "4-hour shisha service",
-        "Choice of 5 premium flavors",
+        "Choice of 5 premium flavours",
         "Professional chauffeur service",
         "Serves up to 12 guests",
         "Premium equipment package",
-        "Premium flavor service included",
+        "Premium flavour service included",
         "Setup & clean-up service",
-        "Custom flavor mixing"
+        "Custom flavour mixing",
       ],
       popular: true,
-      gradient: "gradient-purple"
     },
     {
       name: "Luxury",
@@ -41,61 +44,82 @@ export default function PackagesSection() {
       description: "Ultimate premium experience for VIP events",
       features: [
         "6-hour shisha service",
-        "Unlimited premium flavors",
+        "Unlimited premium flavours",
         "Dedicated chauffeur team",
         "Serves up to 20 guests",
         "Luxury equipment package",
-        "Full flavor bar service",
+        "Full flavour bar service",
         "Professional setup & styling",
-        "Custom flavor creation",
+        "Custom flavour creation",
         "Event coordination",
-        "Photography assistance"
+        "Photography assistance",
       ],
       popular: false,
-      gradient: "gradient-gold"
-    }
+    },
   ];
 
-
   return (
-    <section id="packages" className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Shisha Catering Packages</h2>
-          <p className="text-xl text-muted-foreground">All Shisha Catering Packages include full shisha service with setup, maintenance, and cleaning by our attendants.</p>
+    <section id="packages" className="relative overflow-hidden bg-background py-20 sm:py-24">
+      {/* Ambient luxury backdrop */}
+      <div className="ambient-grid absolute inset-0 opacity-20" />
+      <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto mb-14 max-w-2xl text-center sm:mb-16">
+          <p className="section-kicker mb-4">Catering Packages</p>
+          <h2 className="font-serif text-4xl font-bold md:text-5xl">Choose your experience</h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Every package includes full shisha service with setup, maintenance, and cleaning by our attendants.
+          </p>
         </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
+
+        <div className="grid items-stretch gap-6 md:grid-cols-3 lg:gap-8">
           {packages.map((pkg, index) => (
-            <Card 
-              key={index} 
-              className={`bg-card hover-float relative ${pkg.gradient} ${pkg.popular ? 'ring-2 ring-primary' : ''}`}
+            <Reveal
+              key={index}
+              index={index}
+              className={`surface-panel group relative flex flex-col rounded-2xl p-8 transition-transform duration-300 hover:-translate-y-1.5 ${
+                pkg.popular ? "gold-border ring-1 ring-gold/40" : ""
+              }`}
               data-testid={`package-card-${index}`}
             >
               {pkg.popular && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
-                    Most Popular
-                  </span>
-                </div>
+                <span className="gradient-gold absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold-foreground shadow-lg">
+                  Most Popular
+                </span>
               )}
-              <CardContent className="p-8 flex flex-col h-full">
-                <div className="text-center mb-6">
-                  <h3 className="font-serif text-3xl font-bold mb-2 text-white bg-primary px-4 py-2 rounded-lg">{pkg.name}</h3>
-                  <div className="text-4xl font-bold mb-4 text-white">{pkg.price}</div>
-                  <p className="text-sm text-gray-300 mb-6">{pkg.description}</p>
-                </div>
-                
-                <ul className="space-y-3 mb-8 flex-grow list-disc list-inside">
-                  {pkg.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="text-sm text-white">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-              </CardContent>
-            </Card>
+
+              <div className="mb-6">
+                <h3 className="font-serif text-2xl font-semibold text-white">{pkg.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{pkg.description}</p>
+              </div>
+
+              <div className="mb-8 flex items-baseline gap-2">
+                <span className="font-serif text-5xl font-bold text-white">{pkg.price}</span>
+                <span className="text-sm text-muted-foreground">/ event</span>
+              </div>
+
+              <ul className="mb-8 space-y-3.5">
+                {pkg.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className="flex items-start gap-3 text-sm text-gray-200">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                onClick={scrollToContact}
+                className={`mt-auto min-h-12 w-full rounded-full text-base font-semibold transition-all duration-300 hover:shadow-lg ${
+                  pkg.popular
+                    ? "gradient-gold text-gold-foreground"
+                    : "border border-white/15 bg-white/5 text-white hover:bg-white/10"
+                }`}
+                data-testid={`package-cta-${index}`}
+              >
+                Book {pkg.name}
+              </Button>
+            </Reveal>
           ))}
         </div>
       </div>

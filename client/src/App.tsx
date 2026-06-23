@@ -7,7 +7,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
-import CursorSmoke from "@/components/cursor-smoke";
 
 // Lazy-load admin pages to reduce initial bundle size
 const AdminLogin = lazy(() => import("@/pages/admin-login"));
@@ -26,9 +25,6 @@ const AdminLoadingFallback = () => (
 function Router() {
   return (
     <>
-      {/* Simple cursor smoke that follows the white shisha cursor */}
-      <CursorSmoke enabled={true} intensity={0.8} />
-      
       {/* Main router */}
       <Switch>
         <Route path="/" component={Home} />

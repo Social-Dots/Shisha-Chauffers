@@ -420,23 +420,42 @@ export default function ContactForm() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Shisha Package Selection</FormLabel>
-                          <div className="space-y-4">
-                            {packageOptions.map((option) => (
-                              <button
-                                key={option.value}
-                                type="button"
-                                onClick={() => field.onChange(option.value)}
-                                className={`w-full rounded-2xl border p-4 text-left transition-all ${
-                                  field.value === option.value
-                                    ? "border-primary/60 bg-primary/10"
-                                    : "border-white/10 bg-black/20 hover:border-white/20"
-                                }`}
-                                data-testid={`package-${option.value}`}
-                              >
-                                <p className="font-semibold text-white">{option.label}</p>
-                                <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
-                              </button>
-                            ))}
+                          <div className="grid gap-4 sm:grid-cols-3">
+                            {packageOptions.map((option) => {
+                              const isSelected = field.value === option.value;
+
+                              return (
+                                <label
+                                  key={option.value}
+                                  className={`group flex cursor-pointer flex-col rounded-2xl border p-4 text-left transition-all ${
+                                    isSelected
+                                      ? "border-primary/80 bg-primary/10 ring-2 ring-primary/30"
+                                      : "border-white/10 bg-black/20 hover:border-white/20"
+                                  }`}
+                                  data-testid={`package-${option.value}`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="packageSelection"
+                                    value={option.value}
+                                    checked={isSelected}
+                                    onChange={() => field.onChange(option.value)}
+                                    className="sr-only"
+                                  />
+                                  <div className="flex items-start justify-between gap-4">
+                                    <div>
+                                      <p className="font-semibold text-white">{option.label}</p>
+                                      <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
+                                    </div>
+                                    {isSelected ? (
+                                      <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
+                                        Selected
+                                      </span>
+                                    ) : null}
+                                  </div>
+                                </label>
+                              );
+                            })}
                           </div>
                           <FormMessage />
                         </FormItem>

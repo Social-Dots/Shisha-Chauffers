@@ -12,6 +12,7 @@ const MembershipsSection = lazy(() => import("@/components/memberships-section")
 const ShishaRentalsSection = lazy(() => import("@/components/shisha-rentals-section"));
 const FlavoursMenu = lazy(() => import("@/components/flavours-menu"));
 const GallerySection = lazy(() => import("@/components/gallery-section"));
+const TestimonialsSection = lazy(() => import("@/components/testimonials-section"));
 const ContactForm = lazy(() => import("@/components/contact-form"));
 const Footer = lazy(() => import("@/components/footer"));
 
@@ -64,7 +65,11 @@ export default function Home() {
       <Suspense fallback={<SectionSkeleton />}>
         <GallerySection />
       </Suspense>
-      
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <TestimonialsSection />
+      </Suspense>
+
       <Suspense fallback={<SectionSkeleton />}>
         <ContactForm />
       </Suspense>

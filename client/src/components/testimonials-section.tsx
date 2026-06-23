@@ -30,7 +30,7 @@ const testimonials = [
 export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="relative overflow-hidden bg-background py-20 sm:py-24">
-      <div className="absolute right-1/2 top-0 h-72 w-72 translate-x-1/2 rounded-full bg-gold/5 blur-3xl" />
+      <div className="absolute right-1/2 top-0 h-72 w-72 translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-14 max-w-2xl text-center sm:mb-16">
@@ -49,10 +49,10 @@ export default function TestimonialsSection() {
               className="surface-panel relative flex flex-col rounded-2xl p-7 sm:p-8"
               data-testid={`testimonial-${index}`}
             >
-              <Quote className="mb-5 h-8 w-8 text-gold/70" />
+              <Quote className="mb-5 h-8 w-8 text-primary" />
               <div className="mb-4 flex gap-1" aria-label="5 out of 5 stars">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-gold text-gold" />
+                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                 ))}
               </div>
               <p className="flex-grow text-base leading-7 text-gray-100">

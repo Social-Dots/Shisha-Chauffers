@@ -79,12 +79,12 @@ export default function PackagesSection() {
               key={index}
               index={index}
               className={`surface-panel group relative flex flex-col rounded-2xl p-8 transition-transform duration-300 hover:-translate-y-1.5 ${
-                pkg.popular ? "gold-border ring-1 ring-gold/40" : ""
+                pkg.popular ? "ring-2 ring-primary" : ""
               }`}
               data-testid={`package-card-${index}`}
             >
               {pkg.popular && (
-                <span className="gradient-gold absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold-foreground shadow-lg">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-primary px-4 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-lg">
                   Most Popular
                 </span>
               )}
@@ -102,7 +102,7 @@ export default function PackagesSection() {
               <ul className="mb-8 space-y-3.5">
                 {pkg.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="flex items-start gap-3 text-sm text-gray-200">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={2.5} />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.5} />
                     <span>{feature}</span>
                   </li>
                 ))}
@@ -112,7 +112,7 @@ export default function PackagesSection() {
                 onClick={scrollToContact}
                 className={`mt-auto min-h-12 w-full rounded-full text-base font-semibold transition-all duration-300 hover:shadow-lg ${
                   pkg.popular
-                    ? "gradient-gold text-gold-foreground"
+                    ? "gradient-gold text-black"
                     : "border border-white/15 bg-white/5 text-white hover:bg-white/10"
                 }`}
                 data-testid={`package-cta-${index}`}

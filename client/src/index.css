@@ -3,38 +3,40 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 4%);
-  --foreground: hsl(0, 0%, 98%);
-  --card: hsl(0, 0%, 12%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --popover: hsl(0, 0%, 4%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(0, 70%, 55%);
-  --primary-foreground: hsl(0, 0%, 4%);
-  --secondary: hsl(0, 0%, 18%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --muted: hsl(0, 0%, 15%);
-  --muted-foreground: hsl(0, 0%, 70%);
-  --accent: hsl(0, 70%, 55%);
-  --accent-foreground: hsl(0, 0%, 4%);
-  --destructive: hsl(0, 70%, 55%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(0, 0%, 20%);
-  --input: hsl(0, 0%, 15%);
-  --ring: hsl(0, 70%, 55%);
-  --chart-1: hsl(203.8863, 88.2845%, 53.1373%);
-  --chart-2: hsl(159.7826, 100%, 36.0784%);
-  --chart-3: hsl(42.0290, 92.8251%, 56.2745%);
-  --chart-4: hsl(147.1429, 78.5047%, 41.9608%);
-  --chart-5: hsl(341.4894, 75.2000%, 50.9804%);
-  --sidebar: hsl(0, 0%, 12%);
-  --sidebar-foreground: hsl(0, 0%, 98%);
-  --sidebar-primary: hsl(45, 100%, 51%);
-  --sidebar-primary-foreground: hsl(0, 0%, 4%);
-  --sidebar-accent: hsl(45, 100%, 51%);
-  --sidebar-accent-foreground: hsl(0, 0%, 4%);
-  --sidebar-border: hsl(0, 0%, 20%);
-  --sidebar-ring: hsl(45, 100%, 51%);
+  /* Colours stored as raw HSL channels so Tailwind's /opacity modifiers work
+     (e.g. bg-primary/20). Consumed via hsl(var(--x) / <alpha-value>) in the config. */
+  --background: 0 0% 4%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 70% 55%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 18%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 70%;
+  --accent: 0 70% 55%;
+  --accent-foreground: 0 0% 4%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 15%;
+  --ring: 0 70% 55%;
+  --chart-1: 203.8863 88.2845% 53.1373%;
+  --chart-2: 159.7826 100% 36.0784%;
+  --chart-3: 42.0290 92.8251% 56.2745%;
+  --chart-4: 147.1429 78.5047% 41.9608%;
+  --chart-5: 341.4894 75.2000% 50.9804%;
+  --sidebar: 0 0% 12%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 45 100% 51%;
+  --sidebar-primary-foreground: 0 0% 4%;
+  --sidebar-accent: 45 100% 51%;
+  --sidebar-accent-foreground: 0 0% 4%;
+  --sidebar-border: 0 0% 20%;
+  --sidebar-ring: 45 100% 51%;
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -52,25 +54,25 @@
 }
 
 .dark {
-  --background: hsl(0, 0%, 4%);
-  --foreground: hsl(0, 0%, 98%);
-  --card: hsl(0, 0%, 12%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --popover: hsl(0, 0%, 4%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --primary: hsl(0, 70%, 55%);
-  --primary-foreground: hsl(0, 0%, 4%);
-  --secondary: hsl(0, 0%, 18%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --muted: hsl(0, 0%, 15%);
-  --muted-foreground: hsl(0, 0%, 70%);
-  --accent: hsl(0, 70%, 55%);
-  --accent-foreground: hsl(0, 0%, 4%);
-  --destructive: hsl(0, 70%, 55%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --border: hsl(0, 0%, 20%);
-  --input: hsl(0, 0%, 15%);
-  --ring: hsl(0, 70%, 55%);
+  --background: 0 0% 4%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 70% 55%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 18%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 70%;
+  --accent: 0 70% 55%;
+  --accent-foreground: 0 0% 4%;
+  --destructive: 0 70% 55%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 15%;
+  --ring: 0 70% 55%;
 }
 
 @layer base {

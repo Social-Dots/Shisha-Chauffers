@@ -11,6 +11,8 @@ import Home from "@/pages/home";
 // Lazy-load admin pages to reduce initial bundle size
 const AdminLogin = lazy(() => import("@/pages/admin-login"));
 const AdminDashboard = lazy(() => import("@/pages/admin-dashboard"));
+// Alternate "refined" landing concept (condensed redesign)
+const Refined = lazy(() => import("@/pages/refined"));
 
 // Loading component for admin routes
 const AdminLoadingFallback = () => (
@@ -28,6 +30,11 @@ function Router() {
       {/* Main router */}
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/refined">
+          <Suspense fallback={<AdminLoadingFallback />}>
+            <Refined />
+          </Suspense>
+        </Route>
         <Route path="/admin/login">
           <Suspense fallback={<AdminLoadingFallback />}>
             <AdminLogin />

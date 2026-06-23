@@ -1,0 +1,400 @@
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, Check, Crown, Instagram, Phone } from "lucide-react";
+
+/**
+ * "REFINED" — an alternate, condensed landing concept for Shisha Chauffeurs.
+ *
+ * Aesthetic direction: editorial late-night luxury. High-contrast Fraunces
+ * display type against a near-black ground, a single sharp ember-red accent,
+ * hairline rules, oversized numerals, and a tabbed pricing switcher that folds
+ * Packages + Rentals + Memberships into ONE section. Reachable at /refined.
+ *
+ * Brand colours unchanged (red on black). Fonts are loaded scoped to this page.
+ */
+
+// ─── content (reused verbatim from the live site) ──────────────────────────
+const steps = [
+  { n: "01", t: "Choose your experience", d: "Catering, rentals, mocktails, or membership." },
+  { n: "02", t: "Share the details", d: "Date, guest count, address, and flavour preferences." },
+  { n: "03", t: "We confirm", d: "Availability, pricing, deposit, and arrival timing." },
+];
+
+const packages = [
+  { name: "Standard", price: "$250", note: "Up to 6 guests · 2 hours", popular: false,
+    features: ["2-hour shisha service", "3 premium flavours", "Professional setup", "Clean-up included"] },
+  { name: "Premium", price: "$450", note: "Up to 12 guests · 4 hours", popular: true,
+    features: ["4-hour shisha service", "5 premium flavours", "Chauffeur service", "Custom flavour mixing", "Setup & clean-up"] },
+  { name: "Luxury", price: "$600", note: "Up to 20 guests · 6 hours", popular: false,
+    features: ["6-hour shisha service", "Unlimited flavours", "Dedicated team", "Full flavour bar", "Event coordination"] },
+];
+
+const rentals = [
+  { q: "1 Shisha", p: "$60" }, { q: "2 Shishas", p: "$115" }, { q: "3 Shishas", p: "$165" },
+  { q: "4 Shishas", p: "$210" }, { q: "5 Shishas", p: "$250" }, { q: "6 Shishas", p: "$300" },
+];
+
+const memberships = [
+  { name: "Gold", price: "$120", per: "/mo", popular: false,
+    features: ["10% off all packages", "Priority booking", "Free flavour upgrades", "Monthly exclusive flavours", "24/7 support"] },
+  { name: "Platinum", price: "$200", per: "/mo", popular: true,
+    features: ["20% off all packages", "VIP priority booking", "Unlimited premium flavours", "Personal chauffeur", "Dedicated account manager", "Member-only events"] },
+];
+
+const standardFlavours = ["Double Apple", "Lemon Mint", "Grape", "Blueberry", "Mango", "Lady Killer"];
+const signatureFlavours = [
+  { name: "Chauffeur Special", mix: "Blue Dragon + Lady Killer" },
+  { name: "Blue Mist", mix: "Blueberry + Mint" },
+  { name: "Royal Paan Breeze", mix: "Paan + Mint" },
+  { name: "Summer Sunset", mix: "Mango + Peach + Lemon" },
+  { name: "Raspberry Mojito", mix: "Raspberry + Mint + Lime" },
+];
+
+const gallery = [
+  "/media/in-action/private-residence.jpg",
+  "/media/in-action/venue-lineup.jpg",
+  "/media/in-action/backyard-setup.jpg",
+  "/media/in-action/studio-lineup.jpg",
+  "/media/in-action/event-setup.jpg",
+  "/media/about/about-shisha-chauffeurs.jpg",
+];
+
+const testimonials = [
+  { quote: "The setup was stunning and the service completely hands-off. Our guests didn't stop talking about it all night.", who: "Sample Client", where: "Birthday · Mississauga" },
+  { quote: "Punctual, professional, and the flavours were incredible. They handled everything from setup to clean-up.", who: "Sample Client", where: "Backyard event · Toronto" },
+  { quote: "Easily the highlight of our evening. The presentation felt genuinely premium.", who: "Sample Client", where: "Corporate · GTA" },
+];
+
+// ─── small primitives ──────────────────────────────────────────────────────
+function Kicker({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-primary">
+      <span className="h-px w-6 bg-primary" />
+      {children}
+    </span>
+  );
+}
+
+function Rise({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export default function Refined() {
+  const [tab, setTab] = useState<"packages" | "rentals" | "memberships">("packages");
+
+  // Load the editorial fonts scoped to this page only.
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap";
+    document.head.appendChild(link);
+    return () => { document.head.removeChild(link); };
+  }, []);
+
+  const tel = "tel:6478793637";
+
+  return (
+    <div className="refined min-h-screen bg-[#080808] text-neutral-100 antialiased">
+      {/* scoped styles ----------------------------------------------------- */}
+      <style>{`
+        .refined { font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif; cursor: auto; }
+        .refined .display { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
+        .refined ::selection { background: hsl(0 70% 55%); color: #0a0a0a; }
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .refined .marquee { animation: marquee 34s linear infinite; }
+        .refined .grain::before {
+          content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5; z-index: 1;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        }
+        @media (prefers-reduced-motion: reduce) { .refined .marquee { animation: none; } }
+      `}</style>
+
+      {/* nav --------------------------------------------------------------- */}
+      <header className="fixed inset-x-0 top-0 z-50">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+          <a href="#top" className="display text-lg font-semibold tracking-tight">
+            Shisha<span className="text-primary">.</span>Chauffeurs
+          </a>
+          <nav className="hidden items-center gap-8 text-sm text-neutral-400 md:flex">
+            <a href="#experience" className="transition-colors hover:text-white">Experience</a>
+            <a href="#work" className="transition-colors hover:text-white">Work</a>
+            <a href="#pricing" className="transition-colors hover:text-white">Pricing</a>
+            <a href="#flavours" className="transition-colors hover:text-white">Flavours</a>
+          </nav>
+          <a href={tel} className="group inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm transition-colors hover:border-primary hover:text-primary">
+            Book <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        </div>
+      </header>
+
+      {/* hero -------------------------------------------------------------- */}
+      <section id="top" className="grain relative flex min-h-screen items-center overflow-hidden">
+        <div className="pointer-events-none absolute -left-40 top-1/4 h-[36rem] w-[36rem] rounded-full bg-primary/20 blur-[140px]" />
+        <div className="pointer-events-none absolute right-0 top-0 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[120px]" />
+
+        <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-28">
+          <Rise><Kicker>Mobile shisha catering · Toronto & the GTA</Kicker></Rise>
+          <Rise delay={0.08}>
+            <h1 className="display mt-7 text-[15vw] font-light leading-[0.86] tracking-[-0.02em] sm:text-[12vw] lg:text-[9.5rem]">
+              Where flavour
+              <br />
+              meets <span className="italic text-primary">finesse.</span>
+            </h1>
+          </Rise>
+          <Rise delay={0.16}>
+            <div className="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+              <p className="max-w-md text-lg leading-relaxed text-neutral-400">
+                Premium shisha and mocktail service delivered to your private event — set up, served, and cleaned down while you stay with your guests.
+              </p>
+              <div className="flex shrink-0 items-center gap-4">
+                <a href="#pricing" className="rounded-full bg-primary px-7 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
+                  View pricing
+                </a>
+                <a href="#work" className="rounded-full border border-white/15 px-7 py-4 text-sm font-semibold transition-colors hover:border-white/40">
+                  See our work
+                </a>
+              </div>
+            </div>
+          </Rise>
+        </div>
+
+        {/* flavour marquee */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 overflow-hidden border-y border-white/10 bg-black/40 py-4 backdrop-blur-sm">
+          <div className="marquee flex w-max gap-10 whitespace-nowrap text-sm uppercase tracking-[0.25em] text-neutral-500">
+            {[...standardFlavours, ...signatureFlavours.map((f) => f.name), ...standardFlavours, ...signatureFlavours.map((f) => f.name)].map((f, i) => (
+              <span key={i} className="flex items-center gap-10">
+                {f} <span className="text-primary">✦</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* experience -------------------------------------------------------- */}
+      <section id="experience" className="mx-auto max-w-6xl px-6 py-28">
+        <Rise><Kicker>How it works</Kicker></Rise>
+        <Rise delay={0.05}>
+          <h2 className="display mt-6 max-w-2xl text-4xl font-light leading-[1.05] sm:text-6xl">
+            Set up, serve, refresh, clean down.
+          </h2>
+        </Rise>
+        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
+          {steps.map((s, i) => (
+            <Rise key={s.n} delay={i * 0.1} className="bg-[#080808]">
+              <div className="group h-full p-8 transition-colors hover:bg-white/[0.03]">
+                <span className="display text-5xl font-light text-primary">{s.n}</span>
+                <h3 className="display mt-6 text-2xl">{s.t}</h3>
+                <p className="mt-3 text-neutral-400">{s.d}</p>
+              </div>
+            </Rise>
+          ))}
+        </div>
+      </section>
+
+      {/* work / gallery (single, merged) ----------------------------------- */}
+      <section id="work" className="py-28">
+        <div className="mx-auto mb-12 flex max-w-6xl items-end justify-between px-6">
+          <div>
+            <Rise><Kicker>In action</Kicker></Rise>
+            <Rise delay={0.05}>
+              <h2 className="display mt-6 text-4xl font-light sm:text-6xl">Selected setups</h2>
+            </Rise>
+          </div>
+          <a href={tel} className="hidden text-sm text-neutral-400 transition-colors hover:text-primary sm:block">
+            Book a setup like this →
+          </a>
+        </div>
+        <div className="flex snap-x gap-5 overflow-x-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {gallery.map((src, i) => (
+            <motion.figure
+              key={src}
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.05 }}
+              className="relative aspect-[3/4] w-[78vw] shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 sm:w-[26rem]"
+            >
+              <img src={src} alt="Shisha Chauffeurs setup" loading="lazy" decoding="async"
+                className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <span className="display absolute bottom-5 left-5 text-sm text-white/80">{String(i + 1).padStart(2, "0")} / {String(gallery.length).padStart(2, "0")}</span>
+            </motion.figure>
+          ))}
+        </div>
+      </section>
+
+      {/* pricing (tabs: packages | rentals | memberships) ------------------ */}
+      <section id="pricing" className="mx-auto max-w-6xl px-6 py-28">
+        <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
+          <div>
+            <Rise><Kicker>Pricing</Kicker></Rise>
+            <Rise delay={0.05}>
+              <h2 className="display mt-6 text-4xl font-light sm:text-6xl">One menu, every occasion.</h2>
+            </Rise>
+          </div>
+          <div className="inline-flex rounded-full border border-white/15 p-1 text-sm">
+            {(["packages", "rentals", "memberships"] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`rounded-full px-5 py-2 capitalize transition-colors ${tab === t ? "bg-primary text-black" : "text-neutral-400 hover:text-white"}`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-14">
+          {/* packages */}
+          {tab === "packages" && (
+            <div className="grid gap-6 md:grid-cols-3">
+              {packages.map((p, i) => (
+                <Rise key={p.name} delay={i * 0.08}>
+                  <div className={`flex h-full flex-col rounded-2xl border p-8 ${p.popular ? "border-primary bg-primary/[0.06]" : "border-white/10 bg-white/[0.02]"}`}>
+                    {p.popular && <span className="mb-4 w-fit rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-black">Most booked</span>}
+                    <h3 className="display text-3xl">{p.name}</h3>
+                    <p className="mt-1 text-sm text-neutral-400">{p.note}</p>
+                    <div className="display my-6 text-5xl font-light">{p.price}</div>
+                    <ul className="mb-8 space-y-3 text-sm text-neutral-300">
+                      {p.features.map((f) => (
+                        <li key={f} className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {f}</li>
+                      ))}
+                    </ul>
+                    <a href={tel} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold transition-transform hover:scale-[1.02] ${p.popular ? "bg-primary text-black" : "border border-white/15 hover:border-white/40"}`}>
+                      Book {p.name}
+                    </a>
+                  </div>
+                </Rise>
+              ))}
+            </div>
+          )}
+
+          {/* rentals */}
+          {tab === "rentals" && (
+            <Rise>
+              <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
+                {rentals.map((r) => (
+                  <div key={r.q} className="flex items-baseline justify-between bg-[#080808] p-7 transition-colors hover:bg-white/[0.03]">
+                    <span className="text-neutral-300">{r.q}</span>
+                    <span className="display text-3xl font-light">{r.p}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 text-sm text-neutral-500">Every rental includes premium equipment, a standard flavour selection, clean-equipment guarantee, and optional pickup & delivery.</p>
+            </Rise>
+          )}
+
+          {/* memberships */}
+          {tab === "memberships" && (
+            <div className="grid gap-6 md:grid-cols-2">
+              {memberships.map((m, i) => (
+                <Rise key={m.name} delay={i * 0.08}>
+                  <div className={`flex h-full flex-col rounded-2xl border p-8 ${m.popular ? "border-primary bg-primary/[0.06]" : "border-white/10 bg-white/[0.02]"}`}>
+                    <div className="flex items-center justify-between">
+                      <h3 className="display text-3xl">{m.name}</h3>
+                      <Crown className={`h-6 w-6 ${m.popular ? "text-primary" : "text-neutral-500"}`} />
+                    </div>
+                    <div className="display my-6 text-5xl font-light">{m.price}<span className="text-xl text-neutral-500">{m.per}</span></div>
+                    <ul className="mb-8 grid gap-3 text-sm text-neutral-300 sm:grid-cols-2">
+                      {m.features.map((f) => (
+                        <li key={f} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {f}</li>
+                      ))}
+                    </ul>
+                    <a href={tel} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold ${m.popular ? "bg-primary text-black" : "border border-white/15"}`}>
+                      Join {m.name}
+                    </a>
+                  </div>
+                </Rise>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* flavours ---------------------------------------------------------- */}
+      <section id="flavours" className="border-y border-white/10 bg-white/[0.015] py-28">
+        <div className="mx-auto max-w-6xl px-6">
+          <Rise><Kicker>The menu</Kicker></Rise>
+          <div className="mt-10 grid gap-16 lg:grid-cols-2">
+            <Rise>
+              <h3 className="display mb-8 text-2xl text-neutral-400">Standard</h3>
+              <ul className="divide-y divide-white/10">
+                {standardFlavours.map((f) => (
+                  <li key={f} className="display flex items-center justify-between py-4 text-2xl font-light sm:text-3xl">
+                    {f} <span className="text-neutral-700">—</span>
+                  </li>
+                ))}
+              </ul>
+            </Rise>
+            <Rise delay={0.1}>
+              <h3 className="display mb-8 text-2xl text-primary">Signature blends</h3>
+              <ul className="divide-y divide-white/10">
+                {signatureFlavours.map((f) => (
+                  <li key={f.name} className="py-4">
+                    <div className="display text-2xl font-light sm:text-3xl">{f.name}</div>
+                    <div className="mt-1 text-sm uppercase tracking-widest text-neutral-500">{f.mix}</div>
+                  </li>
+                ))}
+              </ul>
+            </Rise>
+          </div>
+        </div>
+      </section>
+
+      {/* testimonials ------------------------------------------------------ */}
+      <section className="mx-auto max-w-6xl px-6 py-28">
+        <Rise><Kicker>Guests</Kicker></Rise>
+        <div className="mt-12 grid gap-10 lg:grid-cols-3">
+          {testimonials.map((t, i) => (
+            <Rise key={i} delay={i * 0.1}>
+              <figure className="flex h-full flex-col">
+                <blockquote className="display text-2xl font-light leading-snug text-neutral-200">"{t.quote}"</blockquote>
+                <figcaption className="mt-6 border-t border-white/10 pt-5 text-sm">
+                  <span className="text-white">{t.who}</span>
+                  <span className="block text-neutral-500">{t.where}</span>
+                </figcaption>
+              </figure>
+            </Rise>
+          ))}
+        </div>
+        <p className="mt-10 text-xs uppercase tracking-widest text-neutral-700">Sample reviews — replace with real client feedback before launch.</p>
+      </section>
+
+      {/* closing CTA ------------------------------------------------------- */}
+      <section className="grain relative overflow-hidden border-t border-white/10 py-32">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[130px]" />
+        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+          <h2 className="display text-5xl font-light leading-[1.02] sm:text-7xl">
+            Let's make the night<br /><span className="italic text-primary">unforgettable.</span>
+          </h2>
+          <p className="mx-auto mt-6 max-w-md text-neutral-400">Outdoor locations and private residences across Toronto and the GTA. A deposit secures your date.</p>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <a href={tel} className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
+              <Phone className="h-4 w-4" /> (647) 879-3637
+            </a>
+            <a href="https://www.instagram.com/shishachauffeurs/" target="_blank" rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-8 py-4 text-sm font-semibold transition-colors hover:border-white/40">
+              <Instagram className="h-4 w-4" /> @shishachauffeurs
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-white/10 py-10 text-center text-xs uppercase tracking-[0.25em] text-neutral-600">
+        Shisha Chauffeurs · Toronto & the GTA
+      </footer>
+    </div>
+  );
+}

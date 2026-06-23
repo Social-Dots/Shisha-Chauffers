@@ -1,21 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Crown, Instagram, Phone } from "lucide-react";
+import { ArrowUpRight, Check, Instagram, Phone } from "lucide-react";
 
 /**
- * "REFINED" — an alternate, condensed landing concept for Shisha Chauffeurs.
- *
- * Aesthetic direction: editorial late-night luxury. High-contrast Fraunces
- * display type against a near-black ground, a single sharp ember-red accent,
- * hairline rules, oversized numerals, and a tabbed pricing switcher that folds
- * Packages + Rentals + Memberships into ONE section. Reachable at /refined.
- *
- * Brand colours unchanged (red on black). Fonts are loaded scoped to this page.
+ * "REFINED" — condensed landing concept for Shisha Chauffeurs, styled to match
+ * the live site (Playfair Display + Inter, brand red on the site's dark gradient,
+ * surface-panel cards). Keeps the editorial structure: oversized type, a flavour
+ * marquee, one merged gallery, and a tabbed Pricing block. Reachable at /refined.
  */
 
 // ─── content (reused verbatim from the live site) ──────────────────────────
 const steps = [
-  { n: "01", t: "Choose your experience", d: "Catering, rentals, mocktails, or membership." },
+  { n: "01", t: "Choose your experience", d: "Catering, rentals, or mocktails for your event." },
   { n: "02", t: "Share the details", d: "Date, guest count, address, and flavour preferences." },
   { n: "03", t: "We confirm", d: "Availability, pricing, deposit, and arrival timing." },
 ];
@@ -32,13 +28,6 @@ const packages = [
 const rentals = [
   { q: "1 Shisha", p: "$60" }, { q: "2 Shishas", p: "$115" }, { q: "3 Shishas", p: "$165" },
   { q: "4 Shishas", p: "$210" }, { q: "5 Shishas", p: "$250" }, { q: "6 Shishas", p: "$300" },
-];
-
-const memberships = [
-  { name: "Gold", price: "$120", per: "/mo", popular: false,
-    features: ["10% off all packages", "Priority booking", "Free flavour upgrades", "Monthly exclusive flavours", "24/7 support"] },
-  { name: "Platinum", price: "$200", per: "/mo", popular: true,
-    features: ["20% off all packages", "VIP priority booking", "Unlimited premium flavours", "Personal chauffeur", "Dedicated account manager", "Member-only events"] },
 ];
 
 const standardFlavours = ["Double Apple", "Lemon Mint", "Grape", "Blueberry", "Mango", "Lady Killer"];
@@ -90,27 +79,16 @@ function Rise({ children, delay = 0, className = "" }: { children: React.ReactNo
 }
 
 export default function Refined() {
-  const [tab, setTab] = useState<"packages" | "rentals" | "memberships">("packages");
-
-  // Load the editorial fonts scoped to this page only.
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..600&family=Hanken+Grotesk:wght@300;400;500;600&display=swap";
-    document.head.appendChild(link);
-    return () => { document.head.removeChild(link); };
-  }, []);
-
+  const [tab, setTab] = useState<"packages" | "rentals">("packages");
   const tel = "tel:6478793637";
 
   return (
-    <div className="refined min-h-screen bg-[#080808] text-neutral-100 antialiased">
+    <div className="refined min-h-screen bg-background text-foreground antialiased">
       {/* scoped styles ----------------------------------------------------- */}
       <style>{`
-        .refined { font-family: 'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif; cursor: auto; }
-        .refined .display { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
-        .refined ::selection { background: hsl(0 70% 55%); color: #0a0a0a; }
+        .refined { font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif; }
+        .refined .display { font-family: var(--font-serif), Georgia, serif; }
+        .refined ::selection { background: hsl(var(--primary)); color: #0a0a0a; }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .refined .marquee { animation: marquee 34s linear infinite; }
         .refined .grain::before {
@@ -121,12 +99,13 @@ export default function Refined() {
       `}</style>
 
       {/* nav --------------------------------------------------------------- */}
-      <header className="fixed inset-x-0 top-0 z-50">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-          <a href="#top" className="display text-lg font-semibold tracking-tight">
-            Shisha<span className="text-primary">.</span>Chauffeurs
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-black/30 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+          <a href="#top" className="flex items-center gap-3" aria-label="Shisha Chauffeurs home">
+            <img src="/logo.svg" alt="Shisha Chauffeurs" className="h-11 w-auto" />
+            <span className="display hidden text-base font-semibold tracking-wide sm:block">Shisha Chauffeurs</span>
           </a>
-          <nav className="hidden items-center gap-8 text-sm text-neutral-400 md:flex">
+          <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
             <a href="#experience" className="transition-colors hover:text-white">Experience</a>
             <a href="#work" className="transition-colors hover:text-white">Work</a>
             <a href="#pricing" className="transition-colors hover:text-white">Pricing</a>
@@ -140,25 +119,25 @@ export default function Refined() {
 
       {/* hero -------------------------------------------------------------- */}
       <section id="top" className="grain relative flex min-h-screen items-center overflow-hidden">
-        <div className="pointer-events-none absolute -left-40 top-1/4 h-[36rem] w-[36rem] rounded-full bg-primary/20 blur-[140px]" />
+        <div className="pointer-events-none absolute -left-40 top-1/4 h-[36rem] w-[36rem] rounded-full bg-primary/25 blur-[140px]" />
         <div className="pointer-events-none absolute right-0 top-0 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[120px]" />
 
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-28">
           <Rise><Kicker>Mobile shisha catering · Toronto & the GTA</Kicker></Rise>
           <Rise delay={0.08}>
-            <h1 className="display mt-7 text-[15vw] font-light leading-[0.86] tracking-[-0.02em] sm:text-[12vw] lg:text-[9.5rem]">
+            <h1 className="display mt-7 text-[14vw] font-bold leading-[0.9] tracking-[-0.01em] sm:text-[11vw] lg:text-[8.5rem]">
               Where flavour
               <br />
-              meets <span className="italic text-primary">finesse.</span>
+              meets <span className="italic font-medium text-primary">finesse.</span>
             </h1>
           </Rise>
           <Rise delay={0.16}>
             <div className="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-              <p className="max-w-md text-lg leading-relaxed text-neutral-400">
+              <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
                 Premium shisha and mocktail service delivered to your private event — set up, served, and cleaned down while you stay with your guests.
               </p>
               <div className="flex shrink-0 items-center gap-4">
-                <a href="#pricing" className="rounded-full bg-primary px-7 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
+                <a href="#pricing" className="gradient-gold rounded-full px-7 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
                   View pricing
                 </a>
                 <a href="#work" className="rounded-full border border-white/15 px-7 py-4 text-sm font-semibold transition-colors hover:border-white/40">
@@ -171,7 +150,7 @@ export default function Refined() {
 
         {/* flavour marquee */}
         <div className="absolute bottom-0 left-0 right-0 z-10 overflow-hidden border-y border-white/10 bg-black/40 py-4 backdrop-blur-sm">
-          <div className="marquee flex w-max gap-10 whitespace-nowrap text-sm uppercase tracking-[0.25em] text-neutral-500">
+          <div className="marquee flex w-max gap-10 whitespace-nowrap text-sm uppercase tracking-[0.25em] text-muted-foreground">
             {[...standardFlavours, ...signatureFlavours.map((f) => f.name), ...standardFlavours, ...signatureFlavours.map((f) => f.name)].map((f, i) => (
               <span key={i} className="flex items-center gap-10">
                 {f} <span className="text-primary">✦</span>
@@ -185,17 +164,17 @@ export default function Refined() {
       <section id="experience" className="mx-auto max-w-6xl px-6 py-28">
         <Rise><Kicker>How it works</Kicker></Rise>
         <Rise delay={0.05}>
-          <h2 className="display mt-6 max-w-2xl text-4xl font-light leading-[1.05] sm:text-6xl">
+          <h2 className="display mt-6 max-w-2xl text-4xl font-bold leading-[1.05] sm:text-6xl">
             Set up, serve, refresh, clean down.
           </h2>
         </Rise>
         <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
           {steps.map((s, i) => (
-            <Rise key={s.n} delay={i * 0.1} className="bg-[#080808]">
+            <Rise key={s.n} delay={i * 0.1} className="bg-background">
               <div className="group h-full p-8 transition-colors hover:bg-white/[0.03]">
-                <span className="display text-5xl font-light text-primary">{s.n}</span>
-                <h3 className="display mt-6 text-2xl">{s.t}</h3>
-                <p className="mt-3 text-neutral-400">{s.d}</p>
+                <span className="display text-5xl font-bold text-primary">{s.n}</span>
+                <h3 className="display mt-6 text-2xl font-semibold">{s.t}</h3>
+                <p className="mt-3 text-muted-foreground">{s.d}</p>
               </div>
             </Rise>
           ))}
@@ -208,10 +187,10 @@ export default function Refined() {
           <div>
             <Rise><Kicker>In action</Kicker></Rise>
             <Rise delay={0.05}>
-              <h2 className="display mt-6 text-4xl font-light sm:text-6xl">Selected setups</h2>
+              <h2 className="display mt-6 text-4xl font-bold sm:text-6xl">Selected setups</h2>
             </Rise>
           </div>
-          <a href={tel} className="hidden text-sm text-neutral-400 transition-colors hover:text-primary sm:block">
+          <a href={tel} className="hidden text-sm text-muted-foreground transition-colors hover:text-primary sm:block">
             Book a setup like this →
           </a>
         </div>
@@ -234,21 +213,22 @@ export default function Refined() {
         </div>
       </section>
 
-      {/* pricing (tabs: packages | rentals | memberships) ------------------ */}
+      {/* pricing (tabs: packages | rentals) -------------------------------- */}
       <section id="pricing" className="mx-auto max-w-6xl px-6 py-28">
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-end">
           <div>
             <Rise><Kicker>Pricing</Kicker></Rise>
             <Rise delay={0.05}>
-              <h2 className="display mt-6 text-4xl font-light sm:text-6xl">One menu, every occasion.</h2>
+              <h2 className="display mt-6 text-4xl font-bold sm:text-6xl">One menu, every occasion.</h2>
             </Rise>
           </div>
           <div className="inline-flex rounded-full border border-white/15 p-1 text-sm">
-            {(["packages", "rentals", "memberships"] as const).map((t) => (
+            {(["packages", "rentals"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
-                className={`rounded-full px-5 py-2 capitalize transition-colors ${tab === t ? "bg-primary text-black" : "text-neutral-400 hover:text-white"}`}
+                className={`rounded-full px-6 py-2 capitalize transition-colors ${tab === t ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-white"}`}
+                data-testid={`pricing-tab-${t}`}
               >
                 {t}
               </button>
@@ -262,17 +242,17 @@ export default function Refined() {
             <div className="grid gap-6 md:grid-cols-3">
               {packages.map((p, i) => (
                 <Rise key={p.name} delay={i * 0.08}>
-                  <div className={`flex h-full flex-col rounded-2xl border p-8 ${p.popular ? "border-primary bg-primary/[0.06]" : "border-white/10 bg-white/[0.02]"}`}>
-                    {p.popular && <span className="mb-4 w-fit rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-black">Most booked</span>}
-                    <h3 className="display text-3xl">{p.name}</h3>
-                    <p className="mt-1 text-sm text-neutral-400">{p.note}</p>
-                    <div className="display my-6 text-5xl font-light">{p.price}</div>
-                    <ul className="mb-8 space-y-3 text-sm text-neutral-300">
+                  <div className={`surface-panel flex h-full flex-col rounded-2xl p-8 ${p.popular ? "ring-2 ring-primary" : ""}`}>
+                    {p.popular && <span className="mb-4 w-fit rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-primary-foreground">Most booked</span>}
+                    <h3 className="display text-3xl font-bold">{p.name}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{p.note}</p>
+                    <div className="display my-6 text-5xl font-bold">{p.price}</div>
+                    <ul className="mb-8 space-y-3 text-sm text-gray-200">
                       {p.features.map((f) => (
                         <li key={f} className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {f}</li>
                       ))}
                     </ul>
-                    <a href={tel} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold transition-transform hover:scale-[1.02] ${p.popular ? "bg-primary text-black" : "border border-white/15 hover:border-white/40"}`}>
+                    <a href={tel} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold transition-transform hover:scale-[1.02] ${p.popular ? "gradient-gold text-black" : "border border-white/15 hover:border-white/40"}`}>
                       Book {p.name}
                     </a>
                   </div>
@@ -286,39 +266,14 @@ export default function Refined() {
             <Rise>
               <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
                 {rentals.map((r) => (
-                  <div key={r.q} className="flex items-baseline justify-between bg-[#080808] p-7 transition-colors hover:bg-white/[0.03]">
-                    <span className="text-neutral-300">{r.q}</span>
-                    <span className="display text-3xl font-light">{r.p}</span>
+                  <div key={r.q} className="flex items-baseline justify-between bg-background p-7 transition-colors hover:bg-white/[0.03]">
+                    <span className="text-gray-200">{r.q}</span>
+                    <span className="display text-3xl font-bold">{r.p}</span>
                   </div>
                 ))}
               </div>
-              <p className="mt-6 text-sm text-neutral-500">Every rental includes premium equipment, a standard flavour selection, clean-equipment guarantee, and optional pickup & delivery.</p>
+              <p className="mt-6 text-sm text-muted-foreground">Every rental includes premium equipment, a standard flavour selection, clean-equipment guarantee, and optional pickup & delivery.</p>
             </Rise>
-          )}
-
-          {/* memberships */}
-          {tab === "memberships" && (
-            <div className="grid gap-6 md:grid-cols-2">
-              {memberships.map((m, i) => (
-                <Rise key={m.name} delay={i * 0.08}>
-                  <div className={`flex h-full flex-col rounded-2xl border p-8 ${m.popular ? "border-primary bg-primary/[0.06]" : "border-white/10 bg-white/[0.02]"}`}>
-                    <div className="flex items-center justify-between">
-                      <h3 className="display text-3xl">{m.name}</h3>
-                      <Crown className={`h-6 w-6 ${m.popular ? "text-primary" : "text-neutral-500"}`} />
-                    </div>
-                    <div className="display my-6 text-5xl font-light">{m.price}<span className="text-xl text-neutral-500">{m.per}</span></div>
-                    <ul className="mb-8 grid gap-3 text-sm text-neutral-300 sm:grid-cols-2">
-                      {m.features.map((f) => (
-                        <li key={f} className="flex gap-2"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {f}</li>
-                      ))}
-                    </ul>
-                    <a href={tel} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold ${m.popular ? "bg-primary text-black" : "border border-white/15"}`}>
-                      Join {m.name}
-                    </a>
-                  </div>
-                </Rise>
-              ))}
-            </div>
           )}
         </div>
       </section>
@@ -329,22 +284,22 @@ export default function Refined() {
           <Rise><Kicker>The menu</Kicker></Rise>
           <div className="mt-10 grid gap-16 lg:grid-cols-2">
             <Rise>
-              <h3 className="display mb-8 text-2xl text-neutral-400">Standard</h3>
+              <h3 className="display mb-8 text-2xl font-semibold text-muted-foreground">Standard</h3>
               <ul className="divide-y divide-white/10">
                 {standardFlavours.map((f) => (
-                  <li key={f} className="display flex items-center justify-between py-4 text-2xl font-light sm:text-3xl">
-                    {f} <span className="text-neutral-700">—</span>
+                  <li key={f} className="display flex items-center justify-between py-4 text-2xl font-medium sm:text-3xl">
+                    {f} <span className="text-white/20">—</span>
                   </li>
                 ))}
               </ul>
             </Rise>
             <Rise delay={0.1}>
-              <h3 className="display mb-8 text-2xl text-primary">Signature blends</h3>
+              <h3 className="display mb-8 text-2xl font-semibold text-primary">Signature blends</h3>
               <ul className="divide-y divide-white/10">
                 {signatureFlavours.map((f) => (
                   <li key={f.name} className="py-4">
-                    <div className="display text-2xl font-light sm:text-3xl">{f.name}</div>
-                    <div className="mt-1 text-sm uppercase tracking-widest text-neutral-500">{f.mix}</div>
+                    <div className="display text-2xl font-medium sm:text-3xl">{f.name}</div>
+                    <div className="mt-1 text-sm uppercase tracking-widest text-muted-foreground">{f.mix}</div>
                   </li>
                 ))}
               </ul>
@@ -360,28 +315,29 @@ export default function Refined() {
           {testimonials.map((t, i) => (
             <Rise key={i} delay={i * 0.1}>
               <figure className="flex h-full flex-col">
-                <blockquote className="display text-2xl font-light leading-snug text-neutral-200">"{t.quote}"</blockquote>
+                <blockquote className="display text-2xl font-medium leading-snug text-gray-100">"{t.quote}"</blockquote>
                 <figcaption className="mt-6 border-t border-white/10 pt-5 text-sm">
                   <span className="text-white">{t.who}</span>
-                  <span className="block text-neutral-500">{t.where}</span>
+                  <span className="block text-muted-foreground">{t.where}</span>
                 </figcaption>
               </figure>
             </Rise>
           ))}
         </div>
-        <p className="mt-10 text-xs uppercase tracking-widest text-neutral-700">Sample reviews — replace with real client feedback before launch.</p>
+        <p className="mt-10 text-xs uppercase tracking-widest text-white/30">Sample reviews — replace with real client feedback before launch.</p>
       </section>
 
       {/* closing CTA ------------------------------------------------------- */}
       <section className="grain relative overflow-hidden border-t border-white/10 py-32">
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[130px]" />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <h2 className="display text-5xl font-light leading-[1.02] sm:text-7xl">
-            Let's make the night<br /><span className="italic text-primary">unforgettable.</span>
+          <img src="/logo.svg" alt="Shisha Chauffeurs" className="mx-auto mb-8 h-16 w-auto" />
+          <h2 className="display text-5xl font-bold leading-[1.02] sm:text-7xl">
+            Let's make the night<br /><span className="italic font-medium text-primary">unforgettable.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-md text-neutral-400">Outdoor locations and private residences across Toronto and the GTA. A deposit secures your date.</p>
+          <p className="mx-auto mt-6 max-w-md text-muted-foreground">Outdoor locations and private residences across Toronto and the GTA. A deposit secures your date.</p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <a href={tel} className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
+            <a href={tel} className="gradient-gold inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
               <Phone className="h-4 w-4" /> (647) 879-3637
             </a>
             <a href="https://www.instagram.com/shishachauffeurs/" target="_blank" rel="noreferrer"
@@ -392,7 +348,7 @@ export default function Refined() {
         </div>
       </section>
 
-      <footer className="border-t border-white/10 py-10 text-center text-xs uppercase tracking-[0.25em] text-neutral-600">
+      <footer className="border-t border-white/10 py-10 text-center text-xs uppercase tracking-[0.25em] text-white/40">
         Shisha Chauffeurs · Toronto & the GTA
       </footer>
     </div>

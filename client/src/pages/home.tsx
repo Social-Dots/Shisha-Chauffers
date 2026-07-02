@@ -8,7 +8,7 @@ import InActionSection from "@/components/in-action-section";
 // Lazy-load below-the-fold components for better performance
 const ServicesSection = lazy(() => import("@/components/services-section"));
 const PackagesSection = lazy(() => import("@/components/packages-section"));
-const MembershipsSection = lazy(() => import("@/components/memberships-section"));
+
 const ShishaRentalsSection = lazy(() => import("@/components/shisha-rentals-section"));
 const FlavoursMenu = lazy(() => import("@/components/flavours-menu"));
 const GallerySection = lazy(() => import("@/components/gallery-section"));
@@ -48,10 +48,6 @@ export default function Home() {
       
       <Suspense fallback={<SectionSkeleton />}>
         <PackagesSection />
-      </Suspense>
-      
-      <Suspense fallback={<SectionSkeleton />}>
-        <MembershipsSection />
       </Suspense>
       
       <Suspense fallback={<SectionSkeleton />}>

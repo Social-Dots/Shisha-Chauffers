@@ -68,7 +68,7 @@ const flavourOptions = [
 ];
 
 const additionalServiceOptions = [
-  "Additional Hookah ($55)",
+  "Additional Hookah ($75)",
   "Additional Head + flavour ($20 Each)",
   "Fruit Head + Flavour (Apple, Orange, Grapefruit) ($25 Each)",
 ];

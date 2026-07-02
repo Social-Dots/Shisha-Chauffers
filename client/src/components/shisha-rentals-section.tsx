@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/button";
 
 export default function ShishaRentalsSection() {
   const rentalPrices = [
-    { quantity: "1 Shisha", price: "$60" },
-    { quantity: "2 Shishas", price: "$115" },
-    { quantity: "3 Shishas", price: "$165" },
-    { quantity: "4 Shishas", price: "$210" },
-    { quantity: "5 Shishas", price: "$250" },
-    { quantity: "6 Shishas", price: "$300" }
+    { quantity: "1 Shisha", price: "$75" },
+    { quantity: "2 Shishas", price: "$150" },
+    { quantity: "3 Shishas", price: "$225" },
+    { quantity: "4 Shishas", price: "$295" },
+    { quantity: "5 Shishas", price: "$365" },
+    { quantity: "6 Shishas", price: "$435" }
   ];
 
 

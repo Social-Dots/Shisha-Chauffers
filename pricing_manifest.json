@@ -10,44 +10,44 @@
           {
             "plan": "1 Shisha",
             "quantity": 1,
-            "price": 60,
+            "price": 75,
             "currency": "CAD",
-            "display": "$60"
+            "display": "$75"
           },
           {
             "plan": "2 Shishas",
             "quantity": 2,
-            "price": 115,
+            "price": 150,
             "currency": "CAD",
-            "display": "$115"
+            "display": "$150"
           },
           {
             "plan": "3 Shishas",
             "quantity": 3,
-            "price": 165,
+            "price": 225,
             "currency": "CAD",
-            "display": "$165"
+            "display": "$225"
           },
           {
             "plan": "4 Shishas",
             "quantity": 4,
-            "price": 210,
+            "price": 295,
             "currency": "CAD",
-            "display": "$210"
+            "display": "$295"
           },
           {
             "plan": "5 Shishas",
             "quantity": 5,
-            "price": 250,
+            "price": 365,
             "currency": "CAD",
-            "display": "$250"
+            "display": "$365"
           },
           {
             "plan": "6 Shishas",
             "quantity": 6,
-            "price": 300,
+            "price": 435,
             "currency": "CAD",
-            "display": "$300"
+            "display": "$435"
           }
         ]
       },
@@ -71,9 +71,9 @@
           {
             "plan": "Luxury",
             "quantity": null,
-            "price": 600,
+            "price": 800,
             "currency": "CAD",
-            "display": "$600"
+            "display": "$800"
           }
         ]
       },

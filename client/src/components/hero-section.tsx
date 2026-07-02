@@ -1,6 +1,5 @@
 import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EnhancedShishaSmoke } from "@/components/interactive-smoke";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -23,7 +22,6 @@ export default function HeroSection() {
           decoding="async"
         />
         <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-        <EnhancedShishaSmoke className="z-10 opacity-80" />
       </div>
       
       <div className="relative z-30 mx-auto max-w-4xl px-4 text-center">

@@ -40,7 +40,7 @@ export default function PackagesSection() {
     },
     {
       name: "Luxury",
-      price: "$600",
+      price: "$800",
       description: "Ultimate premium experience for VIP events",
       features: [
         "6-hour shisha service",

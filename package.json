@@ -65,6 +65,7 @@
     "nodemailer": "^7.0.6",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "posthog-js": "^1.392.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",

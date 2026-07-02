@@ -196,7 +196,7 @@ export default function ContactForm() {
             Shisha Chauffeurs Booking Form
           </div>
           <div className="mx-auto mb-6 flex w-fit items-center justify-center rounded-3xl border border-white/10 bg-black/30 px-5 py-4 shadow-2xl shadow-black/20 sm:px-6">
-            <img src="/logo.svg" alt="Shisha Chauffeurs" className="h-10 w-auto sm:h-12 md:h-16" />
+            <img src="/brand/icon.png" alt="Shisha Chauffeurs" className="h-10 w-auto sm:h-12 md:h-16" />
           </div>
           <h2 className="mb-4 font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
             Shisha Catering, Rental & Mocktail Services

@@ -102,7 +102,7 @@ export default function Refined() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-black/30 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
           <a href="#top" className="flex items-center gap-3" aria-label="Shisha Chauffeurs home">
-            <img src="/logo.svg" alt="Shisha Chauffeurs" className="h-11 w-auto" />
+            <img src="/brand/icon.png" alt="Shisha Chauffeurs" className="h-11 w-auto" />
             <span className="display hidden text-base font-semibold tracking-wide sm:block">Shisha Chauffeurs</span>
           </a>
           <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
@@ -331,7 +331,7 @@ export default function Refined() {
       <section className="grain relative overflow-hidden border-t border-white/10 py-32">
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[130px]" />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <img src="/logo.svg" alt="Shisha Chauffeurs" className="mx-auto mb-8 h-16 w-auto" />
+          <img src="/brand/icon.png" alt="Shisha Chauffeurs" className="mx-auto mb-8 h-16 w-auto" />
           <h2 className="display text-5xl font-bold leading-[1.02] sm:text-7xl">
             Let's make the night<br /><span className="italic font-medium text-primary">unforgettable.</span>
           </h2>

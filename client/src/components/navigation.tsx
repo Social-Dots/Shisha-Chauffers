@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { CalendarCheck, Menu, X } from "lucide-react";
+import { Logo } from "@/components/brand-mark";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,13 +29,14 @@ export default function Navigation() {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex min-h-16 items-center justify-between gap-3 py-2">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center">
             <button
               onClick={() => scrollToSection('home')}
-              className="max-w-[14rem] text-left font-serif text-lg font-bold leading-tight tracking-[0.08em] sm:max-w-none sm:text-xl"
+              className="text-left"
               data-testid="nav-logo"
+              aria-label="Shisha Chauffeurs — home"
             >
-              SHISHA CHAUFFEURS
+              <Logo markClassName="h-8 w-auto sm:h-9" />
             </button>
           </div>
           

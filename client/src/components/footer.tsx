@@ -1,5 +1,6 @@
 import { Mail, MapPin, Instagram, Phone } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
+import { Logo } from "@/components/brand-mark";
 
 export default function Footer() {
   return (
@@ -7,8 +8,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <span className="font-serif font-bold text-xl">SHISHA CHAUFFEURS</span>
+            <div className="mb-4">
+              <Logo markClassName="h-9 w-auto" />
             </div>
             <p className="text-muted-foreground mb-4">Where flavor meets finesse</p>
             <p className="text-sm text-muted-foreground">

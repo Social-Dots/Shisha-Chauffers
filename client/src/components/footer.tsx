@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <div className="mb-4">
-              <Logo markClassName="h-9 w-auto" />
+              <Logo markClassName="h-11 w-auto sm:h-12" />
             </div>
             <p className="text-muted-foreground mb-4">Where flavor meets finesse</p>
             <p className="text-sm text-muted-foreground">

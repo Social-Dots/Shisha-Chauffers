@@ -18,18 +18,26 @@ interface LogoProps {
   className?: string;
   markClassName?: string;
   variant?: "horizontal" | "stacked" | "icon";
+  priority?: boolean;
 }
 
-export function Logo({ className, markClassName, variant = "horizontal" }: LogoProps) {
+const logoSources = {
+  horizontal: "/brand/horizontal.png",
+  stacked: "/brand/stacked.png",
+};
+
+export function Logo({ className, markClassName, variant = "horizontal", priority = false }: LogoProps) {
   if (variant === "icon") {
     return <HookahMark className={markClassName ?? className ?? "h-9 w-auto"} />;
   }
 
   return (
     <img
-      src="/logo.jpeg"
+      src={logoSources[variant]}
       alt="Shisha Chauffeurs"
-      className={markClassName ?? className ?? "h-9 w-auto"}
+      className={markClassName ?? className ?? "h-12 w-auto"}
+      decoding="async"
+      loading={priority ? "eager" : "lazy"}
     />
   );
 }

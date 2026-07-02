@@ -1,4 +1,5 @@
 import { ChevronDown } from "lucide-react";
+import { Logo } from "@/components/brand-mark";
 import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
@@ -21,11 +22,15 @@ export default function HeroSection() {
           height="683"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div className="absolute inset-0 bg-black/80"></div>
       </div>
       
       <div className="relative z-30 mx-auto max-w-4xl px-4 text-center">
-        <h1 className="mb-5 font-serif text-4xl font-bold leading-[0.95] text-shadow sm:text-5xl md:mb-6 md:text-7xl">
+        <Logo
+          markClassName="mx-auto mb-7 h-auto w-[min(84vw,34rem)] drop-shadow-2xl sm:mb-9"
+          priority
+        />
+        <h1 className="mb-5 font-serif text-[2.4rem] font-bold leading-[0.95] text-shadow sm:text-5xl md:mb-6 md:text-7xl">
           LUXURY MOBILE <br />
           <span className="text-primary font-extrabold tracking-wider">SHISHA CATERING</span>
         </h1>

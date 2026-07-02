@@ -32,11 +32,11 @@ export default function Navigation() {
           <div className="flex items-center">
             <button
               onClick={() => scrollToSection('home')}
-              className="text-left"
+              className="flex items-center text-left"
               data-testid="nav-logo"
               aria-label="Shisha Chauffeurs — home"
             >
-              <Logo markClassName="h-8 w-auto sm:h-9" />
+              <Logo markClassName="h-9 w-auto sm:h-11" priority />
             </button>
           </div>
           
@@ -61,13 +61,6 @@ export default function Navigation() {
               data-testid="nav-packages"
             >
               Packages
-            </button>
-            <button 
-              onClick={() => scrollToSection('memberships')} 
-              className="hover:text-primary transition-colors"
-              data-testid="nav-memberships"
-            >
-              Memberships
             </button>
             <button 
               onClick={() => scrollToSection('shisha-rentals')} 
@@ -136,13 +129,6 @@ export default function Navigation() {
                 data-testid="mobile-nav-packages"
               >
                 Packages
-              </button>
-              <button 
-                onClick={() => scrollToSection('memberships')} 
-                className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
-                data-testid="mobile-nav-memberships"
-              >
-                Memberships
               </button>
               <button 
                 onClick={() => scrollToSection('shisha-rentals')} 

@@ -188,6 +188,8 @@ const actionStats = [
   { value: "GTA", label: "private service" },
 ];
 
+const featuredClip = mediaItems[0];
+
 export default function InActionSection() {
   const scrollToContact = () => {
     const element = document.getElementById("contact");
@@ -202,7 +204,7 @@ export default function InActionSection() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 grid gap-5 sm:mb-10 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.78fr)] lg:items-stretch">
+        <div className="mb-8 grid gap-5 sm:mb-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(26rem,1fr)] lg:items-stretch">
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.035] p-6 shadow-2xl shadow-black/20 sm:p-8 lg:p-10">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80">
               <Sparkles className="h-4 w-4 text-primary" />
@@ -225,23 +227,67 @@ export default function InActionSection() {
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-            {coverageNotes.map((note) => (
-              <div key={note} className="group flex items-center gap-4 rounded-[1.35rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.025] p-4 text-sm text-white/80 transition-colors hover:border-primary/40 sm:p-5">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-primary/10 text-primary">
-                  {note.includes("Toronto") ? <MapPin className="h-5 w-5" /> : <Camera className="h-5 w-5" />}
-                </span>
-                <span className="font-medium">{note}</span>
-              </div>
-            ))}
-            <Button
-              onClick={scrollToContact}
-              className="mt-1 min-h-12 justify-center rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-accent hover:text-accent-foreground"
-              data-testid="button-in-action-book-top"
-            >
-              Book A Setup
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+          <article className="group relative min-h-[24rem] overflow-hidden rounded-[1.75rem] border border-white/10 bg-black shadow-2xl shadow-black/30">
+            {featuredClip.type === "video" && (
+              <video
+                className="h-full min-h-[24rem] w-full object-cover opacity-85 transition-transform duration-700 group-hover:scale-[1.03]"
+                src={featuredClip.src}
+                poster={featuredClip.poster}
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+              />
+            )}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
+            <div className="pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white/80">
+              <PlayCircle className="h-4 w-4 text-primary" />
+              Live Clip
+            </div>
+            <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 shadow-2xl shadow-black/40 backdrop-blur-sm">
+              <PlayCircle className="h-10 w-10 fill-primary/25 text-primary" />
+            </div>
+            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+              <p className="text-sm uppercase tracking-[0.24em] text-primary/90">Featured setup</p>
+              <h3 className="mt-2 font-serif text-2xl font-semibold text-white sm:text-3xl">
+                Hosted lounge setup for private celebrations.
+              </h3>
+              <p className="mt-2 max-w-xl text-sm leading-6 text-white/70">
+                A quick look at the service style guests see on arrival.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div className="mb-8 grid gap-3 sm:mb-10 sm:grid-cols-3 lg:grid-cols-[repeat(3,1fr)_auto]">
+          {coverageNotes.map((note) => (
+            <div key={note} className="group flex items-center gap-4 rounded-[1.35rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.025] p-4 text-sm text-white/80 transition-colors hover:border-primary/40 sm:p-5">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-primary/10 text-primary">
+                {note.includes("Toronto") ? <MapPin className="h-5 w-5" /> : <Camera className="h-5 w-5" />}
+              </span>
+              <span className="font-medium">{note}</span>
+            </div>
+          ))}
+          <Button
+            onClick={scrollToContact}
+            className="min-h-12 justify-center rounded-full bg-primary px-6 text-base font-semibold text-primary-foreground hover:bg-accent hover:text-accent-foreground sm:col-span-3 lg:col-span-1 lg:h-full"
+            data-testid="button-in-action-book-top"
+          >
+            Book A Setup
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-sm uppercase tracking-[0.28em] text-primary/90">Recent Moments</p>
+            <h3 className="mt-2 font-serif text-2xl font-semibold text-white sm:text-3xl">
+              Browse the latest setups
+            </h3>
+          </div>
+          <div className="hidden text-sm text-white/50 sm:block">
+            Swipe or use arrows
           </div>
         </div>
 

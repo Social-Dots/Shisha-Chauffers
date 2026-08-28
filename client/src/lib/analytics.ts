@@ -5,7 +5,7 @@
 // to a no-op when gtag is missing (ad blockers, SSR, tests), so callers never
 // need to guard.
 
-const MEASUREMENT_ID = "G-B5VRGDQKVQ";
+const MEASUREMENT_ID = "G-DW23YFQKHB";
 
 type GtagParams = Record<string, unknown>;
 

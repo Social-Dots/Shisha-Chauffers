@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Check, Instagram, Phone } from "lucide-react";
+import { trackPhoneClick } from "@/lib/analytics";
 
 /**
  * "REFINED" — condensed landing concept for Shisha Chauffeurs, styled to match
@@ -111,7 +112,7 @@ export default function Refined() {
             <a href="#pricing" className="transition-colors hover:text-white">Pricing</a>
             <a href="#flavours" className="transition-colors hover:text-white">Flavours</a>
           </nav>
-          <a href={tel} className="group inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm transition-colors hover:border-primary hover:text-primary">
+          <a href={tel} onClick={() => trackPhoneClick("refined-header")} className="group inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm transition-colors hover:border-primary hover:text-primary">
             Book <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </div>
@@ -190,7 +191,7 @@ export default function Refined() {
               <h2 className="display mt-6 text-4xl font-bold sm:text-6xl">Selected setups</h2>
             </Rise>
           </div>
-          <a href={tel} className="hidden text-sm text-muted-foreground transition-colors hover:text-primary sm:block">
+          <a href={tel} onClick={() => trackPhoneClick("refined-gallery")} className="hidden text-sm text-muted-foreground transition-colors hover:text-primary sm:block">
             Book a setup like this →
           </a>
         </div>
@@ -252,7 +253,7 @@ export default function Refined() {
                         <li key={f} className="flex gap-3"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {f}</li>
                       ))}
                     </ul>
-                    <a href={tel} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold transition-transform hover:scale-[1.02] ${p.popular ? "gradient-gold text-black" : "border border-white/15 hover:border-white/40"}`}>
+                    <a href={tel} onClick={() => trackPhoneClick(`refined-pricing-${p.name}`)} className={`mt-auto rounded-full py-3 text-center text-sm font-semibold transition-transform hover:scale-[1.02] ${p.popular ? "gradient-gold text-black" : "border border-white/15 hover:border-white/40"}`}>
                       Book {p.name}
                     </a>
                   </div>
@@ -337,7 +338,7 @@ export default function Refined() {
           </h2>
           <p className="mx-auto mt-6 max-w-md text-muted-foreground">Outdoor locations and private residences across Toronto and the GTA. A deposit secures your date.</p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <a href={tel} className="gradient-gold inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
+            <a href={tel} onClick={() => trackPhoneClick("refined-cta")} className="gradient-gold inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
               <Phone className="h-4 w-4" /> (647) 879-3637
             </a>
             <a href="https://www.instagram.com/shishachauffeurs/" target="_blank" rel="noreferrer"

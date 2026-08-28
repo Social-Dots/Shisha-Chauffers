@@ -1,6 +1,7 @@
 import { Mail, MapPin, Instagram, Phone } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
 import { Logo } from "@/components/brand-mark";
+import { trackPhoneClick } from "@/lib/analytics";
 
 export default function Footer() {
   return (
@@ -33,9 +34,10 @@ export default function Footer() {
               <div className="flex items-center">
                 <Phone className="text-primary mr-2 h-4 w-4" />
                 <a 
-                  href="tel:6478793637" 
+                  href="tel:6478793637"
                   className="hover:text-primary transition-colors"
                   data-testid="link-phone"
+                  onClick={() => trackPhoneClick("footer")}
                 >
                   (647) 879-3637
                 </a>

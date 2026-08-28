@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { insertBookingSchema, type InsertBooking } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { trackBookingSubmit, trackBookingError } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -138,7 +139,13 @@ export default function ContactForm() {
 
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (_result, variables) => {
+      trackBookingSubmit({
+        event_label: variables.packageSelection || "unspecified",
+        services: variables.services?.join(", "),
+        guest_count: variables.guestCount,
+        referral_source: variables.referralSource,
+      });
       toast({
         title: "Booking Request Submitted",
         description: "We received your request and will follow up shortly to confirm availability.",
@@ -147,6 +154,7 @@ export default function ContactForm() {
       setCurrentStep(1);
     },
     onError: (error) => {
+      trackBookingError(error instanceof Error ? error.message : "Unknown error");
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to submit booking request. Please try again.",

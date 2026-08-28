@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { Logo } from "@/components/brand-mark";
 import { Button } from "@/components/ui/button";
+import { trackBookingStart } from "@/lib/analytics";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -41,7 +42,10 @@ export default function HeroSection() {
         
         <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
           <Button 
-            onClick={() => scrollToSection('contact')} 
+            onClick={() => {
+              trackBookingStart('hero');
+              scrollToSection('contact');
+            }}
             className="gradient-gold min-h-12 rounded-full px-7 py-3 text-base font-semibold text-black transition-all duration-300 hover:shadow-lg sm:px-8 sm:py-4"
             data-testid="button-book-event"
           >

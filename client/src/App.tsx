@@ -1,6 +1,7 @@
-import { Switch, Route } from "wouter";
-import { Suspense, lazy } from "react";
+import { Switch, Route, useLocation } from "wouter";
+import { Suspense, lazy, useEffect, useRef } from "react";
 import { queryClient } from "./lib/queryClient";
+import { trackPageView } from "@/lib/analytics";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,6 +26,18 @@ const AdminLoadingFallback = () => (
 );
 
 function Router() {
+  const [location] = useLocation();
+
+  // The gtag snippet in index.html already reports the landing page, so only
+  // client-side navigations after it need to be sent.
+  const initialLocation = useRef(location);
+  useEffect(() => {
+    if (location === initialLocation.current) {
+      return;
+    }
+    trackPageView(location);
+  }, [location]);
+
   return (
     <>
       {/* Main router */}

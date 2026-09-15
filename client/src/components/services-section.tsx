@@ -9,7 +9,7 @@ export default function ServicesSection() {
       description: "Professional shisha masters bring premium flavours and equipment directly to your event",
       gradient: "gradient-gold",
       features: [
-        "Professional attendants prepare all shisha equipment and premium flavors.",
+        "Professional attendants prepare all shisha equipment and premium flavours.",
         "Continuous monitoring and service throughout your event.",
         "Complete breakdown and cleanup once the event concludes."
       ]
@@ -17,23 +17,13 @@ export default function ServicesSection() {
     {
       icon: Home,
       title: "Shisha Rentals",
-      description: "Rent premium shisha equipment for your private events and parties",
+      description: "Rent shisha equipment for your private events and parties",
       gradient: "gradient-gold",
       features: [
-        "Professional attendants prepare all shisha equipment and premium flavors.",
-        "Continuous monitoring and service throughout your event.",
-        "Complete breakdown and cleanup once the event concludes."
-      ]
-    },
-    {
-      icon: Martini,
-      title: "Shisha Membership", 
-      description: "Enjoy exclusive member perks, preferred pricing, and prioritized bookings for private events and regular service schedules.",
-      gradient: "gradient-purple",
-      features: [
-        "Professional attendants prepare all shisha equipment and premium flavors.",
-        "Continuous monitoring and service throughout your event.",
-        "Complete breakdown and cleanup once the event concludes."
+        "Self-service rental — equipment only, no attendants included.",
+        "Basic equipment: shisha, basic head, basic flavour, and quick-light coals.",
+        "Set-up instructions included, with a 24-hour rental period.",
+        "Pickup and delivery available."
       ]
     }
   ];
@@ -44,11 +34,11 @@ export default function ServicesSection() {
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Our Premium Services</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Elevate your events with our luxury mobile shisha catering services and exclusive membership benefits
+            Elevate your events with our luxury mobile shisha catering, or rent shisha equipment for a self-service setup
           </p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           {services.map((service, index) => (
             <Card key={index} className="bg-card hover-float" data-testid={`service-card-${index}`}>
               <CardContent className="p-8">

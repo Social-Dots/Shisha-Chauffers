@@ -183,8 +183,6 @@ const coverageNotes = [
 ];
 
 const actionStats = [
-  { value: "27", label: "event moments" },
-  { value: "3", label: "live clips" },
   { value: "GTA", label: "private service" },
 ];
 
@@ -217,7 +215,7 @@ export default function InActionSection() {
               Real shisha setups, live clips, and private-event moments from bookings across Toronto and the GTA.
             </p>
 
-            <div className="mt-7 grid grid-cols-3 gap-3">
+            <div className="mt-7 grid gap-3 sm:max-w-xs">
               {actionStats.map((stat) => (
                 <div key={stat.label} className="rounded-2xl border border-white/10 bg-black/25 p-4">
                   <p className="font-serif text-2xl font-semibold text-white sm:text-3xl">{stat.value}</p>

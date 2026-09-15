@@ -16,7 +16,7 @@ export default function AboutSection() {
             <h2 className="mb-5 font-serif text-3xl font-bold sm:text-4xl md:text-5xl">About Shisha Chauffeurs</h2>
             <p className="mb-5 text-lg text-primary sm:text-xl">Where flavor meets finesse</p>
             <p className="mb-5 text-base leading-7 text-muted-foreground sm:text-lg">
-              We are a premium mobile shisha and mocktail catering service that brings luxury directly to your events. 
+              We are a premium mobile shisha catering and rental service that brings luxury directly to your events. 
               Our team of professionals ensures every gathering becomes an unforgettable experience with the finest 
               flavours and impeccable service.
             </p>

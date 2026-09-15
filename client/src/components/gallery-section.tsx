@@ -4,34 +4,34 @@ import { Button } from "@/components/ui/button";
 export default function GallerySection() {
   const galleryImages = [
     {
-      src: "https://lh3.googleusercontent.com/pw/AP1GczP-FRnrKUzQHX4h3rFX5DBRwpNjR41QuvgOr-2S5jDEqNNplXwg4ydxC5pFM4hQNGnUSa1mDz3ezAUM255rVxOTBhjoCtaEpA_yoosryeLGv-y0ZOOZ8MgB2_1YiulzC92N4VSXRNHangaDqTxd54ay5Q=w512-h683-s-no?authuser=0",
-      alt: "Luxury outdoor shisha setup",
-      caption: "Outdoor Event Setup"
+      src: "/media/in-action/venue-lineup.jpg",
+      alt: "Multi-head shisha lineup set up for a private event",
+      caption: "Event Lineup"
     },
     {
-      src: "https://lh3.googleusercontent.com/pw/AP1GczPAc3EgZ-ZVaIoD664HFRkpZEYXy9OAKkbzp02u1kd6YgVBpfe6fr5_luMF1soMWbl3j0gTVNQ4h_iJrRHNbezvQ-zUB-4ZA1BiQNV_ii8mgHSiC_RHWzXOc1qb1JyWJRFAwWBVAHtN1x_uk80CX3BHFg=w512-h683-s-no?authuser=0",
-      alt: "Premium shisha lounge interior",
-      caption: "Premium Lounge Experience"
+      src: "/media/in-action/lounge-smoke-poster.jpg",
+      alt: "Hosted lounge shisha setup for a private celebration",
+      caption: "Hosted Lounge Setup"
     },
     {
-      src: "https://lh3.googleusercontent.com/pw/AP1GczNs-OAgeTHQGhPQcis1nx135hfFnewdZjy0vs2-HBuLkjn3jCCLSiw6u_OiGHPS3ET8z6DkNeTg5WzOZ8xGb88UKHtbUnLd-zby0bs_fXNiQcEZl0EH3A-HbZyTa2qkgGihiDJjg_bxf6_Gd0fJZRpcXQ=w512-h683-s-no?authuser=0",
-      alt: "Elegant shisha pipe closeup",
+      src: "/media/in-action/private-residence.jpg",
+      alt: "Shisha setup at a private residence",
+      caption: "Private Residence"
+    },
+    {
+      src: "/media/in-action/outdoor-setup-poster.jpg",
+      alt: "Outdoor shisha service for a backyard party",
+      caption: "Outdoor Setup"
+    },
+    {
+      src: "/media/in-action/backyard-setup.jpg",
+      alt: "Backyard shisha service with a polished setup",
+      caption: "Backyard Service"
+    },
+    {
+      src: "/media/in-action/closeup-setup-poster.jpg",
+      alt: "Close-up of premium shisha equipment",
       caption: "Premium Equipment"
-    },
-    {
-      src: "https://lh3.googleusercontent.com/pw/AP1GczN3qDn5ysxiWEUEAkye-N_xGi-mOP63IzmZ9cDBf5Mj0i627kpZJZTgSW2zOSx7Row1wBPvwiDl6yFEULJD_olvb1EQz8sfL5eqLSPa_uIlQuDmrrT4YHJRDliJ8J9w6P8DyN5vfjkE_mqRnfNAoNDeww=w512-h683-s-no?authuser=0",
-      alt: "Upscale patio shisha service",
-      caption: "Private Residence Service"
-    },
-    {
-      src: "https://lh3.googleusercontent.com/pw/AP1GczOoPLJF23dRVAOy5vqPBGLULmoJNtEpTdAa05H55gyhl8M2u6UcIgd6B5qP8ujLKxBamhbgfzwNofFUmyWVxEYjRNHgNl69pT9NmDENTAtt2hrCSV7qjRQCQjTk_F1-9JUMB61aCco1tbfCMibKqUFhtQ=w512-h683-s-no?authuser=0",
-      alt: "Professional shisha preparation",
-      caption: "Expert Preparation"
-    },
-    {
-      src: "https://lh3.googleusercontent.com/pw/AP1GczMi0k9U9UoPmxy9_uYqI0NEbVQUuyU9ASX27FRNoR0LQXkpeYJveI_S6UzB9u8NziZwwbevSKyagg8uqIuGPmoiJ0oS9eImuPG5JX8y67m7wb7f6qjBsUg6soLkUJwonLAT4vqOXB7iie_TxXDwQ3wdVQ=w512-h683-s-no?authuser=0",
-      alt: "Luxury rooftop shisha bar",
-      caption: "Rooftop Events"
     }
   ];
 
@@ -50,8 +50,6 @@ export default function GallerySection() {
                 src={image.src} 
                 alt={image.alt} 
                 className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
-                width="512"
-                height="683"
                 loading="lazy"
                 decoding="async"
               />

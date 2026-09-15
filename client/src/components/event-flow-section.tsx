@@ -5,7 +5,7 @@ export default function EventFlowSection() {
     {
       number: "01",
       title: "Choose your experience",
-      description: "Choose shisha catering, rentals, mocktails, or membership.",
+      description: "Choose shisha catering or shisha rentals.",
       icon: Sparkles,
     },
     {

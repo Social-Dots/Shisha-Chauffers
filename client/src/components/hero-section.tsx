@@ -16,11 +16,11 @@ export default function HeroSection() {
       {/* Hero background */}
       <div className="absolute inset-0">
         <img 
-          src="https://lh3.googleusercontent.com/pw/AP1GczOrQSNMMXMkfvlqyH32IhDel9d5ORHwmV-nHIfYLSv1ya8e7Cc9RngQdbYVctm9a9Z1MhtN3K8OnQlMo76X1Mj19MaqwAk_kA6Xby8OpoG4crYB4LL1zhj97zA1CI2kIhKdCAFAglvDlofj5IIihanJ=w854-h683-s-no?authuser=0" 
-          alt="Luxury shisha cafe ambiance" 
+          src="/media/in-action/event-setup.jpg" 
+          alt="Luxury mobile shisha setup at a private event" 
           className="w-full h-full object-cover"
-          width="854"
-          height="683"
+          width="1600"
+          height="1200"
           decoding="async"
         />
         <div className="absolute inset-0 bg-black/80"></div>
@@ -37,7 +37,7 @@ export default function HeroSection() {
         </h1>
         <p className="mb-2 text-lg text-muted-foreground sm:text-xl md:text-2xl">Where flavor meets finesse</p>
         <p className="mx-auto mb-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg md:text-xl">
-          Premium shisha and mocktail services delivered to your doorstep for private events across Toronto and the GTA.
+          Premium shisha catering and rentals delivered to your doorstep for private events across Toronto and the GTA.
         </p>
         
         <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">

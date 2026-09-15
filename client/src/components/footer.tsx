@@ -14,7 +14,7 @@ export default function Footer() {
             </div>
             <p className="text-muted-foreground mb-4">Where flavor meets finesse</p>
             <p className="text-sm text-muted-foreground">
-              Premium mobile shisha and mocktail catering services for your luxury events.
+              Premium mobile shisha catering and rental services for your luxury events.
             </p>
           </div>
           

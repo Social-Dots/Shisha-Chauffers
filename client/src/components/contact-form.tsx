@@ -27,29 +27,23 @@ const serviceOptions = [
     description:
       "Fully catered on-site experience with professional attendants, setup, coal rotation, flavour guidance, and clean-down.",
   },
-  {
-    value: "mocktail-services",
-    label: "Mocktail Services",
-    description:
-      "Handcrafted mocktail service for events that want a full hospitality layer alongside shisha.",
-  },
 ];
 
 const packageOptions = [
   {
     value: "standard-private-session",
-    label: "Standard Private Session (2-6 People) $250",
-    description: "2 hookahs, standard or premium flavours, plus setup, maintenance, and cleaning by attendants.",
+    label: "Standard Private Session (2-6 People) $300",
+    description: "2 shishas, choice of any 2 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
   },
   {
     value: "premium-private-session",
     label: "Premium Private Session (4-12 People) $450",
-    description: "4 hookahs, standard or premium flavours, plus setup, maintenance, and cleaning by attendants.",
+    description: "4 shishas, choice of any 4 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
   },
   {
     value: "luxury-private-experience",
     label: "Luxury Private Experience (8-24 People) $600",
-    description: "8 hookahs, standard or premium flavours, plus setup, maintenance, and cleaning by attendants.",
+    description: "8 shishas, choice of any 8 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
   },
 ];
 
@@ -69,9 +63,11 @@ const flavourOptions = [
 ];
 
 const additionalServiceOptions = [
-  "Additional Hookah ($75)",
-  "Additional Head + flavour ($20 Each)",
-  "Fruit Head + Flavour (Apple, Orange, Grapefruit) ($25 Each)",
+  "Electric Charcoal Burner Rental ($5 per day)",
+  "Heat Management Device ($20 each)",
+  "Box of Coconut Coals ($20 per box)",
+  "250g Box of Flavours ($40 - $45 each)",
+  "Additional Day ($60)",
 ];
 
 const referralOptions = [
@@ -207,10 +203,10 @@ export default function ContactForm() {
             <img src="/brand/icon.png" alt="Shisha Chauffeurs" className="h-10 w-auto sm:h-12 md:h-16" />
           </div>
           <h2 className="mb-4 font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            Shisha Catering, Rental & Mocktail Services
+            Shisha Catering & Rental Services
           </h2>
           <p className="mx-auto max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Reserve our luxury mobile shisha and mocktail catering services or rent shishas for your next event.
+            Reserve our luxury mobile shisha catering service or rent shishas for your next event.
             Whether you are hosting a private gathering, wedding, birthday, or celebration, we use this form to confirm
             your service request, event details, preferred flavours, and any add-ons you want included.
           </p>
@@ -473,6 +469,7 @@ export default function ContactForm() {
                     <div className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm text-muted-foreground">
                       <p className="font-semibold text-white">Shisha rental prices</p>
                       <p className="mt-2">1 shisha $60, 2 shishas $115, 3 shishas $165, 4 shishas $210, 5 shishas $250, 6 shishas $300.</p>
+                      <p className="mt-3 text-white">Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box.</p>
                     </div>
 
                     <FormField

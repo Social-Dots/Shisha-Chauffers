@@ -12,7 +12,7 @@ import { trackPhoneClick } from "@/lib/analytics";
 
 // ─── content (reused verbatim from the live site) ──────────────────────────
 const steps = [
-  { n: "01", t: "Choose your experience", d: "Catering, rentals, or mocktails for your event." },
+  { n: "01", t: "Choose your experience", d: "Catering or rentals for your event." },
   { n: "02", t: "Share the details", d: "Date, guest count, address, and flavour preferences." },
   { n: "03", t: "We confirm", d: "Availability, pricing, deposit, and arrival timing." },
 ];
@@ -135,7 +135,7 @@ export default function Refined() {
           <Rise delay={0.16}>
             <div className="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-                Premium shisha and mocktail service delivered to your private event — set up, served, and cleaned down while you stay with your guests.
+                Premium shisha service delivered to your private event — set up, served, and cleaned down while you stay with your guests.
               </p>
               <div className="flex shrink-0 items-center gap-4">
                 <a href="#pricing" className="gradient-gold rounded-full px-7 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">

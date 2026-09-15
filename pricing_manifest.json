@@ -1,112 +1,62 @@
 {
   "pricing_manifest": {
-    "version": "1.0",
-    "last_updated": "2025-09-22",
+    "version": "1.1",
+    "last_updated": "2026-09-15",
     "currency": "CAD",
     "categories": {
       "shisha_rental": {
         "context": "Rental",
         "pricing": [
-          {
-            "plan": "1 Shisha",
-            "quantity": 1,
-            "price": 75,
-            "currency": "CAD",
-            "display": "$75"
-          },
-          {
-            "plan": "2 Shishas",
-            "quantity": 2,
-            "price": 150,
-            "currency": "CAD",
-            "display": "$150"
-          },
-          {
-            "plan": "3 Shishas",
-            "quantity": 3,
-            "price": 225,
-            "currency": "CAD",
-            "display": "$225"
-          },
-          {
-            "plan": "4 Shishas",
-            "quantity": 4,
-            "price": 295,
-            "currency": "CAD",
-            "display": "$295"
-          },
-          {
-            "plan": "5 Shishas",
-            "quantity": 5,
-            "price": 365,
-            "currency": "CAD",
-            "display": "$365"
-          },
-          {
-            "plan": "6 Shishas",
-            "quantity": 6,
-            "price": 435,
-            "currency": "CAD",
-            "display": "$435"
-          }
+          { "plan": "1 Shisha", "quantity": 1, "price": 75, "currency": "CAD", "display": "$75" },
+          { "plan": "2 Shishas", "quantity": 2, "price": 150, "currency": "CAD", "display": "$150" },
+          { "plan": "3 Shishas", "quantity": 3, "price": 225, "currency": "CAD", "display": "$225" },
+          { "plan": "4 Shishas", "quantity": 4, "price": 295, "currency": "CAD", "display": "$295" },
+          { "plan": "5 Shishas", "quantity": 5, "price": 365, "currency": "CAD", "display": "$365" },
+          { "plan": "6 Shishas", "quantity": 6, "price": 435, "currency": "CAD", "display": "$435" }
         ]
       },
       "shisha_catering": {
         "context": "Catering",
         "pricing": [
-          {
-            "plan": "Standard",
-            "quantity": null,
-            "price": 250,
-            "currency": "CAD",
-            "display": "$250"
-          },
-          {
-            "plan": "Premium",
-            "quantity": null,
-            "price": 450,
-            "currency": "CAD",
-            "display": "$450"
-          },
-          {
-            "plan": "Luxury",
-            "quantity": null,
-            "price": 800,
-            "currency": "CAD",
-            "display": "$800"
-          }
+          { "plan": "Standard", "shishas_included": 2, "flavours_included": 2, "equipment_package": "Luxury", "price": 300, "currency": "CAD", "display": "$300" },
+          { "plan": "Premium", "shishas_included": 4, "flavours_included": 4, "equipment_package": "Luxury", "price": 450, "currency": "CAD", "display": "$450" },
+          { "plan": "Luxury", "shishas_included": 8, "flavours_included": 8, "equipment_package": "Luxury", "price": 800, "currency": "CAD", "display": "$800" }
         ]
       },
-      "membership": {
-        "context": "Membership",
+      "rental_add_ons": {
+        "context": "Rental",
         "pricing": [
-          {
-            "plan": "Gold",
-            "quantity": null,
-            "price": 120,
-            "currency": "CAD",
-            "display": "$120",
-            "period": "monthly"
-          },
-          {
-            "plan": "Platinum",
-            "quantity": null,
-            "price": 200,
-            "currency": "CAD",
-            "display": "$200",
-            "period": "monthly"
-          }
+          { "plan": "Electric Charcoal Burner Rental", "price": 5, "unit": "per day", "display": "$5 per day" },
+          { "plan": "Heat Management Device", "price": 20, "unit": "each", "display": "$20 each" },
+          { "plan": "Box of Coconut Coals", "price": 20, "unit": "per box", "display": "$20 per box" },
+          { "plan": "250g Box of Flavours", "price_min": 40, "price_max": 45, "unit": "each", "display": "$40 - $45 each" },
+          { "plan": "Additional Day", "price": 60, "unit": "per day", "display": "$60" }
         ]
+      },
+      "flavour_box_requirement": {
+        "context": "Rental",
+        "price": 30,
+        "currency": "CAD",
+        "display": "$30 per box",
+        "note": "Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box."
       }
     },
+    "known_conflicts": [
+      "Luxury package price: $800 in client/src/components/packages-section.tsx vs $600 in client/src/components/contact-form.tsx. UNRESOLVED - needs client confirmation.",
+      "Shisha rental prices: $75/$150/$225/$295/$365/$435 in client/src/components/shisha-rentals-section.tsx vs $60/$115/$165/$210/$250/$300 in client/src/components/contact-form.tsx. UNRESOLVED - needs client confirmation.",
+      "Flavour box: '250g Box of Flavours $40 - $45 each' (add-on) vs 'flavour box purchase is required at $30 per box'. May be two different products. UNRESOLVED - needs client confirmation."
+    ],
+    "removed": {
+      "membership": "Membership pricing (Gold $120/month, Platinum $200/month) removed from the public site on 2026-09-15 at the client's request."
+    },
     "validation": {
-      "total_pricing_points": 10,
+      "total_pricing_points": 15,
       "files_containing_pricing": [
         "client/src/components/shisha-rentals-section.tsx",
         "client/src/components/packages-section.tsx",
-        "client/src/components/memberships-section.tsx"
+        "client/src/components/contact-form.tsx"
       ],
-      "consistency_check": "PASSED - All prices match manifest"
+      "consistency_check": "FAILED - see known_conflicts"
     }
   }
 }

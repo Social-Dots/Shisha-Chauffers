@@ -13,11 +13,9 @@ export default function ShishaRentalsSection() {
 
 
   const rentalIncludes = [
-    "High-quality shisha equipment",
-    "Standard flavor selection",
-    "Basic setup instructions",
-    "Flexible rental periods",
-    "Clean equipment guarantee",
+    "Basic shisha equipment: shisha, basic head, basic flavour, and quick-light coals",
+    "Set-up instructions",
+    "24-hour rental period",
     "Pickup and delivery available"
   ];
 
@@ -33,7 +31,7 @@ export default function ShishaRentalsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Shisha Rental Pricing</h2>
-          <p className="text-xl text-muted-foreground">Premium equipment rental for your events</p>
+          <p className="text-xl text-muted-foreground">Shisha equipment rental for your events — self-service, no attendants included</p>
         </div>
 
         {/* Rental Pricing */}
@@ -61,7 +59,7 @@ export default function ShishaRentalsSection() {
               <h3 className="font-serif text-2xl font-semibold text-center mb-8 text-red">
                 What's Included with Every Rental
               </h3>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div>
                 <ul className="list-disc list-inside space-y-2">
                   {rentalIncludes.map((item, index) => (
                     <li key={index} className="text-white">
@@ -69,6 +67,9 @@ export default function ShishaRentalsSection() {
                     </li>
                   ))}
                 </ul>
+                <p className="mt-8 rounded-xl border border-primary/30 bg-primary/5 p-4 text-center text-sm text-white">
+                  Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box.
+                </p>
               </div>
             </CardContent>
           </Card>

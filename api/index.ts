@@ -29,7 +29,26 @@ const brandName = 'Shisha Chauffeurs';
 const brandPrimary = '#dc2626';
 const brandSurface = '#111111';
 const brandPanel = 'rgba(255,255,255,0.08)';
-const adminContactEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
+// ADMIN_EMAIL may hold a single address or a comma-separated list of them.
+const parseRecipients = (value?: string): string[] => {
+  if (!value) return [];
+  const seen = new Set<string>();
+  const recipients: string[] = [];
+  for (const entry of value.split(/[,;]+/)) {
+    const address = entry.trim();
+    if (!address) continue;
+    const key = address.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    recipients.push(address);
+  }
+  return recipients;
+};
+
+const adminRecipients = parseRecipients(
+  process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'shishachauffeurs@gmail.com'
+);
+const adminContactEmail = adminRecipients[0] || 'shishachauffeurs@gmail.com';
 const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
 const smtpSecure = smtpPort === 465;
 const senderEmail = process.env.EMAIL_FROM || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
@@ -169,14 +188,19 @@ const sendBookingNotification = async (booking: any, adminEmail: string) => {
       throw new Error('No email provider configured');
     }
 
+    const recipients = parseRecipients(adminEmail);
+    if (recipients.length === 0) {
+      throw new Error('No admin recipients configured: ADMIN_EMAIL is empty');
+    }
+
     const result = await transporter.sendMail({
       from: formattedFrom,
       sender: senderEmail,
-      to: adminEmail,
+      to: recipients,
       replyTo: booking.email,
       envelope: {
         from: senderEmail,
-        to: [adminEmail],
+        to: recipients,
       },
       subject: emailContent.subject,
       text: emailContent.text,
@@ -348,6 +372,47 @@ expressApp.post('/api/bookings', async (req, res) => {
       console.error("Booking creation error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
+  }
+});
+
+// Manual delivery test. Guarded by ENABLE_TEST_EMAIL so the public deployment
+// does not expose an open mail-sending endpoint.
+expressApp.post('/api/test-email', async (req, res) => {
+  if (process.env.ENABLE_TEST_EMAIL !== 'true') {
+    return res.status(404).json({ error: 'Not found' });
+  }
+
+  try {
+    const testBooking = {
+      id: 'test-' + Date.now(),
+      firstName: 'Test',
+      lastName: 'User',
+      email: adminContactEmail,
+      phone: '0000000000',
+      eventDate: new Date().toISOString().split('T')[0],
+      eventTime: '18:00',
+      location: 'Test Location',
+      guestCount: 5,
+      services: ['shisha-catering'],
+      createdAt: new Date().toISOString(),
+    };
+
+    const result = (await sendBookingNotification(
+      testBooking,
+      process.env.ADMIN_EMAIL || adminContactEmail
+    )) as { success: boolean; messageId?: string };
+
+    res.status(result.success ? 200 : 500).json({
+      success: result.success,
+      recipientCount: adminRecipients.length,
+      messageId: result.messageId,
+    });
+  } catch (error) {
+    console.error('Test email error:', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
   }
 });
 

@@ -5,7 +5,26 @@ const brandName = 'Shisha Chauffeurs';
 const brandPrimary = '#dc2626';
 const brandSurface = '#111111';
 const brandPanel = 'rgba(255,255,255,0.08)';
-const adminContactEmail = process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
+// ADMIN_EMAIL may hold a single address or a comma-separated list of them.
+export const parseRecipients = (value?: string): string[] => {
+  if (!value) return [];
+  const seen = new Set<string>();
+  const recipients: string[] = [];
+  for (const entry of value.split(/[,;]+/)) {
+    const address = entry.trim();
+    if (!address) continue;
+    const key = address.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    recipients.push(address);
+  }
+  return recipients;
+};
+
+const adminRecipients = parseRecipients(
+  process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'shishachauffeurs@gmail.com'
+);
+const adminContactEmail = adminRecipients[0] || 'shishachauffeurs@gmail.com';
 const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
 const smtpSecure = smtpPort === 465;
 const senderEmail = process.env.EMAIL_FROM || process.env.SMTP_USER || 'shishachauffeurs@gmail.com';
@@ -244,14 +263,19 @@ export const sendBookingNotification = async (booking: any, adminEmail: string) 
       throw new Error('No email provider configured');
     }
 
+    const recipients = parseRecipients(adminEmail);
+    if (recipients.length === 0) {
+      throw new Error('No admin recipients configured: ADMIN_EMAIL is empty');
+    }
+
     const result = await transporter.sendMail({
       from: formattedFrom,
       sender: senderEmail,
-      to: adminEmail,
+      to: recipients,
       replyTo: booking.email,
       envelope: {
         from: senderEmail,
-        to: [adminEmail],
+        to: recipients,
       },
       subject: emailContent.subject,
       text: emailContent.text,
@@ -356,7 +380,7 @@ export const createMembershipWelcomeEmail = (member: any) => {
         </div>
         
         <div style="text-align: center; margin-top: 25px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 10px;">
-          <p>Questions? Contact us at <a href="mailto:${process.env.ADMIN_EMAIL}" style="color: #FFD700;">${process.env.ADMIN_EMAIL}</a></p>
+          <p>Questions? Contact us at <a href="mailto:${adminContactEmail}" style="color: #FFD700;">${adminContactEmail}</a></p>
           <p style="font-size: 0.9em; opacity: 0.8;">Thank you for choosing Shisha Cafe!</p>
         </div>
       </div>
@@ -378,7 +402,7 @@ ${benefits.map(benefit => `- ${benefit}`).join('\n')}
 
 ${member.paymentStatus === 'pending' ? 'Please complete your payment to activate your membership benefits.' : 'Start enjoying your exclusive benefits immediately!'}
 
-Questions? Contact us at ${process.env.ADMIN_EMAIL}
+Questions? Contact us at ${adminContactEmail}
     `
   };
 };

@@ -2,14 +2,14 @@ import { Quote, Star } from "lucide-react";
 import Reveal from "@/components/reveal";
 
 /**
- * SOCIAL PROOF — replace the `testimonials` below with REAL client reviews
+ * SOCIAL PROOF: replace the `testimonials` below with REAL client reviews
  * before going live. Do not ship fabricated testimonials. Pull these from
  * Instagram comments/DMs, Google reviews, or text feedback (with permission).
  */
 const testimonials = [
   {
     quote:
-      "The setup was stunning and the service was completely hands-off for us — our guests didn't stop talking about it all night.",
+      "The setup was stunning and the service was completely hands-off for us. Our guests didn't stop talking about it all night.",
     name: "Sample Client",
     detail: "Birthday party · Mississauga",
   },

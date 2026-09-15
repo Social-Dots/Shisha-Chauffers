@@ -4,7 +4,7 @@ import { ArrowUpRight, Check, Instagram, Phone } from "lucide-react";
 import { trackPhoneClick } from "@/lib/analytics";
 
 /**
- * "REFINED" — condensed landing concept for Shisha Chauffeurs, styled to match
+ * "REFINED": condensed landing concept for Shisha Chauffeurs, styled to match
  * the live site (Playfair Display + Inter, brand red on the site's dark gradient,
  * surface-panel cards). Keeps the editorial structure: oversized type, a flavour
  * marquee, one merged gallery, and a tabbed Pricing block. Reachable at /refined.
@@ -135,7 +135,7 @@ export default function Refined() {
           <Rise delay={0.16}>
             <div className="mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-                Premium shisha service delivered to your private event — set up, served, and cleaned down while you stay with your guests.
+                Premium shisha service delivered to your private event. Set up, served, and cleaned down while you stay with your guests.
               </p>
               <div className="flex shrink-0 items-center gap-4">
                 <a href="#pricing" className="gradient-gold rounded-full px-7 py-4 text-sm font-semibold text-black transition-transform hover:scale-[1.03]">
@@ -289,7 +289,7 @@ export default function Refined() {
               <ul className="divide-y divide-white/10">
                 {standardFlavours.map((f) => (
                   <li key={f} className="display flex items-center justify-between py-4 text-2xl font-medium sm:text-3xl">
-                    {f} <span className="text-white/20">—</span>
+                    {f} <span className="text-white/20">·</span>
                   </li>
                 ))}
               </ul>
@@ -325,7 +325,7 @@ export default function Refined() {
             </Rise>
           ))}
         </div>
-        <p className="mt-10 text-xs uppercase tracking-widest text-white/30">Sample reviews — replace with real client feedback before launch.</p>
+        <p className="mt-10 text-xs uppercase tracking-widest text-white/30">Sample reviews: replace with real client feedback before launch.</p>
       </section>
 
       {/* closing CTA ------------------------------------------------------- */}

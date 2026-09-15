@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 interface RevealProps {
   children: ReactNode;
-  /** Stagger index — multiplies the delay so grids cascade in. */
+  /** Stagger index: multiplies the delay so grids cascade in. */
   index?: number;
   className?: string;
   /** Pass-through for data-* attributes, etc. */

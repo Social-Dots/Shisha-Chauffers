@@ -31,7 +31,7 @@ export default function ShishaRentalsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Shisha Rental Pricing</h2>
-          <p className="text-xl text-muted-foreground">Shisha equipment rental for your events — self-service, no attendants included</p>
+          <p className="text-xl text-muted-foreground">Shisha equipment rental for your events. Self-service, no attendants included</p>
         </div>
 
         {/* Rental Pricing */}

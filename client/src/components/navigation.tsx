@@ -34,7 +34,7 @@ export default function Navigation() {
               onClick={() => scrollToSection('home')}
               className="flex items-center text-left"
               data-testid="nav-logo"
-              aria-label="Shisha Chauffeurs — home"
+              aria-label="Shisha Chauffeurs home page"
             >
               <Logo markClassName="h-9 w-auto sm:h-11" priority />
             </button>

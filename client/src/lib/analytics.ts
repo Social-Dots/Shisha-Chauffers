@@ -60,7 +60,7 @@ export function trackBookingStart(location: string) {
 }
 
 /**
- * A booking request was accepted by the API. This is the conversion event —
+ * A booking request was accepted by the API. This is the conversion event:
  * fire it only after the request succeeds, not on form submit.
  */
 export function trackBookingSubmit(params: GtagParams = {}) {

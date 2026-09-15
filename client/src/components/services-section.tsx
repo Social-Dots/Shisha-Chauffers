@@ -20,7 +20,7 @@ export default function ServicesSection() {
       description: "Rent shisha equipment for your private events and parties",
       gradient: "gradient-gold",
       features: [
-        "Self-service rental — equipment only, no attendants included.",
+        "Self-service rental. Equipment only, no attendants included.",
         "Basic equipment: shisha, basic head, basic flavour, and quick-light coals.",
         "Set-up instructions included, with a 24-hour rental period.",
         "Pickup and delivery available."

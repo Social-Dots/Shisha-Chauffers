@@ -56,6 +56,56 @@ export function trackBookingStart(location: string) {
   trackEvent("booking_start", {
     event_category: "engagement",
     event_label: location,
+    placement: location,
+  });
+}
+
+/**
+ * A visitor began filling in the booking form. Fired once per mount, on the
+ * first field interaction. This is deliberately separate from booking_start:
+ * that event only records the CTA that scrolls a visitor to the form, while
+ * this one records real typing, so the two together expose the scroll-to-type
+ * drop-off.
+ */
+export function trackBookingFormStart(location: string) {
+  trackEvent("booking_form_start", {
+    event_category: "engagement",
+    event_label: location,
+    placement: location,
+  });
+}
+
+/** A visitor passed a form step's validation and moved on to the next one. */
+export function trackBookingStepComplete(step: number, stepName: string) {
+  trackEvent("booking_step_complete", {
+    event_category: "engagement",
+    event_label: `step_${step}_${stepName}`,
+    step_number: step,
+    step_name: stepName,
+  });
+}
+
+/** A visitor tried to advance a step but validation blocked them. */
+export function trackBookingStepError(step: number, stepName: string, missingFields: string) {
+  trackEvent("booking_step_error", {
+    event_category: "error",
+    event_label: `step_${step}_${stepName}`,
+    step_number: step,
+    step_name: stepName,
+    missing_fields: missingFields,
+  });
+}
+
+/**
+ * The visitor pressed the final submit button, before the API has answered.
+ * Pairs with booking_submit (accepted) and booking_error (rejected) so the
+ * number of attempts can be compared with the number of leads that actually
+ * landed.
+ */
+export function trackBookingSubmitAttempt(params: GtagParams = {}) {
+  trackEvent("booking_submit_attempt", {
+    event_category: "conversion",
+    ...params,
   });
 }
 

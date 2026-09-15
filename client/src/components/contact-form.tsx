@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { insertBookingSchema, type InsertBooking } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
-import { trackBookingSubmit, trackBookingError } from "@/lib/analytics";
+import {
+  trackBookingSubmit,
+  trackBookingError,
+  trackBookingFormStart,
+  trackBookingStepComplete,
+  trackBookingStepError,
+  trackBookingSubmitAttempt,
+} from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -159,7 +166,26 @@ export default function ContactForm() {
     },
   });
 
+  // Fires booking_form_start once per mount, on the first real field
+  // interaction, so a visitor who only scrolls past the form is not counted.
+  const formStartTracked = useRef(false);
+
+  const handleFormStart = () => {
+    if (formStartTracked.current) {
+      return;
+    }
+    formStartTracked.current = true;
+    trackBookingFormStart("booking-form");
+  };
+
   const onSubmit = (data: InsertBooking) => {
+    trackBookingSubmitAttempt({
+      event_label: data.packageSelection || "unspecified",
+      step_number: totalSteps,
+      services: data.services?.join(", "),
+      guest_count: data.guestCount,
+      referral_source: data.referralSource,
+    });
     bookingMutation.mutate(data);
   };
 
@@ -172,10 +198,15 @@ export default function ContactForm() {
   };
 
   const nextStep = async () => {
+    const stepName = stepCopy[currentStep - 1]?.title ?? `step_${currentStep}`;
     const isStepValid = await form.trigger(stepFields[currentStep]);
     if (!isStepValid) {
+      const missingFields = Object.keys(form.formState.errors).join(", ") || "unknown";
+      trackBookingStepError(currentStep, stepName, missingFields);
       return;
     }
+
+    trackBookingStepComplete(currentStep, stepName);
 
     if (currentStep < totalSteps) {
       setCurrentStep((step) => step + 1);
@@ -275,7 +306,7 @@ export default function ContactForm() {
             </div>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <form onSubmit={form.handleSubmit(onSubmit)} onFocusCapture={handleFormStart} className="space-y-8">
                 {currentStep === 1 && (
                   <div className="space-y-6">
                     <h3 className="mb-6 font-serif text-2xl font-semibold">Contact & Location</h3>

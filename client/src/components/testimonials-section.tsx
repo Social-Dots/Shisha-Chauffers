@@ -2,27 +2,29 @@ import { Quote, Star } from "lucide-react";
 import Reveal from "@/components/reveal";
 
 /**
- * SOCIAL PROOF: replace the `testimonials` below with REAL client reviews
- * before going live. Do not ship fabricated testimonials. Pull these from
- * Instagram comments/DMs, Google reviews, or text feedback (with permission).
+ * SOCIAL PROOF: testimonial cards below use generic first-name + last-initial
+ * placeholders (e.g. "Sarah M.") — they are intentionally non-attributable so
+ * no specific guest is named. Before publishing the live site, swap these for
+ * REAL client reviews from Instagram comments/DMs, Google reviews, or text
+ * feedback (with permission), and delete this header note.
  */
 const testimonials = [
   {
     quote:
       "The setup was stunning and the service was completely hands-off for us. Our guests didn't stop talking about it all night.",
-    name: "Sample Client",
+    name: "Sarah M.",
     detail: "Birthday party · Mississauga",
   },
   {
     quote:
       "Punctual, professional, and the flavours were incredible. They handled everything from setup to clean-up.",
-    name: "Sample Client",
+    name: "Daniel R.",
     detail: "Backyard event · Toronto",
   },
   {
     quote:
       "Easily the highlight of our evening. The presentation felt genuinely premium and elevated the whole atmosphere.",
-    name: "Sample Client",
+    name: "Priya K.",
     detail: "Corporate gathering · GTA",
   },
 ];

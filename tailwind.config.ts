@@ -1,8 +1,22 @@
 import type { Config } from "tailwindcss";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const clientDir = path.resolve(__dirname, "client");
 
 export default {
   darkMode: ["class"],
-  content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  // Absolute paths so `tailwind.config.ts` resolves the same source set whether
+  // it's loaded from the repo root (production build, npm run dev) or from
+  // client/ (vite invoked directly). Without this, running vite from inside
+  // client/ makes the `./client/**` globs miss everything and PostCSS fails
+  // on every custom colour utility (e.g. border-border).
+  content: [
+    path.join(clientDir, "index.html"),
+    path.join(clientDir, "src/**/*.{js,jsx,ts,tsx}"),
+  ],
   theme: {
     extend: {
       borderRadius: {

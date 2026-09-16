@@ -43,7 +43,7 @@ export default function ServicesSection() {
             <Card key={index} className="bg-card hover-float" data-testid={`service-card-${index}`}>
               <CardContent className="p-8">
                 <div className="text-center mb-6">
-                  <h3 className="font-serif text-2xl font-semibold mb-4 text-red">{service.title}</h3>
+                  <h3 className="font-serif text-2xl font-semibold mb-4 text-white">{service.title}</h3>
                   <p className="text-muted-foreground mb-6">
                     {service.description}
                   </p>

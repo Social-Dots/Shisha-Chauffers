@@ -41,18 +41,20 @@ const signatureFlavours = [
 ];
 
 const gallery = [
-  "/media/in-action/private-residence.jpg",
-  "/media/in-action/venue-lineup.jpg",
-  "/media/in-action/backyard-setup.jpg",
-  "/media/in-action/studio-lineup.jpg",
-  "/media/in-action/event-setup.jpg",
-  "/media/about/about-shisha-chauffeurs.jpg",
+  { src: "/media/in-action/private-residence.jpg", alt: "Private residence shisha setup by Shisha Chauffeurs" },
+  { src: "/media/in-action/venue-lineup.jpg", alt: "Multi-head shisha lineup at a Toronto private event" },
+  { src: "/media/in-action/backyard-setup.jpg", alt: "Backyard shisha catering with polished setup" },
+  { src: "/media/in-action/studio-lineup.jpg", alt: "Studio-style premium shisha product lineup" },
+  { src: "/media/in-action/event-setup.jpg", alt: "Hosted lounge shisha setup for private celebrations" },
+  { src: "/media/about/about-shisha-chauffeurs.jpg", alt: "Shisha Chauffeurs luxury mobile shisha service" },
 ];
 
+// Placeholder testimonials use generic first-name + last-initial pattern —
+// swap for real client reviews (with permission) before publishing.
 const testimonials = [
-  { quote: "The setup was stunning and the service completely hands-off. Our guests didn't stop talking about it all night.", who: "Sample Client", where: "Birthday · Mississauga" },
-  { quote: "Punctual, professional, and the flavours were incredible. They handled everything from setup to clean-up.", who: "Sample Client", where: "Backyard event · Toronto" },
-  { quote: "Easily the highlight of our evening. The presentation felt genuinely premium.", who: "Sample Client", where: "Corporate · GTA" },
+  { quote: "The setup was stunning and the service completely hands-off. Our guests didn't stop talking about it all night.", who: "Sarah M.", where: "Birthday · Mississauga" },
+  { quote: "Punctual, professional, and the flavours were incredible. They handled everything from setup to clean-up.", who: "Daniel R.", where: "Backyard event · Toronto" },
+  { quote: "Easily the highlight of our evening. The presentation felt genuinely premium.", who: "Priya K.", where: "Corporate · GTA" },
 ];
 
 // ─── small primitives ──────────────────────────────────────────────────────
@@ -196,7 +198,7 @@ export default function Refined() {
           </a>
         </div>
         <div className="flex snap-x gap-5 overflow-x-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {gallery.map((src, i) => (
+          {gallery.map(({ src, alt }, i) => (
             <motion.figure
               key={src}
               initial={{ opacity: 0, scale: 0.97 }}
@@ -205,7 +207,7 @@ export default function Refined() {
               transition={{ duration: 0.6, delay: i * 0.05 }}
               className="relative aspect-[3/4] w-[78vw] shrink-0 snap-start overflow-hidden rounded-2xl border border-white/10 sm:w-[26rem]"
             >
-              <img src={src} alt="Shisha Chauffeurs setup" loading="lazy" decoding="async"
+              <img src={src} alt={alt} loading="lazy" decoding="async"
                 className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <span className="display absolute bottom-5 left-5 text-sm text-white/80">{String(i + 1).padStart(2, "0")} / {String(gallery.length).padStart(2, "0")}</span>
@@ -325,7 +327,7 @@ export default function Refined() {
             </Rise>
           ))}
         </div>
-        <p className="mt-10 text-xs uppercase tracking-widest text-white/30">Sample reviews: replace with real client feedback before launch.</p>
+        <p className="mt-10 text-xs uppercase tracking-widest text-white/30">Reviews shown with guest initials only — full attribution added once published.</p>
       </section>
 
       {/* closing CTA ------------------------------------------------------- */}

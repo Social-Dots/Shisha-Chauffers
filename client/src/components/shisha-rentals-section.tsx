@@ -56,7 +56,7 @@ export default function ShishaRentalsSection() {
         <div className="mb-12">
           <Card className="bg-card max-w-4xl mx-auto">
             <CardContent className="p-8">
-              <h3 className="font-serif text-2xl font-semibold text-center mb-8 text-red">
+              <h3 className="font-serif text-2xl font-semibold text-center mb-8 text-white">
                 What's Included with Every Rental
               </h3>
               <div>

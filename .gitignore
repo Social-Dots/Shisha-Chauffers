@@ -8,3 +8,4 @@ vite.config.ts.*
 .env
 .playwright-cli
 plan.md
+.env*

@@ -1,7 +1,9 @@
-import { Mail, MapPin, Instagram, Phone } from "lucide-react";
+import { Mail, MapPin, Instagram, Phone, Star } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
 import { Logo } from "@/components/brand-mark";
 import { trackPhoneClick } from "@/lib/analytics";
+
+const GOOGLE_REVIEW_URL = "https://share.google/UNJ4s92g3hc7JgV59";
 
 export default function Footer() {
   return (
@@ -52,25 +54,38 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a 
-                href="https://www.instagram.com/shishachauffeurs/" 
-                target="_blank" 
+              <a
+                href="https://www.instagram.com/shishachauffeurs/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-black hover:bg-opacity-80 transition-colors"
                 data-testid="link-instagram"
+                aria-label="Follow Shisha Chauffeurs on Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
-              <a 
-                href="https://www.tiktok.com/@shishachauffeurs?_t=ZS-8zS117qnAYM&_r=1" 
-                target="_blank" 
+              <a
+                href="https://www.tiktok.com/@shishachauffeurs?_t=ZS-8zS117qnAYM&_r=1"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-black hover:bg-opacity-80 transition-colors"
                 data-testid="link-tiktok"
+                aria-label="Follow Shisha Chauffeurs on TikTok"
               >
                 <SiTiktok className="h-5 w-5" />
               </a>
             </div>
+            <a
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
+              data-testid="link-google-review"
+              aria-label="Leave a Google review for Shisha Chauffeurs"
+            >
+              <Star className="h-4 w-4 fill-primary text-primary" />
+              Review us on Google
+            </a>
             <p className="text-sm text-muted-foreground mt-4">@shishachauffeurs</p>
           </div>
         </div>

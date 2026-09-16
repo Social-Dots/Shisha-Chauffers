@@ -18,17 +18,17 @@ const steps = [
 ];
 
 const packages = [
-  { name: "Standard", price: "$250", note: "Up to 6 guests · 2 hours", popular: false,
-    features: ["2-hour shisha service", "3 premium flavours", "Professional setup", "Clean-up included"] },
-  { name: "Premium", price: "$450", note: "Up to 12 guests · 4 hours", popular: true,
-    features: ["4-hour shisha service", "5 premium flavours", "Chauffeur service", "Custom flavour mixing", "Setup & clean-up"] },
-  { name: "Luxury", price: "$600", note: "Up to 20 guests · 6 hours", popular: false,
-    features: ["6-hour shisha service", "Unlimited flavours", "Dedicated team", "Full flavour bar", "Event coordination"] },
+  { name: "Standard", price: "$300", note: "2 shishas · 2 flavours · luxury equipment", popular: false,
+    features: ["2 shishas included", "Choice of any 2 flavours", "Luxury equipment package", "Professional setup included", "Clean-up service included"] },
+  { name: "Premium", price: "$450", note: "4 shishas · 4 flavours · luxury equipment", popular: true,
+    features: ["4 shishas included", "Choice of any 4 flavours", "Luxury equipment package", "Professional setup included", "Clean-up service included"] },
+  { name: "Luxury", price: "$800", note: "8 shishas · 8 flavours · luxury equipment", popular: false,
+    features: ["8 shishas included", "Choice of any 8 flavours", "Luxury equipment package", "Professional setup included", "Clean-up service included"] },
 ];
 
 const rentals = [
-  { q: "1 Shisha", p: "$60" }, { q: "2 Shishas", p: "$115" }, { q: "3 Shishas", p: "$165" },
-  { q: "4 Shishas", p: "$210" }, { q: "5 Shishas", p: "$250" }, { q: "6 Shishas", p: "$300" },
+  { q: "1 Shisha", p: "$75" }, { q: "2 Shishas", p: "$150" }, { q: "3 Shishas", p: "$225" },
+  { q: "4 Shishas", p: "$295" }, { q: "5 Shishas", p: "$365" }, { q: "6 Shishas", p: "$435" },
 ];
 
 const standardFlavours = ["Double Apple", "Lemon Mint", "Grape", "Blueberry", "Mango", "Lady Killer"];
@@ -49,13 +49,10 @@ const gallery = [
   { src: "/media/about/about-shisha-chauffeurs.jpg", alt: "Shisha Chauffeurs luxury mobile shisha service" },
 ];
 
-// Placeholder testimonials use generic first-name + last-initial pattern —
-// swap for real client reviews (with permission) before publishing.
-const testimonials = [
-  { quote: "The setup was stunning and the service completely hands-off. Our guests didn't stop talking about it all night.", who: "Sarah M.", where: "Birthday · Mississauga" },
-  { quote: "Punctual, professional, and the flavours were incredible. They handled everything from setup to clean-up.", who: "Daniel R.", where: "Backyard event · Toronto" },
-  { quote: "Easily the highlight of our evening. The presentation felt genuinely premium.", who: "Priya K.", where: "Corporate · GTA" },
-];
+// Placeholder testimonials removed — live testimonials now use real Google
+// reviews and live in the main site's testimonials section. The /refined
+// landing intentionally has no testimonials block.
+const testimonials: { quote: string; who: string; where: string }[] = [];
 
 // ─── small primitives ──────────────────────────────────────────────────────
 function Kicker({ children }: { children: React.ReactNode }) {
@@ -314,20 +311,9 @@ export default function Refined() {
       {/* testimonials ------------------------------------------------------ */}
       <section className="mx-auto max-w-6xl px-6 py-28">
         <Rise><Kicker>Guests</Kicker></Rise>
-        <div className="mt-12 grid gap-10 lg:grid-cols-3">
-          {testimonials.map((t, i) => (
-            <Rise key={i} delay={i * 0.1}>
-              <figure className="flex h-full flex-col">
-                <blockquote className="display text-2xl font-medium leading-snug text-gray-100">"{t.quote}"</blockquote>
-                <figcaption className="mt-6 border-t border-white/10 pt-5 text-sm">
-                  <span className="text-white">{t.who}</span>
-                  <span className="block text-muted-foreground">{t.where}</span>
-                </figcaption>
-              </figure>
-            </Rise>
-          ))}
+        <div className="mt-8 text-center text-sm text-white/40">
+          See guest reviews on the live site's testimonials section.
         </div>
-        <p className="mt-10 text-xs uppercase tracking-widest text-white/30">Reviews shown with guest initials only — full attribution added once published.</p>
       </section>
 
       {/* closing CTA ------------------------------------------------------- */}

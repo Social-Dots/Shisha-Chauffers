@@ -49,7 +49,7 @@ const packageOptions = [
   },
   {
     value: "luxury-private-experience",
-    label: "Luxury Private Experience (8-24 People) $600",
+    label: "Luxury Private Experience (8-20 People) $800",
     description: "8 shishas, choice of any 8 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
   },
 ];
@@ -124,6 +124,10 @@ export default function ContactForm() {
       termsAccepted: false,
     },
   });
+
+  const selectedServices = form.watch("services") ?? [];
+  const wantsCatering = selectedServices.includes("shisha-catering");
+  const wantsRental = selectedServices.includes("shisha-rental");
 
   const bookingMutation = useMutation({
     mutationFn: async (data: InsertBooking) => {
@@ -440,68 +444,74 @@ export default function ContactForm() {
                       )}
                     />
 
-                    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                      <p className="text-sm font-semibold text-white">What our attendants provide</p>
-                      <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                        <li>Full setup and teardown so you can stay focused on your guests.</li>
-                        <li>Live flavour mixing and recommendations based on the event vibe.</li>
-                        <li>Continuous coal rotation, fruit head preparation, and clean hygienic service.</li>
-                      </ul>
-                    </div>
+                    {wantsCatering && (
+                      <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                        <p className="text-sm font-semibold text-white">What our attendants provide</p>
+                        <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
+                          <li>Full setup and teardown so you can stay focused on your guests.</li>
+                          <li>Live flavour mixing and recommendations based on the event vibe.</li>
+                          <li>Continuous coal rotation, fruit head preparation, and clean hygienic service.</li>
+                        </ul>
+                      </div>
+                    )}
 
-                    <FormField
-                      control={form.control}
-                      name="packageSelection"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Shisha Package Selection</FormLabel>
-                          <div className="grid gap-4 sm:grid-cols-3">
-                            {packageOptions.map((option) => {
-                              const isSelected = field.value === option.value;
+                    {wantsCatering && (
+                      <FormField
+                        control={form.control}
+                        name="packageSelection"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Shisha Package Selection</FormLabel>
+                            <div className="grid gap-4 sm:grid-cols-3">
+                              {packageOptions.map((option) => {
+                                const isSelected = field.value === option.value;
 
-                              return (
-                                <label
-                                  key={option.value}
-                                  className={`group flex cursor-pointer flex-col rounded-2xl border p-4 text-left transition-all ${
-                                    isSelected
-                                      ? "border-primary/80 bg-primary/10 ring-2 ring-primary/30"
-                                      : "border-white/10 bg-black/20 hover:border-white/20"
-                                  }`}
-                                  data-testid={`package-${option.value}`}
-                                >
-                                  <input
-                                    type="radio"
-                                    name="packageSelection"
-                                    value={option.value}
-                                    checked={isSelected}
-                                    onChange={() => field.onChange(option.value)}
-                                    className="sr-only"
-                                  />
-                                  <div className="flex items-start justify-between gap-4">
-                                    <div>
-                                      <p className="font-semibold text-white">{option.label}</p>
-                                      <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
+                                return (
+                                  <label
+                                    key={option.value}
+                                    className={`group flex cursor-pointer flex-col rounded-2xl border p-4 text-left transition-all ${
+                                      isSelected
+                                        ? "border-primary/80 bg-primary/10 ring-2 ring-primary/30"
+                                        : "border-white/10 bg-black/20 hover:border-white/20"
+                                    }`}
+                                    data-testid={`package-${option.value}`}
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="packageSelection"
+                                      value={option.value}
+                                      checked={isSelected}
+                                      onChange={() => field.onChange(option.value)}
+                                      className="sr-only"
+                                    />
+                                    <div className="flex items-start justify-between gap-4">
+                                      <div>
+                                        <p className="font-semibold text-white">{option.label}</p>
+                                        <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
+                                      </div>
+                                      {isSelected ? (
+                                        <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
+                                          Selected
+                                        </span>
+                                      ) : null}
                                     </div>
-                                    {isSelected ? (
-                                      <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
-                                        Selected
-                                      </span>
-                                    ) : null}
-                                  </div>
-                                </label>
-                              );
-                            })}
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                                  </label>
+                                );
+                              })}
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
 
+                    {wantsRental && (
                     <div className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm text-muted-foreground">
                       <p className="font-semibold text-white">Shisha rental prices</p>
-                      <p className="mt-2">1 shisha $60, 2 shishas $115, 3 shishas $165, 4 shishas $210, 5 shishas $250, 6 shishas $300.</p>
+                      <p className="mt-2">1 shisha $75, 2 shishas $150, 3 shishas $225, 4 shishas $295, 5 shishas $365, 6 shishas $435.</p>
                       <p className="mt-3 text-white">Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box.</p>
                     </div>
+                    )}
 
                     <FormField
                       control={form.control}

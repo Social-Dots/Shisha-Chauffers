@@ -1,7 +1,7 @@
 {
   "pricing_manifest": {
-    "version": "1.1",
-    "last_updated": "2026-09-15",
+    "version": "1.2",
+    "last_updated": "2026-09-16",
     "currency": "CAD",
     "categories": {
       "shisha_rental": {
@@ -38,13 +38,28 @@
         "price": 30,
         "currency": "CAD",
         "display": "$30 per box",
-        "note": "Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box."
+        "note": "Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box. The 250g Box of Flavours add-on ($40-$45) is a separate, optional stand-alone purchase for events that need additional flavours."
       }
     },
-    "known_conflicts": [
-      "Luxury package price: $800 in client/src/components/packages-section.tsx vs $600 in client/src/components/contact-form.tsx. UNRESOLVED - needs client confirmation.",
-      "Shisha rental prices: $75/$150/$225/$295/$365/$435 in client/src/components/shisha-rentals-section.tsx vs $60/$115/$165/$210/$250/$300 in client/src/components/contact-form.tsx. UNRESOLVED - needs client confirmation.",
-      "Flavour box: '250g Box of Flavours $40 - $45 each' (add-on) vs 'flavour box purchase is required at $30 per box'. May be two different products. UNRESOLVED - needs client confirmation."
+    "resolved_conflicts": [
+      {
+        "id": "luxury_package_price",
+        "previous": "$800 in packages-section.tsx vs $600 in contact-form.tsx",
+        "resolution": "$800 chosen (matches pricing_manifest v1.1 and packages-section.tsx)",
+        "decided_on": "2026-09-16"
+      },
+      {
+        "id": "shisha_rental_prices",
+        "previous": "$75/$150/$225/$295/$365/$435 in shisha-rentals-section.tsx vs $60/$115/$165/$210/$250/$300 in contact-form.tsx",
+        "resolution": "$75/$150/$225/$295/$365/$435 chosen (matches pricing_manifest v1.1, the public rentals section, and the client's spec)",
+        "decided_on": "2026-09-16"
+      },
+      {
+        "id": "flavour_box",
+        "previous": "$30 rental requirement vs $40-45 add-on",
+        "resolution": "TWO DISTINCT PRODUCTS: $30/box = mandatory rental flavour box (rental customers must buy). $40-45 = optional 250g Box of Flavours add-on. Both stay in the system, both clearly labelled.",
+        "decided_on": "2026-09-16"
+      }
     ],
     "removed": {
       "membership": "Membership pricing (Gold $120/month, Platinum $200/month) removed from the public site on 2026-09-15 at the client's request."
@@ -54,9 +69,11 @@
       "files_containing_pricing": [
         "client/src/components/shisha-rentals-section.tsx",
         "client/src/components/packages-section.tsx",
-        "client/src/components/contact-form.tsx"
+        "client/src/components/contact-form.tsx",
+        "client/src/components/services-section.tsx",
+        "client/index.html (JSON-LD hasOfferCatalog)"
       ],
-      "consistency_check": "FAILED - see known_conflicts"
+      "consistency_check": "PASS - all source files and JSON-LD now match the manifest"
     }
   }
 }

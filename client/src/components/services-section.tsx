@@ -3,30 +3,30 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function ServicesSection() {
   const services = [
-    {
-      icon: Martini,
-      title: "Shisha Catering",
-      description: "Professional shisha masters bring premium flavours and equipment directly to your event",
-      gradient: "gradient-gold",
-      features: [
-        "Professional attendants prepare all shisha equipment and premium flavours.",
-        "Continuous monitoring and service throughout your event.",
-        "Complete breakdown and cleanup once the event concludes."
-      ]
-    },
-    {
-      icon: Home,
-      title: "Shisha Rentals",
-      description: "Rent shisha equipment for your private events and parties",
-      gradient: "gradient-gold",
-      features: [
-        "Self-service rental. Equipment only, no attendants included.",
-        "Basic equipment: shisha, basic head, basic flavour, and quick-light coals.",
-        "Set-up instructions included, with a 24-hour rental period.",
-        "Pickup and delivery available."
-      ]
-    }
-  ];
+      {
+        icon: Martini,
+        title: "Shisha Catering",
+        description: "Professional shisha masters bring premium flavours and equipment directly to your event",
+        gradient: "gradient-gold",
+        features: [
+          "Luxury equipment package: shisha, premium heads, premium flavours, and coconut coals.",
+          "Professional setup and clean-up included with every package.",
+          "Pickup-and-delivery available for all service areas across the GTA.",
+        ]
+      },
+      {
+        icon: Home,
+        title: "Shisha Rentals",
+        description: "Rent shisha equipment for your private events and parties",
+        gradient: "gradient-gold",
+        features: [
+          "Self-service rental. Equipment only, no attendants included.",
+          "Basic equipment: shisha, basic head, basic flavour, and quick-light coals.",
+          "Set-up instructions included, with a 24-hour rental period.",
+          "Pickup and delivery available.",
+        ]
+      }
+    ];
 
   return (
     <section id="services" className="py-20 bg-muted">

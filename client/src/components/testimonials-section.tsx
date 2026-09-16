@@ -1,33 +1,58 @@
 import { Quote, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Reveal from "@/components/reveal";
 
 /**
- * SOCIAL PROOF: testimonial cards below use generic first-name + last-initial
- * placeholders (e.g. "Sarah M.") — they are intentionally non-attributable so
- * no specific guest is named. Before publishing the live site, swap these for
- * REAL client reviews from Instagram comments/DMs, Google reviews, or text
- * feedback (with permission), and delete this header note.
+ * SOCIAL PROOF: real Google reviews pulled from the Shisha Chauffeurs Google
+ * Business Profile (share.google/UNJ4s92g3hc7JgV59). Reviewers are shown as
+ * first-name + last-initial by their preference; full attribution and star
+ * counts come straight from the GBP. Replace this array when the GBP publishes
+ * new reviews.
  */
 const testimonials = [
   {
     quote:
-      "The setup was stunning and the service was completely hands-off for us. Our guests didn't stop talking about it all night.",
-    name: "Sarah M.",
-    detail: "Birthday party · Mississauga",
+      "We hired this service for our house warming with 4 shishas for 4 hours. Rahman was very helpful and ensured all of our shishas were running smoothly. Great service. Highly recommended.",
+    name: "Sid C.",
+    detail: "Local Guide · House warming · 4 shishas · 4 hours",
+    rating: 5,
+    isNew: false,
   },
   {
     quote:
-      "Punctual, professional, and the flavours were incredible. They handled everything from setup to clean-up.",
-    name: "Daniel R.",
-    detail: "Backyard event · Toronto",
+      "Ordered Shisha rental service from Shisha Chauffeurs for a birthday event. Honestly without a doubt, arrangement, flavours, coals and over all presentation was amazing. Also want to mention these guys are using the best quality Shisha's.",
+    name: "Hamza K.",
+    detail: "Birthday event · Shisha rental",
+    rating: 5,
+    isNew: false,
   },
   {
     quote:
-      "Easily the highlight of our evening. The presentation felt genuinely premium and elevated the whole atmosphere.",
-    name: "Priya K.",
-    detail: "Corporate gathering · GTA",
+      "Service was amazing I would most definitely recommend. Everything was seamless. I will be giving these guys a call again!",
+    name: "Amitesh B.",
+    detail: "Recent booking",
+    rating: 5,
+    isNew: true,
+  },
+  {
+    quote:
+      "Service and amazing and quality was top tier. HIGHLY RECOMMEND!",
+    name: "Mohid R.",
+    detail: "Recent booking",
+    rating: 5,
+    isNew: true,
+  },
+  {
+    quote:
+      "One of the best services you will see. Their Team was fast, professional and well experienced! Definitely would recommend!",
+    name: "Hamza S.",
+    detail: "Recent booking",
+    rating: 5,
+    isNew: false,
   },
 ];
+
+const GOOGLE_REVIEW_URL = "https://share.google/UNJ4s92g3hc7JgV59";
 
 export default function TestimonialsSection() {
   return (
@@ -43,7 +68,7 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {testimonials.map((t, index) => (
             <Reveal
               key={index}
@@ -52,10 +77,17 @@ export default function TestimonialsSection() {
               data-testid={`testimonial-${index}`}
             >
               <Quote className="mb-5 h-8 w-8 text-primary" />
-              <div className="mb-4 flex gap-1" aria-label="5 out of 5 stars">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-primary text-primary" />
-                ))}
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex gap-1" aria-label={`${t.rating} out of 5 stars`}>
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                {t.isNew && (
+                  <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+                    New
+                  </span>
+                )}
               </div>
               <p className="flex-grow text-base leading-7 text-gray-100">
                 "{t.quote}"
@@ -66,6 +98,27 @@ export default function TestimonialsSection() {
               </div>
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-12 flex flex-col items-center justify-center gap-3 text-center sm:mt-14">
+          <p className="text-sm text-muted-foreground">
+            Booked with us? Leave a quick review and help the next host decide.
+          </p>
+          <Button
+            asChild
+            className="gradient-gold min-h-12 rounded-full px-7 py-3 text-base font-semibold text-black transition-all duration-300 hover:shadow-lg"
+            data-testid="button-leave-google-review"
+          >
+            <a
+              href={GOOGLE_REVIEW_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Leave a review on Google"
+            >
+              <Star className="mr-2 h-4 w-4 fill-black text-black" />
+              Leave us a review on Google
+            </a>
+          </Button>
         </div>
       </div>
     </section>

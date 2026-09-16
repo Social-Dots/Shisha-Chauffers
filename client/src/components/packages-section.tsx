@@ -14,11 +14,10 @@ export default function PackagesSection() {
       description: "Perfect for small gatherings and intimate events",
       features: [
         "2 shishas included",
-        "2-hour shisha service",
         "Choice of any 2 flavours",
+        "Luxury equipment package",
         "Professional setup included",
         "Serves up to 6 guests",
-        "Luxury equipment package",
         "Clean-up service included",
       ],
       popular: false,
@@ -29,13 +28,12 @@ export default function PackagesSection() {
       description: "Enhanced experience for special occasions",
       features: [
         "4 shishas included",
-        "4-hour shisha service",
         "Choice of any 4 flavours",
+        "Luxury equipment package",
         "Professional setup included",
         "Serves up to 12 guests",
-        "Luxury equipment package",
+        "Clean-up service included",
         "Setup & clean-up service",
-        "Custom flavour mixing",
       ],
       popular: true,
     },
@@ -45,12 +43,11 @@ export default function PackagesSection() {
       description: "Ultimate premium experience for VIP events",
       features: [
         "8 shishas included",
-        "6-hour shisha service",
         "Choice of any 8 flavours",
-        "Professional setup & styling",
-        "Serves up to 20 guests",
         "Luxury equipment package",
-        "Custom flavour creation",
+        "Professional setup included",
+        "Serves up to 20 guests",
+        "Clean-up service included",
       ],
       popular: false,
     },
@@ -67,7 +64,7 @@ export default function PackagesSection() {
           <p className="section-kicker mb-4">Catering Packages</p>
           <h2 className="font-serif text-4xl font-bold md:text-5xl">Choose your experience</h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Every package includes full shisha service with setup, maintenance, and cleaning by our attendants.
+            Every package includes luxury equipment, professional setup, and full clean-down by our team.
           </p>
         </div>
 

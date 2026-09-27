@@ -1,21 +1,24 @@
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function FlavoursMenu() {
-  const standardFlavours = [
-    { name: "Double Apple", emoji: "🍎" },
+  const classicFlavours = [
+    { name: "Double Apple", emoji: "🍏" },
     { name: "Lemon Mint", emoji: "🍋" },
-    { name: "Grape", emoji: "🍇" },
-    { name: "Blueberry", emoji: "🫐" },
+    { name: "Grape Mint", emoji: "🍇" },
+    { name: "Peach", emoji: "🍑" },
     { name: "Mango", emoji: "🥭" },
-    { name: "Lady Killer", emoji: "🌿" }
+    { name: "Orange Mint", emoji: "🍊" },
+    { name: "Blue Dragon", emoji: "🐉" },
+    { name: "Lady Killer", emoji: "🍈" },
+    { name: "Paan Raas", emoji: "🌿" },
+    { name: "Blue Mist", emoji: "🫐" }
   ];
 
-  const premiumFlavours = [
+  const signatureFlavours = [
     { name: "Chauffeur Special", description: "(Blue Dragon + Lady Killer)", emoji: "🌟" },
-    { name: "Blue Mist", description: "(Blueberry + Mint)", emoji: "🔵" },
-    { name: "Royal Paan Breeze", description: "(Paan + mint)", emoji: "🍃" },
+    { name: "Royal Paan Breeze", description: "(Paan + Mint)", emoji: "🍃" },
     { name: "Summer Sunset", description: "(Mango + Peach + Lemon)", emoji: "🍑🥭" },
-    { name: "Raspberry Mojito", description: "(Raspberry + mint + lime)", emoji: "🍓🌿" }
+    { name: "Raspberry Mojito", description: "(Raspberry + Mint + Lime)", emoji: "🍓🌿" }
   ];
 
   return (
@@ -26,14 +29,14 @@ export default function FlavoursMenu() {
           <p className="text-xl text-muted-foreground">Discover our premium selection of shisha flavours</p>
         </div>
 
-        {/* Standard Flavours */}
+        {/* Classic Flavours */}
         <div className="mb-16">
           <h3 className="font-serif text-3xl font-semibold text-center mb-12 border-b border-primary pb-4">
-            Standard Flavours
+            Classic Flavours
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {standardFlavours.map((flavour, index) => (
-              <Card key={index} className="bg-card text-center hover-float gradient-purple" data-testid={`standard-flavour-${index}`}>
+            {classicFlavours.map((flavour, index) => (
+              <Card key={index} className="bg-card text-center hover-float gradient-purple" data-testid={`classic-flavour-${index}`}>
                 <CardContent className="p-6">
                   <div className="text-4xl mb-3">{flavour.emoji}</div>
                   <h4 className="font-semibold text-lg mb-2">{flavour.name}</h4>
@@ -43,14 +46,14 @@ export default function FlavoursMenu() {
           </div>
         </div>
 
-        {/* Premium Flavours */}
+        {/* Signature Blends */}
         <div>
           <h3 className="font-serif text-3xl font-semibold text-center mb-12 border-b border-primary pb-4">
-            Premium Flavours
+            Signature Blends
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {premiumFlavours.map((flavour, index) => (
-              <Card key={index} className="bg-card hover-float gradient-purple" data-testid={`premium-flavour-${index}`}>
+            {signatureFlavours.map((flavour, index) => (
+              <Card key={index} className="bg-card hover-float gradient-purple" data-testid={`signature-flavour-${index}`}>
                 <CardContent className="p-8">
                   <div className="text-center">
                     <div className="text-4xl mb-4">{flavour.emoji}</div>
@@ -60,6 +63,16 @@ export default function FlavoursMenu() {
                 </CardContent>
               </Card>
             ))}
+            <Card className="bg-card hover-float gradient-purple" data-testid="custom-flavour-card">
+              <CardContent className="p-8 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-4xl mb-4">🎨</div>
+                  <h4 className="font-serif text-xl font-semibold mb-3">Custom Flavour</h4>
+                  <p className="text-sm text-gray-300">Custom flavour available upon request</p>
+                  <p className="mt-2 text-sm text-primary font-semibold">Additional flavours at $30</p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

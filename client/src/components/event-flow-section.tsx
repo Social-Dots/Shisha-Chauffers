@@ -5,13 +5,13 @@ export default function EventFlowSection() {
     {
       number: "01",
       title: "Choose your experience",
-      description: "Choose shisha catering or shisha rentals.",
+      description: "Pick the catering package that matches your event — Standard, Signature, Premium, or Luxury.",
       icon: Sparkles,
     },
     {
       number: "02",
       title: "Share the event details",
-      description: "Tell us the date, guest count, address, and flavour preferences.",
+      description: "Tell us the date, address, guest count, and flavour preferences.",
       icon: ClipboardList,
     },
     {
@@ -26,7 +26,7 @@ export default function EventFlowSection() {
     <section className="relative overflow-hidden bg-background py-16 sm:py-20">
       <div className="ambient-grid absolute inset-0 opacity-30" />
       <div className="absolute left-1/2 top-0 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
-      
+
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-10">
           <div>
@@ -52,7 +52,7 @@ export default function EventFlowSection() {
               >
                 <div className="absolute inset-y-0 left-0 w-1 bg-primary" />
                 <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-primary/15 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
-                
+
                 <div className="relative flex gap-4 sm:gap-5">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/15 sm:h-14 sm:w-14">
                     <step.icon className="h-6 w-6 text-primary" />

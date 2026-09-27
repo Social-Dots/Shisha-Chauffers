@@ -18,12 +18,14 @@ const steps = [
 ];
 
 const packages = [
-  { name: "Standard", price: "$300", note: "2 shishas · 2 flavours · luxury equipment", popular: false,
-    features: ["2 shishas included", "Choice of any 2 flavours", "Luxury equipment package", "Professional setup included", "Clean-up service included"] },
-  { name: "Premium", price: "$450", note: "4 shishas · 4 flavours · luxury equipment", popular: true,
-    features: ["4 shishas included", "Choice of any 4 flavours", "Luxury equipment package", "Professional setup included", "Clean-up service included"] },
-  { name: "Luxury", price: "$800", note: "8 shishas · 8 flavours · luxury equipment", popular: false,
-    features: ["8 shishas included", "Choice of any 8 flavours", "Luxury equipment package", "Professional setup included", "Clean-up service included"] },
+  { name: "Standard", price: "$300", note: "2 shishas · up to 3 hours", popular: false,
+    features: ["2 shishas included", "Up to 3 hours"] },
+  { name: "Signature", price: "$475", note: "4 shishas · up to 4 hours", popular: false,
+    features: ["4 shishas included", "Up to 4 hours"] },
+  { name: "Premium", price: "$650", note: "6 shishas · up to 4 hours", popular: true,
+    features: ["6 shishas included", "Up to 4 hours"] },
+  { name: "Luxury", price: "$800", note: "8 shishas · up to 5 hours", popular: false,
+    features: ["8 shishas included", "Up to 5 hours"] },
 ];
 
 const rentals = [
@@ -31,10 +33,9 @@ const rentals = [
   { q: "4 Shishas", p: "$295" }, { q: "5 Shishas", p: "$365" }, { q: "6 Shishas", p: "$435" },
 ];
 
-const standardFlavours = ["Double Apple", "Lemon Mint", "Grape", "Blueberry", "Mango", "Lady Killer"];
+const standardFlavours = ["Double Apple", "Lemon Mint", "Grape Mint", "Peach", "Mango", "Orange Mint", "Blue Dragon", "Lady Killer", "Paan Raas", "Blue Mist"];
 const signatureFlavours = [
   { name: "Chauffeur Special", mix: "Blue Dragon + Lady Killer" },
-  { name: "Blue Mist", mix: "Blueberry + Mint" },
   { name: "Royal Paan Breeze", mix: "Paan + Mint" },
   { name: "Summer Sunset", mix: "Mango + Peach + Lemon" },
   { name: "Raspberry Mojito", mix: "Raspberry + Mint + Lime" },

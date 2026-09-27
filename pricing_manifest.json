@@ -1,79 +1,78 @@
 {
   "pricing_manifest": {
-    "version": "1.2",
-    "last_updated": "2026-09-16",
+    "version": "2.0",
+    "last_updated": "2026-09-27",
     "currency": "CAD",
+    "notes": "Rental business line removed 2026-09-27 at the client's request. Shisha Chauffeurs is now strictly a shisha catering / event service.",
     "categories": {
-      "shisha_rental": {
-        "context": "Rental",
-        "pricing": [
-          { "plan": "1 Shisha", "quantity": 1, "price": 75, "currency": "CAD", "display": "$75" },
-          { "plan": "2 Shishas", "quantity": 2, "price": 150, "currency": "CAD", "display": "$150" },
-          { "plan": "3 Shishas", "quantity": 3, "price": 225, "currency": "CAD", "display": "$225" },
-          { "plan": "4 Shishas", "quantity": 4, "price": 295, "currency": "CAD", "display": "$295" },
-          { "plan": "5 Shishas", "quantity": 5, "price": 365, "currency": "CAD", "display": "$365" },
-          { "plan": "6 Shishas", "quantity": 6, "price": 435, "currency": "CAD", "display": "$435" }
-        ]
-      },
       "shisha_catering": {
         "context": "Catering",
         "pricing": [
-          { "plan": "Standard", "shishas_included": 2, "flavours_included": 2, "equipment_package": "Luxury", "price": 300, "currency": "CAD", "display": "$300" },
-          { "plan": "Premium", "shishas_included": 4, "flavours_included": 4, "equipment_package": "Luxury", "price": 450, "currency": "CAD", "display": "$450" },
-          { "plan": "Luxury", "shishas_included": 8, "flavours_included": 8, "equipment_package": "Luxury", "price": 800, "currency": "CAD", "display": "$800" }
-        ]
+          { "plan": "Standard",  "shishas_included": 2, "hours_included": 3, "price": 300, "currency": "CAD", "display": "$300", "popular": false },
+          { "plan": "Signature", "shishas_included": 4, "hours_included": 4, "price": 475, "currency": "CAD", "display": "$475", "popular": false },
+          { "plan": "Premium",   "shishas_included": 6, "hours_included": 4, "price": 650, "currency": "CAD", "display": "$650", "popular": true  },
+          { "plan": "Luxury",    "shishas_included": 8, "hours_included": 5, "price": 800, "currency": "CAD", "display": "$800", "popular": false }
+        ],
+        "inclusions": [
+          "Premium shisha",
+          "Quasar head with HMD (Heat Management Device)",
+          "Coconut coals",
+          "Flavour",
+          "Mouthpieces",
+          "Professional attendant",
+          "Setup & teardown",
+          "Coal management",
+          "1 complimentary head + flavour change (per shisha)"
+        ],
+        "add_ons": [
+          { "plan": "Additional hookah",                "price": 100, "unit": "each",     "display": "$100 each" },
+          { "plan": "Additional head + flavour change", "price": 20,  "unit": "each",     "display": "$20" },
+          { "plan": "Additional catering time",         "price": 100, "unit": "per hour", "display": "$100/hour" },
+          { "plan": "Additional custom flavour",        "price": 30,  "unit": "each",     "display": "$30" },
+          { "plan": "Ice pipe",                         "price": 10,  "unit": "each",     "display": "$10 each" }
+        ],
+        "delivery": {
+          "local_delivery": "Free",
+          "additional_charges": "Additional charges may apply based on event location"
+        }
       },
-      "rental_add_ons": {
-        "context": "Rental",
-        "pricing": [
-          { "plan": "Electric Charcoal Burner Rental", "price": 5, "unit": "per day", "display": "$5 per day" },
-          { "plan": "Heat Management Device", "price": 20, "unit": "each", "display": "$20 each" },
-          { "plan": "Box of Coconut Coals", "price": 20, "unit": "per box", "display": "$20 per box" },
-          { "plan": "250g Box of Flavours", "price_min": 40, "price_max": 45, "unit": "each", "display": "$40 - $45 each" },
-          { "plan": "Additional Day", "price": 60, "unit": "per day", "display": "$60" }
-        ]
-      },
-      "flavour_box_requirement": {
-        "context": "Rental",
-        "price": 30,
-        "currency": "CAD",
-        "display": "$30 per box",
-        "note": "Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box. The 250g Box of Flavours add-on ($40-$45) is a separate, optional stand-alone purchase for events that need additional flavours."
+      "flavours": {
+        "classic": [
+          { "name": "Double Apple", "emoji": "🍏" },
+          { "name": "Lemon Mint",   "emoji": "🍋" },
+          { "name": "Grape Mint",   "emoji": "🍇" },
+          { "name": "Peach",        "emoji": "🍑" },
+          { "name": "Mango",        "emoji": "🥭" },
+          { "name": "Orange Mint",  "emoji": "🍊" },
+          { "name": "Blue Dragon",  "emoji": "🐉" },
+          { "name": "Lady Killer",  "emoji": "🍈" },
+          { "name": "Paan Raas",    "emoji": "🌿" },
+          { "name": "Blue Mist",    "emoji": "🫐" }
+        ],
+        "signature_blends": [
+          { "name": "Chauffeur Special",  "mix": "Blue Dragon + Lady Killer" },
+          { "name": "Royal Paan Breeze", "mix": "Paan + Mint" },
+          { "name": "Summer Sunset",     "mix": "Mango + Peach + Lemon" },
+          { "name": "Raspberry Mojito",  "mix": "Raspberry + Mint + Lime" }
+        ],
+        "custom_flavour_charge": 30
       }
     },
-    "resolved_conflicts": [
-      {
-        "id": "luxury_package_price",
-        "previous": "$800 in packages-section.tsx vs $600 in contact-form.tsx",
-        "resolution": "$800 chosen (matches pricing_manifest v1.1 and packages-section.tsx)",
-        "decided_on": "2026-09-16"
-      },
-      {
-        "id": "shisha_rental_prices",
-        "previous": "$75/$150/$225/$295/$365/$435 in shisha-rentals-section.tsx vs $60/$115/$165/$210/$250/$300 in contact-form.tsx",
-        "resolution": "$75/$150/$225/$295/$365/$435 chosen (matches pricing_manifest v1.1, the public rentals section, and the client's spec)",
-        "decided_on": "2026-09-16"
-      },
-      {
-        "id": "flavour_box",
-        "previous": "$30 rental requirement vs $40-45 add-on",
-        "resolution": "TWO DISTINCT PRODUCTS: $30/box = mandatory rental flavour box (rental customers must buy). $40-45 = optional 250g Box of Flavours add-on. Both stay in the system, both clearly labelled.",
-        "decided_on": "2026-09-16"
-      }
-    ],
     "removed": {
-      "membership": "Membership pricing (Gold $120/month, Platinum $200/month) removed from the public site on 2026-09-15 at the client's request."
+      "membership":  "Membership pricing (Gold $120/month, Platinum $200/month) removed from the public site on 2026-09-15 at the client's request.",
+      "rentals":     "Shisha rental line removed from the public site on 2026-09-27 at the client's request. Site now presents Shisha Chauffeurs strictly as a catering / event service.",
+      "flavour_box": "Per-box rental flavour requirement removed 2026-09-27."
     },
     "validation": {
-      "total_pricing_points": 15,
+      "total_pricing_points": 9,
       "files_containing_pricing": [
-        "client/src/components/shisha-rentals-section.tsx",
         "client/src/components/packages-section.tsx",
         "client/src/components/contact-form.tsx",
         "client/src/components/services-section.tsx",
+        "client/src/components/flavours-menu.tsx",
         "client/index.html (JSON-LD hasOfferCatalog)"
       ],
-      "consistency_check": "PASS - all source files and JSON-LD now match the manifest"
+      "consistency_check": "PASS — catering tiers, add-ons, and flavour taxonomy are in sync across the manifest and the source files."
     }
   }
 }

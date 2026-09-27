@@ -1,0 +1,51 @@
+{
+  "$comment": "Ali-editable content manifest. Drop new photos into client/public/media/in-action/ and add an entry here — or update captions/ordering — and the site picks them up on the next build. Same for testimonials, gallery images, and featured media. You do not need to ask me to make these changes; just edit this file.",
+  "lastUpdated": "2026-09-27",
+  "inAction": {
+    "featuredMedia": {
+      "type": "image",
+      "src": "/media/in-action/lounge-smoke-poster.jpg",
+      "alt": "Shisha Chauffeurs in action — hosted lounge setup for private celebrations"
+    },
+    "mediaItems": [
+      { "src": "/media/in-action/lounge-smoke-poster.jpg",    "title": "Hosted lounge setup for private celebrations", "caption": "Hosted lounge setup for private celebrations." },
+      { "src": "/media/in-action/outdoor-setup-poster.jpg",   "title": "Outdoor shisha setup in the GTA",              "caption": "Outdoor shisha service for backyard parties." },
+      { "src": "/media/in-action/closeup-setup-poster.jpg",   "title": "Luxury hookah setup detail",                   "caption": "Premium hookah details for VIP lounges." },
+      { "src": "/media/in-action/private-residence.jpg",      "title": "Private residence shisha setup",              "caption": "Private residence setup for relaxed hosting." },
+      { "src": "/media/in-action/luxury/3cbef6e6-c14b-41ea-b537-89e3f152432d.jpg", "title": "VIP shisha setup for luxury events",    "caption": "VIP styling for luxury night events." },
+      { "src": "/media/in-action/venue-lineup.jpg",           "title": "Event venue hookah lineup",                   "caption": "Multi-head lineup for smooth guest flow." },
+      { "src": "/media/in-action/luxury/97dbe86e-25a3-48c0-8285-0d9ba03b59d0.jpg", "title": "Luxury event hookah display",         "caption": "Bold display for upscale Toronto nights." },
+      { "src": "/media/in-action/studio-lineup.jpg",          "title": "Premium shisha product presentation",         "caption": "Clean product styling for curated events." },
+      { "src": "/media/in-action/backyard-setup.jpg",         "title": "Backyard party shisha service",               "caption": "Backyard shisha service with polished setup." },
+      { "src": "/media/in-action/event-setup.jpg",            "title": "Evening event shisha atmosphere",             "caption": "Evening setup for elevated private events." }
+    ]
+  },
+  "gallery": {
+    "comment": "Edit / replace with photos you want shown in the Event Gallery section.",
+    "images": [
+      { "src": "/media/in-action/venue-lineup.jpg",         "alt": "Multi-head shisha lineup set up for a private event",  "caption": "Event Lineup" },
+      { "src": "/media/in-action/lounge-smoke-poster.jpg",  "alt": "Hosted lounge shisha setup for a private celebration","caption": "Hosted Lounge Setup" },
+      { "src": "/media/in-action/private-residence.jpg",    "alt": "Shisha setup at a private residence",                "caption": "Private Residence" },
+      { "src": "/media/in-action/outdoor-setup-poster.jpg", "alt": "Outdoor shisha service for a backyard party",        "caption": "Outdoor Setup" },
+      { "src": "/media/in-action/backyard-setup.jpg",       "alt": "Backyard shisha service with a polished setup",      "caption": "Backyard Service" },
+      { "src": "/media/in-action/closeup-setup-poster.jpg", "alt": "Close-up of premium shisha equipment",               "caption": "Premium Equipment" }
+    ]
+  },
+  "testimonials": {
+    "comment": "Pulled from share.google/UNJ4s92g3hc7JgV59 weekly. Add new reviews here with publishedOn set to today — the carousel rotates them in.",
+    "googleReviewUrl": "https://share.google/UNJ4s92g3hc7JgV59",
+    "entries": [
+      { "quote": "We hired this service for our house warming with 4 shishas for 4 hours. Rahman was very helpful and ensured all of our shishas were running smoothly. Great service. Highly recommended.", "name": "Sid C.", "detail": "Local Guide · House warming · 4 shishas · 4 hours", "rating": 5, "isNew": false, "publishedOn": "2025-12-01" },
+      { "quote": "Ordered shisha catering from Shisha Chauffeurs for a birthday event. Honestly without a doubt, arrangement, flavours, coals and overall presentation was amazing. Also want to mention these guys are using the best quality Shisha's.", "name": "Hamza K.", "detail": "Birthday event · Shisha catering", "rating": 5, "isNew": false, "publishedOn": "2025-12-08" },
+      { "quote": "Service was amazing I would most definitely recommend. Everything was seamless. I will be giving these guys a call again!", "name": "Amitesh B.", "detail": "Recent booking", "rating": 5, "isNew": true, "publishedOn": "2026-09-20" },
+      { "quote": "Service and amazing and quality was top tier. HIGHLY RECOMMEND!", "name": "Mohid R.", "detail": "Recent booking", "rating": 5, "isNew": true, "publishedOn": "2026-09-20" },
+      { "quote": "One of the best services you will see. Their Team was fast, professional and well experienced! Definitely would recommend!", "name": "Hamza S.", "detail": "Recent booking", "rating": 5, "isNew": false, "publishedOn": "2026-01-15" }
+    ]
+  },
+  "instagram": {
+    "handle": "@shishachauffeurs",
+    "url": "https://www.instagram.com/shishachauffeurs/",
+    "tiktokUrl": "https://www.tiktok.com/@shishachauffeurs",
+    "weeklyRefresh": "Manual — paste new image src here and the in-action section will pick them up. A scheduled cron (syncInstagramMedia.ts) can fill this automatically once a token is added to .env."
+  }
+}

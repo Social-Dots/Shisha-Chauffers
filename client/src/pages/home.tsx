@@ -9,7 +9,6 @@ import InActionSection from "@/components/in-action-section";
 const ServicesSection = lazy(() => import("@/components/services-section"));
 const PackagesSection = lazy(() => import("@/components/packages-section"));
 
-const ShishaRentalsSection = lazy(() => import("@/components/shisha-rentals-section"));
 const FlavoursMenu = lazy(() => import("@/components/flavours-menu"));
 const GallerySection = lazy(() => import("@/components/gallery-section"));
 const TestimonialsSection = lazy(() => import("@/components/testimonials-section"));
@@ -41,23 +40,19 @@ export default function Home() {
       <EventFlowSection />
       <InActionSection />
       <AboutSection />
-      
+
       <Suspense fallback={<SectionSkeleton />}>
         <ServicesSection />
       </Suspense>
-      
+
       <Suspense fallback={<SectionSkeleton />}>
         <PackagesSection />
       </Suspense>
-      
-      <Suspense fallback={<SectionSkeleton />}>
-        <ShishaRentalsSection />
-      </Suspense>
-      
+
       <Suspense fallback={<SectionSkeleton />}>
         <FlavoursMenu />
       </Suspense>
-      
+
       <Suspense fallback={<SectionSkeleton />}>
         <GallerySection />
       </Suspense>
@@ -69,7 +64,7 @@ export default function Home() {
       <Suspense fallback={<SectionSkeleton />}>
         <ContactForm />
       </Suspense>
-      
+
       <Suspense fallback={<div className="h-32 bg-muted/50"></div>}>
         <Footer />
       </Suspense>

@@ -62,8 +62,8 @@ export default function Navigation() {
             >
               Packages
             </button>
-            <button 
-              onClick={() => scrollToSection('shisha-rentals')} 
+            <button
+              onClick={() => scrollToSection('pricing')}
               className="hover:text-primary transition-colors"
               data-testid="nav-pricing"
             >
@@ -130,8 +130,8 @@ export default function Navigation() {
               >
                 Packages
               </button>
-              <button 
-                onClick={() => scrollToSection('shisha-rentals')} 
+              <button
+                onClick={() => scrollToSection('pricing')}
                 className="rounded-2xl border border-white/5 bg-white/[0.03] px-4 py-3 text-left transition-colors hover:text-primary"
                 data-testid="mobile-nav-pricing"
               >

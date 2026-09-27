@@ -1,44 +1,34 @@
-import { Martini, Home } from "lucide-react";
+import { Martini } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function ServicesSection() {
   const services = [
-      {
-        icon: Martini,
-        title: "Shisha Catering",
-        description: "Professional shisha masters bring premium flavours and equipment directly to your event",
-        gradient: "gradient-gold",
-        features: [
-          "Luxury equipment package: shisha, premium heads, premium flavours, and coconut coals.",
-          "Professional setup and clean-up included with every package.",
-          "Pickup-and-delivery available for all service areas across the GTA.",
-        ]
-      },
-      {
-        icon: Home,
-        title: "Shisha Rentals",
-        description: "Rent shisha equipment for your private events and parties",
-        gradient: "gradient-gold",
-        features: [
-          "Self-service rental. Equipment only, no attendants included.",
-          "Basic equipment: shisha, basic head, basic flavour, and quick-light coals.",
-          "Set-up instructions included, with a 24-hour rental period.",
-          "Pickup and delivery available.",
-        ]
-      }
-    ];
+    {
+      icon: Martini,
+      title: "Shisha Catering",
+      description:
+        "Professional shisha masters bring premium flavours and equipment directly to your event",
+      gradient: "gradient-gold",
+      features: [
+        "Luxury equipment package: shisha, quasar heads with HMD (Heat Management Device), coconut coals, and mouthpieces.",
+        "Every package includes: flavour, a professional attendant, setup & teardown, coal management, and 1 complimentary head + flavour change per shisha.",
+        "Professional setup and clean-down included with every package.",
+        "Free local delivery across the GTA. Additional charges may apply based on event location.",
+      ],
+    },
+  ];
 
   return (
     <section id="services" className="py-20 bg-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Our Premium Services</h2>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Our Premium Service</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Elevate your events with our luxury mobile shisha catering, or rent shisha equipment for a self-service setup
+            Mobile shisha catering delivered and serviced at your private event — setup, service, and clean-down handled by our team.
           </p>
         </div>
-        
-        <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
+
+        <div className="mx-auto grid max-w-3xl gap-8">
           {services.map((service, index) => (
             <Card key={index} className="bg-card hover-float" data-testid={`service-card-${index}`}>
               <CardContent className="p-8">

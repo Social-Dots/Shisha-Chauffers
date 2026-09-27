@@ -1,4 +1,5 @@
-import { ArrowRight, Camera, MapPin, PlayCircle, Sparkles } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { ArrowRight, Camera, MapPin, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -6,25 +7,45 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 
-const mediaItems = [
+/**
+ * Featured media (top of section). When you have a fresh hero image or reel
+ * for the "Shisha Chauffeurs in Action" header, drop it in /media/in-action/
+ * and update FEATURED_MEDIA below — first image/video is the featured card.
+ */
+const FEATURED_MEDIA = {
+  type: "image" as const,
+  src: "/media/in-action/lounge-smoke-poster.jpg",
+  alt: "Shisha Chauffeurs in action — hosted lounge setup for private celebrations",
+};
+
+type MediaItem = {
+  type: "image" | "video";
+  title: string;
+  caption: string;
+  src: string;
+  poster?: string;
+};
+
+const mediaItems: MediaItem[] = [
   {
-    type: "video" as const,
-    title: "Mobile shisha catering for private events",
+    type: "video",
+    title: "Hosted lounge setup for private celebrations",
     caption: "Hosted lounge setup for private celebrations.",
     src: "/media/in-action/lounge-smoke.mp4",
     poster: "/media/in-action/lounge-smoke-poster.jpg",
   },
   {
-    type: "video" as const,
+    type: "video",
     title: "Outdoor shisha setup in the GTA",
     caption: "Outdoor shisha service for backyard parties.",
     src: "/media/in-action/outdoor-setup.mp4",
     poster: "/media/in-action/outdoor-setup-poster.jpg",
   },
   {
-    type: "video" as const,
+    type: "video",
     title: "Luxury hookah setup detail",
     caption: "Premium hookah details for VIP lounges.",
     src: "/media/in-action/closeup-setup.mp4",
@@ -62,33 +83,15 @@ const mediaItems = [
   },
   {
     type: "image" as const,
-    title: "Luxury hookah service for VIP gatherings",
-    caption: "Luxury hookah service for VIP gatherings.",
-    src: "/media/in-action/luxury/3ddac740-b269-478d-8992-3decafd96e0c.jpg",
-  },
-  {
-    type: "image" as const,
     title: "Backyard party shisha service",
     caption: "Backyard shisha service with polished setup.",
     src: "/media/in-action/backyard-setup.jpg",
   },
   {
     type: "image" as const,
-    title: "Luxury smoke session at a private event",
-    caption: "Late-night atmosphere for premium sessions.",
-    src: "/media/in-action/luxury/8dffd9a1-cfaa-45e6-b889-9ee3c43d7a8a.jpg",
-  },
-  {
-    type: "image" as const,
     title: "Evening event shisha atmosphere",
     caption: "Evening setup for elevated private events.",
     src: "/media/in-action/event-setup.jpg",
-  },
-  {
-    type: "image" as const,
-    title: "Private event hookah rental display",
-    caption: "Rental display with polished visual presence.",
-    src: "/media/in-action/luxury/a58cfd78-9c3c-4033-a7a8-5aaa98500b0b.jpg",
   },
   {
     type: "image" as const,
@@ -107,12 +110,6 @@ const mediaItems = [
     title: "Luxury party hookah catering display",
     caption: "High-end display for premium private parties.",
     src: "/media/in-action/luxury/99c3ef50-ba26-4c35-b3c0-8edb96959891.jpg",
-  },
-  {
-    type: "image" as const,
-    title: "Premium hookah setup for nightlife events",
-    caption: "Nightlife-ready setup for curated gatherings.",
-    src: "/media/in-action/luxury/ebbb0b5e-d1a4-4221-b886-4c2ec11d95b3.jpg",
   },
   {
     type: "image" as const,
@@ -140,18 +137,6 @@ const mediaItems = [
   },
   {
     type: "image" as const,
-    title: "High-end shisha service presentation",
-    caption: "High-end presentation for curated guest experiences.",
-    src: "/media/in-action/luxury/dcc4a253-2be5-4903-aa33-6e737dff64c5.jpg",
-  },
-  {
-    type: "image" as const,
-    title: "Hookah rental for premium private parties",
-    caption: "Premium rental setup for private parties.",
-    src: "/media/in-action/luxury/7582af4d-cff7-4a57-ae3b-26bfdef6b44d.jpg",
-  },
-  {
-    type: "image" as const,
     title: "Toronto hookah setup close-up",
     caption: "Close-up product detail with event atmosphere.",
     src: "/media/in-action/luxury/c0375fc7-91d3-46a2-9812-66285ecd378b.jpg",
@@ -168,12 +153,6 @@ const mediaItems = [
     caption: "Cinematic smoke scene for private parties.",
     src: "/media/in-action/luxury/d35d8a14-269b-4f80-a8e3-a5dd439b1855.jpg",
   },
-  {
-    type: "image" as const,
-    title: "VIP event hookah detail shot",
-    caption: "VIP detail shot with premium finish.",
-    src: "/media/in-action/luxury/4547d91f-2f0e-4379-acd1-d7fab672b6c0.jpg",
-  },
 ];
 
 const coverageNotes = [
@@ -186,9 +165,38 @@ const actionStats = [
   { value: "GTA", label: "private service" },
 ];
 
-const featuredClip = mediaItems[0];
-
 export default function InActionSection() {
+  const carouselApi = useRef<CarouselApi | null>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+
+  // When the active slide changes, play only that video; pause the rest so
+  // multiple .mp4s aren't decoding simultaneously off-screen.
+  useEffect(() => {
+    const api = carouselApi.current;
+    if (!api) return;
+
+    const replayIfVideo = (api: NonNullable<CarouselApi>) => {
+      const index = api.selectedScrollSnap();
+      videoRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        if (idx === index) {
+          el.play().catch(() => {
+            /* autoplay may be blocked until user interaction; controls handle it */
+          });
+        } else {
+          el.pause();
+        }
+      });
+    };
+
+    replayIfVideo(api);
+    api.on("select", replayIfVideo);
+
+    return () => {
+      api.off("select", replayIfVideo);
+    };
+  }, []);
+
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
@@ -226,25 +234,19 @@ export default function InActionSection() {
           </div>
 
           <article className="group relative min-h-[24rem] overflow-hidden rounded-[1.75rem] border border-white/10 bg-black shadow-2xl shadow-black/30">
-            {featuredClip.type === "video" && (
-              <video
-                className="h-full min-h-[24rem] w-full object-cover opacity-85 transition-transform duration-700 group-hover:scale-[1.03]"
-                src={featuredClip.src}
-                poster={featuredClip.poster}
-                muted
-                loop
-                playsInline
-                controls
-                preload="metadata"
-              />
-            )}
+            <img
+              src={FEATURED_MEDIA.src}
+              alt={FEATURED_MEDIA.alt}
+              className="h-full min-h-[24rem] w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.03]"
+              loading="eager"
+              decoding="async"
+              width="1600"
+              height="1200"
+            />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
             <div className="pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white/80">
-              <PlayCircle className="h-4 w-4 text-primary" />
-              Live Clip
-            </div>
-            <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 shadow-2xl shadow-black/40 backdrop-blur-sm">
-              <PlayCircle className="h-10 w-10 fill-primary/25 text-primary" />
+              <Camera className="h-4 w-4 text-primary" />
+              Featured Setup
             </div>
             <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
               <p className="text-sm uppercase tracking-[0.24em] text-primary/90">Featured setup</p>
@@ -291,10 +293,13 @@ export default function InActionSection() {
 
         <Carousel
           opts={{ align: "start", loop: true }}
+          setApi={(api) => {
+            carouselApi.current = api;
+          }}
           className="mx-auto w-full max-w-6xl"
         >
           <CarouselContent className="-ml-0">
-            {mediaItems.map((item) => (
+            {mediaItems.map((item, index) => (
               <CarouselItem
                 key={item.src}
                 className="pl-0 md:basis-1/2 xl:basis-1/3"
@@ -302,25 +307,21 @@ export default function InActionSection() {
                 <article className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35 shadow-2xl shadow-black/20 sm:mx-3 sm:rounded-[1.75rem]">
                   <div className="relative aspect-[4/5] bg-black">
                     {item.type === "video" ? (
-                      <>
-                        <video
-                          className="h-full w-full object-cover"
-                          src={item.src}
-                          poster={item.poster}
-                          muted
-                          loop
-                          playsInline
-                          controls
-                          preload="metadata"
-                        />
-                        <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/50 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/80 sm:left-4 sm:top-4 sm:text-[11px] sm:tracking-[0.22em]">
-                          <PlayCircle className="h-4 w-4 text-primary" />
-                          Live Clip
-                        </div>
-                        <div className="pointer-events-none absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/45 text-white shadow-2xl shadow-black/40 backdrop-blur-sm sm:h-20 sm:w-20">
-                          <PlayCircle className="h-8 w-8 fill-primary/25 text-primary sm:h-10 sm:w-10" />
-                        </div>
-                      </>
+                      <video
+                        ref={(el) => {
+                          videoRefs.current[index] = el;
+                        }}
+                        src={item.src}
+                        poster={item.poster}
+                        muted
+                        autoPlay
+                        loop
+                        playsInline
+                        preload="metadata"
+                        aria-label={item.title}
+                        className="h-full w-full object-cover"
+                        data-testid={`in-action-video-${index}`}
+                      />
                     ) : (
                       <img
                         src={item.src}
@@ -330,7 +331,6 @@ export default function InActionSection() {
                         decoding="async"
                       />
                     )}
-
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
                       <p className="text-sm leading-6 text-white/85">{item.caption}</p>
@@ -345,7 +345,9 @@ export default function InActionSection() {
           <CarouselNext className="right-3 top-[42%] hidden h-10 w-10 border-white/15 bg-black/60 text-white hover:bg-black/80 disabled:opacity-30 sm:flex md:right-4 md:h-11 md:w-11" />
         </Carousel>
 
-        <div className="mt-6 grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/30 p-5 sm:mt-8 sm:rounded-[2rem] sm:p-6 md:grid-cols-[1fr_auto] md:items-center">
+        {/* Closing CTA fills the empty space below the carousel and gives the
+            section a natural end before the next block. */}
+        <div className="mt-10 grid gap-4 rounded-[1.5rem] border border-white/10 bg-black/30 p-5 sm:mt-12 sm:rounded-[2rem] sm:p-6 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-primary/90">Setup Spotlight</p>
             <h3 className="mt-3 font-serif text-2xl font-semibold text-white sm:text-3xl">

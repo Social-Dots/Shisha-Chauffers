@@ -37,7 +37,7 @@ export default function HeroSection() {
         </h1>
         <p className="mb-2 text-lg text-muted-foreground sm:text-xl md:text-2xl">Where flavor meets finesse</p>
         <p className="mx-auto mb-8 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg md:text-xl">
-          Premium shisha catering and rentals delivered to your doorstep for private events across Toronto and the GTA.
+          Premium shisha catering delivered to your doorstep for private events across Toronto and the GTA.
         </p>
         
         <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">

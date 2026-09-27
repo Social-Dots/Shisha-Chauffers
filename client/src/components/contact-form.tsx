@@ -21,60 +21,65 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowRight, CalendarDays, Clock3, Flame, MapPinned, PhoneCall, Sparkles } from "lucide-react";
 
-const serviceOptions = [
-  {
-    value: "shisha-rental",
-    label: "Shisha Rental",
-    description:
-      "All-inclusive rental service for house parties, backyard hangouts, and special celebrations without lounge travel.",
-  },
-  {
-    value: "shisha-catering",
-    label: "Shisha Catering",
-    description:
-      "Fully catered on-site experience with professional attendants, setup, coal rotation, flavour guidance, and clean-down.",
-  },
-];
-
 const packageOptions = [
   {
     value: "standard-private-session",
-    label: "Standard Private Session (2-6 People) $300",
-    description: "2 shishas, choice of any 2 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
+    label: "Standard - $300",
+    description: "2 shishas, up to 3 hours.",
+  },
+  {
+    value: "signature-private-session",
+    label: "Signature - $475",
+    description: "4 shishas, up to 4 hours.",
   },
   {
     value: "premium-private-session",
-    label: "Premium Private Session (4-12 People) $450",
-    description: "4 shishas, choice of any 4 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
+    label: "Premium - $650",
+    description: "6 shishas, up to 4 hours.",
   },
   {
     value: "luxury-private-experience",
-    label: "Luxury Private Experience (8-20 People) $800",
-    description: "8 shishas, choice of any 8 flavours, luxury equipment package, plus setup, maintenance, and cleaning by attendants.",
+    label: "Luxury - $800",
+    description: "8 shishas, up to 5 hours.",
   },
+];
+
+const cateringAddOns = [
+  "Additional hookah ($100 each)",
+  "Additional head + flavour change ($20)",
+  "Additional catering time ($100/hour)",
+  "Additional custom flavour ($30)",
+  "Ice pipe ($10 each)",
+];
+
+const cateringInclusions = [
+  "Premium shisha",
+  "Quasar head with HMD (Heat Management Device)",
+  "Coconut coals",
+  "Flavour",
+  "Mouthpieces",
+  "Professional attendant",
+  "Setup & teardown",
+  "Coal management",
+  "1 complimentary head + flavour change (per shisha)",
 ];
 
 const flavourOptions = [
   "Double Apple",
   "Lemon Mint",
-  "Grape",
-  "Blueberry",
+  "Grape Mint",
   "Peach",
   "Mango",
+  "Orange Mint",
+  "Blue Dragon",
   "Lady Killer",
-  "Chauffeur Special (Blue Dragon + Lady Killer)",
+  "Paan Raas",
   "Blue Mist",
+  "Chauffeur Special (Blue Dragon + Lady Killer)",
   "Royal Paan Breeze (Paan + Mint)",
   "Summer Sunset (Mango + Peach + Lemon)",
   "Raspberry Mojito (Raspberry + Mint + Lime)",
-];
-
-const additionalServiceOptions = [
-  "Electric Charcoal Burner Rental ($5 per day)",
-  "Heat Management Device ($20 each)",
-  "Box of Coconut Coals ($20 per box)",
-  "250g Box of Flavours ($40 - $45 each)",
-  "Additional Day ($60)",
+  "Custom flavour on request ($30)",
 ];
 
 const referralOptions = [
@@ -87,7 +92,7 @@ const referralOptions = [
 
 const stepCopy = [
   { title: "Contact", detail: "Who is booking and where the event is happening" },
-  { title: "Service", detail: "Select your service, package, and add-ons" },
+  { title: "Package", detail: "Select your catering tier and any add-ons" },
   { title: "Event", detail: "Date, timing, event type, and guest count" },
   { title: "Flavours", detail: "Choose flavour profiles and final notes" },
   { title: "Confirm", detail: "Review the important booking conditions" },
@@ -124,10 +129,6 @@ export default function ContactForm() {
       termsAccepted: false,
     },
   });
-
-  const selectedServices = form.watch("services") ?? [];
-  const wantsCatering = selectedServices.includes("shisha-catering");
-  const wantsRental = selectedServices.includes("shisha-rental");
 
   const bookingMutation = useMutation({
     mutationFn: async (data: InsertBooking) => {
@@ -195,7 +196,7 @@ export default function ContactForm() {
 
   const stepFields: Record<number, (keyof InsertBooking)[]> = {
     1: ["firstName", "lastName", "location", "phone", "email"],
-    2: ["services", "packageSelection"],
+    2: ["packageSelection", "additionalServices"],
     3: ["eventDate", "eventTime", "endTime", "eventType", "guestCount"],
     4: ["preferredFlavours", "referralSource"],
     5: ["termsAccepted"],
@@ -238,12 +239,12 @@ export default function ContactForm() {
             <img src="/brand/icon.png" alt="Shisha Chauffeurs" className="h-10 w-auto sm:h-12 md:h-16" />
           </div>
           <h2 className="mb-4 font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            Shisha Catering & Rental Services
+            Book Your Catering Experience
           </h2>
           <p className="mx-auto max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">
-            Reserve our luxury mobile shisha catering service or rent shishas for your next event.
+            Reserve our luxury mobile shisha catering for your next private event.
             Whether you are hosting a private gathering, wedding, birthday, or celebration, we use this form to confirm
-            your service request, event details, preferred flavours, and any add-ons you want included.
+            your package, event details, preferred flavours, and any add-ons you want included.
           </p>
         </div>
 
@@ -403,124 +404,76 @@ export default function ContactForm() {
 
                 {currentStep === 2 && (
                   <div className="space-y-6">
-                    <h3 className="mb-6 font-serif text-2xl font-semibold">Service Request</h3>
+                    <h3 className="mb-6 font-serif text-2xl font-semibold">Package & Add-ons</h3>
+
+                    <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                      <p className="text-sm font-semibold text-white">Every catering package includes</p>
+                      <ul className="mt-3 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+                        {cateringInclusions.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                      <p className="mt-4 text-xs text-muted-foreground">
+                        Free local delivery. Additional charges may apply based on event location.
+                      </p>
+                    </div>
 
                     <FormField
                       control={form.control}
-                      name="services"
-                      render={() => (
+                      name="packageSelection"
+                      render={({ field }) => (
                         <FormItem>
-                          <FormLabel>What service do you want? *</FormLabel>
-                          <div className="space-y-4">
-                            {serviceOptions.map((option) => (
-                              <FormField
-                                key={option.value}
-                                control={form.control}
-                                name="services"
-                                render={({ field }) => (
-                                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-2xl border border-white/10 bg-black/20 p-4">
-                                    <FormControl>
-                                      <Checkbox
-                                        checked={field.value?.includes(option.value)}
-                                        onCheckedChange={(checked) =>
-                                          checked
-                                            ? field.onChange([...(field.value ?? []), option.value])
-                                            : field.onChange((field.value ?? []).filter((value) => value !== option.value))
-                                        }
-                                        data-testid={`checkbox-service-${option.value}`}
-                                      />
-                                    </FormControl>
-                                    <div className="space-y-1 leading-none">
-                                      <FormLabel className="font-semibold text-white">{option.label}</FormLabel>
-                                      <p className="text-sm text-muted-foreground">{option.description}</p>
+                          <FormLabel>Shisha Package Selection *</FormLabel>
+                          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            {packageOptions.map((option) => {
+                              const isSelected = field.value === option.value;
+
+                              return (
+                                <label
+                                  key={option.value}
+                                  className={`group flex cursor-pointer flex-col rounded-2xl border p-4 text-left transition-all ${
+                                    isSelected
+                                      ? "border-primary/80 bg-primary/10 ring-2 ring-primary/30"
+                                      : "border-white/10 bg-black/20 hover:border-white/20"
+                                  }`}
+                                  data-testid={`package-${option.value}`}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="packageSelection"
+                                    value={option.value}
+                                    checked={isSelected}
+                                    onChange={() => field.onChange(option.value)}
+                                    className="sr-only"
+                                  />
+                                  <div className="flex items-start justify-between gap-4">
+                                    <div>
+                                      <p className="font-semibold text-white">{option.label}</p>
+                                      <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
                                     </div>
-                                  </FormItem>
-                                )}
-                              />
-                            ))}
+                                    {isSelected ? (
+                                      <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
+                                        Selected
+                                      </span>
+                                    ) : null}
+                                  </div>
+                                </label>
+                              );
+                            })}
                           </div>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
 
-                    {wantsCatering && (
-                      <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
-                        <p className="text-sm font-semibold text-white">What our attendants provide</p>
-                        <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                          <li>Full setup and teardown so you can stay focused on your guests.</li>
-                          <li>Live flavour mixing and recommendations based on the event vibe.</li>
-                          <li>Continuous coal rotation, fruit head preparation, and clean hygienic service.</li>
-                        </ul>
-                      </div>
-                    )}
-
-                    {wantsCatering && (
-                      <FormField
-                        control={form.control}
-                        name="packageSelection"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Shisha Package Selection</FormLabel>
-                            <div className="grid gap-4 sm:grid-cols-3">
-                              {packageOptions.map((option) => {
-                                const isSelected = field.value === option.value;
-
-                                return (
-                                  <label
-                                    key={option.value}
-                                    className={`group flex cursor-pointer flex-col rounded-2xl border p-4 text-left transition-all ${
-                                      isSelected
-                                        ? "border-primary/80 bg-primary/10 ring-2 ring-primary/30"
-                                        : "border-white/10 bg-black/20 hover:border-white/20"
-                                    }`}
-                                    data-testid={`package-${option.value}`}
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="packageSelection"
-                                      value={option.value}
-                                      checked={isSelected}
-                                      onChange={() => field.onChange(option.value)}
-                                      className="sr-only"
-                                    />
-                                    <div className="flex items-start justify-between gap-4">
-                                      <div>
-                                        <p className="font-semibold text-white">{option.label}</p>
-                                        <p className="mt-2 text-sm text-muted-foreground">{option.description}</p>
-                                      </div>
-                                      {isSelected ? (
-                                        <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-primary-foreground">
-                                          Selected
-                                        </span>
-                                      ) : null}
-                                    </div>
-                                  </label>
-                                );
-                              })}
-                            </div>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-
-                    {wantsRental && (
-                    <div className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm text-muted-foreground">
-                      <p className="font-semibold text-white">Shisha rental prices</p>
-                      <p className="mt-2">1 shisha $75, 2 shishas $150, 3 shishas $225, 4 shishas $295, 5 shishas $365, 6 shishas $435.</p>
-                      <p className="mt-3 text-white">Rentals are supplied per box of flavours. A flavour box purchase is required at $30 per box.</p>
-                    </div>
-                    )}
-
                     <FormField
                       control={form.control}
                       name="additionalServices"
                       render={() => (
                         <FormItem>
-                          <FormLabel>Additional Services</FormLabel>
+                          <FormLabel>Add-ons</FormLabel>
                           <div className="space-y-3">
-                            {additionalServiceOptions.map((option) => (
+                            {cateringAddOns.map((option) => (
                               <FormField
                                 key={option}
                                 control={form.control}
@@ -839,6 +792,9 @@ export default function ContactForm() {
                   )}
                 </div>
               </form>
+              <div className="mt-6 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+                Powered by <a href="https://socialdots.ca" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary hover:underline" data-testid="link-powered-by-social-dots">Social Dots</a>
+              </div>
             </Form>
           </CardContent>
         </Card>

@@ -50,7 +50,7 @@ const gallery = [
   { src: "/media/about/about-shisha-chauffeurs.jpg", alt: "Shisha Chauffeurs luxury mobile shisha service" },
 ];
 
-// Placeholder testimonials removed — live testimonials now use real Google
+// Placeholder testimonials removed. Live testimonials now use real Google
 // reviews and live in the main site's testimonials section. The /refined
 // landing intentionally has no testimonials block.
 const testimonials: { quote: string; who: string; where: string }[] = [];

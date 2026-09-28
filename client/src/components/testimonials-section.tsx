@@ -20,7 +20,7 @@ const testimonials: {
   detail: string;
   rating: number;
   isNew?: boolean;
-  publishedOn: string; // ISO date — used for weekly auto-rotation
+  publishedOn: string; // ISO date used for weekly auto-rotation
 }[] = [
   {
     quote:
@@ -72,7 +72,7 @@ const testimonials: {
 const GOOGLE_REVIEW_URL = "https://share.google/UNJ4s92g3hc7JgV59";
 
 // One week (ms). Weekly tick keeps newly published reviews surfaced without a
-// code change — only the GBP sync process needs to keep the array up to date.
+// code change: only the GBP sync process needs to keep the array up to date.
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 // Carousel pacing: rotate every 6s, pause when the user has interacted.

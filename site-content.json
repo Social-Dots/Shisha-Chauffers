@@ -1,11 +1,11 @@
 {
-  "$comment": "Ali-editable content manifest. Drop new photos into client/public/media/in-action/ and add an entry here — or update captions/ordering — and the site picks them up on the next build. Same for testimonials, gallery images, and featured media. You do not need to ask me to make these changes; just edit this file.",
+  "$comment": "Ali-editable content manifest. Drop new photos into client/public/media/in-action/ and add an entry here. You can also update captions and ordering. The site picks them up on the next build. Same for testimonials, gallery images, and featured media. You do not need to ask me to make these changes. Just edit this file.",
   "lastUpdated": "2026-09-27",
   "inAction": {
     "featuredMedia": {
       "type": "image",
       "src": "/media/in-action/lounge-smoke-poster.jpg",
-      "alt": "Shisha Chauffeurs in action — hosted lounge setup for private celebrations"
+      "alt": "Shisha Chauffeurs in action: hosted lounge setup for private celebrations"
     },
     "mediaItems": [
       { "src": "/media/in-action/lounge-smoke-poster.jpg",    "title": "Hosted lounge setup for private celebrations", "caption": "Hosted lounge setup for private celebrations." },
@@ -32,7 +32,7 @@
     ]
   },
   "testimonials": {
-    "comment": "Pulled from share.google/UNJ4s92g3hc7JgV59 weekly. Add new reviews here with publishedOn set to today — the carousel rotates them in.",
+    "comment": "Pulled from share.google/UNJ4s92g3hc7JgV59 weekly. Add new reviews here with publishedOn set to today. The carousel rotates them in.",
     "googleReviewUrl": "https://share.google/UNJ4s92g3hc7JgV59",
     "entries": [
       { "quote": "We hired this service for our house warming with 4 shishas for 4 hours. Rahman was very helpful and ensured all of our shishas were running smoothly. Great service. Highly recommended.", "name": "Sid C.", "detail": "Local Guide · House warming · 4 shishas · 4 hours", "rating": 5, "isNew": false, "publishedOn": "2025-12-01" },
@@ -46,6 +46,6 @@
     "handle": "@shishachauffeurs",
     "url": "https://www.instagram.com/shishachauffeurs/",
     "tiktokUrl": "https://www.tiktok.com/@shishachauffeurs",
-    "weeklyRefresh": "Manual — paste new image src here and the in-action section will pick them up. A scheduled cron (syncInstagramMedia.ts) can fill this automatically once a token is added to .env."
+    "weeklyRefresh": "Manual: paste new image src here. The in-action section will pick it up. A scheduled cron (syncInstagramMedia.ts) can fill this automatically once a token is added to .env."
   }
 }

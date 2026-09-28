@@ -5,7 +5,7 @@ export default function EventFlowSection() {
     {
       number: "01",
       title: "Choose your experience",
-      description: "Pick the catering package that matches your event — Standard, Signature, Premium, or Luxury.",
+      description: "Pick the catering package that matches your event. Choose Standard, Signature, Premium, or Luxury.",
       icon: Sparkles,
     },
     {

@@ -10,23 +10,13 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
-/**
- * Featured media (top of section). When you have a fresh hero image or reel
- * for the "Shisha Chauffeurs in Action" header, drop it in /media/in-action/
- * and update FEATURED_MEDIA below — first image/video is the featured card.
- */
-const FEATURED_MEDIA = {
-  type: "image" as const,
-  src: "/media/in-action/lounge-smoke-poster.jpg",
-  alt: "Shisha Chauffeurs in action — hosted lounge setup for private celebrations",
-};
-
 type MediaItem = {
   type: "image" | "video";
   title: string;
   caption: string;
   src: string;
   poster?: string;
+  featured?: boolean;
 };
 
 const mediaItems: MediaItem[] = [
@@ -36,6 +26,7 @@ const mediaItems: MediaItem[] = [
     caption: "Hosted lounge setup for private celebrations.",
     src: "/media/in-action/lounge-smoke.mp4",
     poster: "/media/in-action/lounge-smoke-poster.jpg",
+    featured: true,
   },
   {
     type: "video",
@@ -161,10 +152,6 @@ const coverageNotes = [
   "Weddings, birthdays, corporate events",
 ];
 
-const actionStats = [
-  { value: "GTA", label: "private service" },
-];
-
 export default function InActionSection() {
   const carouselApi = useRef<CarouselApi | null>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
@@ -210,57 +197,20 @@ export default function InActionSection() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 grid gap-5 sm:mb-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(26rem,1fr)] lg:items-stretch">
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.035] p-6 shadow-2xl shadow-black/20 sm:p-8 lg:p-10">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80">
-              <Sparkles className="h-4 w-4 text-primary" />
-              Latest event content
-            </div>
-            <h2 className="max-w-xl font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-              Shisha Chauffeurs in Action
-            </h2>
-            <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground sm:text-lg">
-              Real shisha setups, live clips, and private-event moments from bookings across Toronto and the GTA.
-            </p>
-
-            <div className="mt-7 grid gap-3 sm:max-w-xs">
-              {actionStats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-white/10 bg-black/25 p-4">
-                  <p className="font-serif text-2xl font-semibold text-white sm:text-3xl">{stat.value}</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.16em] text-white/50">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+        <div className="mb-8 max-w-3xl sm:mb-10">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Latest event content
           </div>
-
-          <article className="group relative min-h-[24rem] overflow-hidden rounded-[1.75rem] border border-white/10 bg-black shadow-2xl shadow-black/30">
-            <img
-              src={FEATURED_MEDIA.src}
-              alt={FEATURED_MEDIA.alt}
-              className="h-full min-h-[24rem] w-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.03]"
-              loading="eager"
-              decoding="async"
-              width="1600"
-              height="1200"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
-            <div className="pointer-events-none absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white/80">
-              <Camera className="h-4 w-4 text-primary" />
-              Featured Setup
-            </div>
-            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-primary/90">Featured setup</p>
-              <h3 className="mt-2 font-serif text-2xl font-semibold text-white sm:text-3xl">
-                Hosted lounge setup for private celebrations.
-              </h3>
-              <p className="mt-2 max-w-xl text-sm leading-6 text-white/70">
-                A quick look at the service style guests see on arrival.
-              </p>
-            </div>
-          </article>
+          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+            Shisha Chauffeurs in Action
+          </h2>
+          <p className="mt-3 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+            Real shisha setups, live clips, and private-event moments from bookings across Toronto and the GTA.
+          </p>
         </div>
 
-        <div className="mb-8 grid gap-3 sm:mb-10 sm:grid-cols-3 lg:grid-cols-[repeat(3,1fr)_auto]">
+        <div className="mb-8 grid gap-3 sm:mb-10 sm:grid-cols-3">
           {coverageNotes.map((note) => (
             <div key={note} className="group flex items-center gap-4 rounded-[1.35rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.025] p-4 text-sm text-white/80 transition-colors hover:border-primary/40 sm:p-5">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/25 bg-primary/10 text-primary">
@@ -269,23 +219,12 @@ export default function InActionSection() {
               <span className="font-medium">{note}</span>
             </div>
           ))}
-          <Button
-            onClick={scrollToContact}
-            className="min-h-12 justify-center rounded-full bg-primary px-6 text-base font-semibold text-primary-foreground hover:bg-accent hover:text-accent-foreground sm:col-span-3 lg:col-span-1 lg:h-full"
-            data-testid="button-in-action-book-top"
-          >
-            Book A Setup
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
         </div>
 
         <div className="mb-5 flex items-end justify-between gap-4">
-          <div>
-            <p className="text-sm uppercase tracking-[0.28em] text-primary/90">Recent Moments</p>
-            <h3 className="mt-2 font-serif text-2xl font-semibold text-white sm:text-3xl">
-              Browse the latest setups
-            </h3>
-          </div>
+          <h3 className="font-serif text-xl font-semibold text-white sm:text-2xl">
+            Browse the latest setups
+          </h3>
           <div className="hidden text-sm text-white/50 sm:block">
             Swipe or use arrows
           </div>
@@ -304,7 +243,7 @@ export default function InActionSection() {
                 key={item.src}
                 className="pl-0 md:basis-1/2 xl:basis-1/3"
               >
-                <article className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35 shadow-2xl shadow-black/20 sm:mx-3 sm:rounded-[1.75rem]">
+                <article className="relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-black/35 shadow-2xl shadow-black/20 sm:mx-3 sm:rounded-[1.75rem]">
                   <div className="relative aspect-[4/5] bg-black">
                     {item.type === "video" ? (
                       <video
@@ -330,6 +269,12 @@ export default function InActionSection() {
                         loading="lazy"
                         decoding="async"
                       />
+                    )}
+                    {item.featured && (
+                      <div className="pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/55 px-3 py-2 text-[11px] font-medium uppercase tracking-[0.22em] text-white/80">
+                        <Camera className="h-4 w-4 text-primary" />
+                        Featured
+                      </div>
                     )}
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">

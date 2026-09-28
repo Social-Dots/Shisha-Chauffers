@@ -10,9 +10,9 @@ export default function ServicesSection() {
         "Professional shisha masters bring premium flavours and equipment directly to your event",
       gradient: "gradient-gold",
       features: [
-        "Luxury equipment package: shisha, quasar heads with HMD (Heat Management Device), coconut coals, and mouthpieces.",
-        "Every package includes: flavour, a professional attendant, setup & teardown, coal management, and 1 complimentary head + flavour change per shisha.",
-        "Professional setup and clean-down included with every package.",
+        "Luxury equipment package: shisha, quasar heads, HMD, coconut coals, and mouthpieces.",
+        "Every package includes flavour, an attendant, setup, teardown, coal management, and 1 head + flavour change.",
+        "Professional setup and clean-down included.",
         "Free local delivery across the GTA. Additional charges may apply based on event location.",
       ],
     },
@@ -24,7 +24,7 @@ export default function ServicesSection() {
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">Our Premium Service</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Mobile shisha catering delivered and serviced at your private event — setup, service, and clean-down handled by our team.
+            Mobile shisha catering delivered and serviced at your event. Setup, service, and clean-down handled by our team.
           </p>
         </div>
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { auth, signOut, updateBookingStatus, deleteBooking } from "@/lib/firebase";
+import { auth, signOut, getBookings, updateBookingStatus, deleteBooking } from "@/lib/firebase";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
@@ -33,13 +33,7 @@ export default function AdminDashboard() {
 
   const { data: bookings, isLoading, error, refetch } = useQuery({
     queryKey: ['bookings'],
-    queryFn: async () => {
-      const response = await fetch('/api/bookings');
-      if (!response.ok) {
-        throw new Error('Failed to fetch bookings');
-      }
-      return response.json();
-    },
+    queryFn: getBookings,
     enabled: !!user,
   });
 

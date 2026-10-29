@@ -112,7 +112,7 @@ export default function ContactForm() {
       email: "",
       phone: "",
       instagram: "",
-      services: [],
+      services: ["shisha-catering"],
       packageSelection: "",
       additionalServices: [],
       eventDate: "",
@@ -147,7 +147,7 @@ export default function ContactForm() {
 
       return response.json();
     },
-    onSuccess: (_result, variables) => {
+    onSuccess: (result, variables) => {
       trackBookingSubmit({
         event_label: variables.packageSelection || "unspecified",
         services: variables.services?.join(", "),
@@ -156,7 +156,9 @@ export default function ContactForm() {
       });
       toast({
         title: "Booking Request Submitted",
-        description: "We received your request and will follow up shortly to confirm availability.",
+        description: result.email?.adminNotificationSent
+          ? "We received your request and will follow up shortly to confirm availability."
+          : "Your request was saved, but our notification did not go through. Please email shishachauffeurs@gmail.com or contact us on Instagram or TikTok to make sure we see it.",
       });
       form.reset();
       setCurrentStep(1);
@@ -743,11 +745,11 @@ export default function ContactForm() {
                             <FormLabel className="text-sm">
                               I understand the booking conditions and agree that a deposit is required to secure the reservation. *
                             </FormLabel>
+                            <FormMessage />
                           </div>
                         </FormItem>
                       )}
                     />
-                    <FormMessage />
 
                     <div className="rounded-2xl border border-white/10 bg-black/20 p-5 text-sm text-muted-foreground">
                       <p className="font-semibold text-white">Need to reach us directly?</p>

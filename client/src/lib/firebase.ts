@@ -37,57 +37,11 @@ export const getBookings = async () => {
 };
 
 export const updateBookingStatus = async (id: string, status: string) => {
-  console.log('API call: updating booking', id, 'to status', status);
-  const response = await fetch(`/api/bookings/${id}/status`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ status }),
-  });
-  
-  console.log('Update response status:', response.status);
-  
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Update error response:', errorText);
-    let errorData;
-    try {
-      errorData = JSON.parse(errorText);
-    } catch {
-      throw new Error(`Server returned ${response.status}: ${errorText}`);
-    }
-    throw new Error(errorData.error || 'Failed to update booking status');
-  }
-  
-  const result = await response.json();
-  console.log('Update response data:', result);
-  return result;
+  await updateDoc(doc(db, "bookings", id), { status });
 };
 
 export const deleteBooking = async (id: string) => {
-  console.log('API call: deleting booking', id);
-  const response = await fetch(`/api/bookings/${id}`, {
-    method: 'DELETE',
-  });
-  
-  console.log('Delete response status:', response.status);
-  
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error('Delete error response:', errorText);
-    let errorData;
-    try {
-      errorData = JSON.parse(errorText);
-    } catch {
-      throw new Error(`Server returned ${response.status}: ${errorText}`);
-    }
-    throw new Error(errorData.error || 'Failed to delete booking');
-  }
-  
-  const result = await response.json();
-  console.log('Delete response data:', result);
-  return result;
+  await deleteDoc(doc(db, "bookings", id));
 };
 
 export { signInWithEmailAndPassword, signOut, onAuthStateChanged, type User, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, where, Timestamp };

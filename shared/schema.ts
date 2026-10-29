@@ -74,18 +74,19 @@ export const insertBookingSchema = createInsertSchema(bookings).omit({
   endTime: z.string().trim().min(1, "End time is required"),
   location: z.string().trim().min(1, "Event location is required"),
   guestCount: z.string().trim().min(1, "Please select a guest count"),
-  packageSelection: z.string().trim().optional(),
+  packageSelection: z.string().trim().min(1, "Please select a shisha package"),
   preferredFlavours: z.array(z.string()).min(1, "Please select at least one flavour"),
   additionalServices: z.array(z.string()).default([]),
   referralSource: z.string().trim().min(1, "Please tell us how you heard about us"),
   termsAccepted: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
 }).superRefine((data, ctx) => {
-  if (data.services.includes("shisha-catering") && !data.packageSelection) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Please select a shisha package",
-      path: ["packageSelection"],
-    });
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit",
+  }).format(new Date());
+  const date = data.eventDate;
+  const parsed = new Date(`${date}T00:00:00Z`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(parsed.valueOf()) || parsed.toISOString().slice(0, 10) !== date || date < today) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Please choose today or a future date", path: ["eventDate"] });
   }
 });
 
